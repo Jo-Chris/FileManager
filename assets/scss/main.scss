@@ -1,0 +1,41 @@
+/* Main */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  background: #F5F5F5;
+}
+.main {
+  align-items: center;
+  -ms-flex-align: center;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  text-align: center;
+}
+
+/* Login */
+
+.login {
+  margin: auto;
+  max-width: 330px;
+  padding: 15px;
+  width: 100%;
+}
+.login > form .checkbox {
+  font-weight: 400;
+}
+.login > form .form-control {
+  box-sizing: border-box;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  position: relative;
+}
+.login > form input[type="password"] {
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
