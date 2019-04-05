@@ -1,4 +1,4 @@
-### Dateimanager ###
+### FileManager ###
 
 ## Konfiguration
 
