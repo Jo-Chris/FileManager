@@ -11,8 +11,8 @@
 
 		public function run(){
 			$this->view->title = "Übersicht";
-		}
 
+		}
 	}
 
 ?>
