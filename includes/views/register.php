@@ -1,34 +1,49 @@
 <?php
     echo $this->header;
 ?>
-<div class="main register">
-    <div class="container">
-        <form class="form-signup">
-            <div class="row mb-1">
-                <h1 class="h2 font-weight-normal text-center">Registrierung</h1>
+<main class="main register">
+    <div class="container m-auto">
+        <form class="form-signup mb-3 mt-3">
+            <div class="mb-0">
+                <h1 class="h2 font-weight-normal mb-0 text-center w-100">Registrierung</h1>
             </div>
-            <div class="row mb-3">
-                <p class="m-0">Erstellen Sie jetzt einen kostenlosen Account.</p>
+            <div class="mb-3">
+                <p class="m-0 text-center">Erstellen Sie jetzt kostenlos Ihr Konto.</p>
             </div>
-            <div class="row mb-1">
-                <label class="sr-only" for="salutation">Anrede</label>
-                <!--<input class="form-control" type="text" id="salutation" placeholder="Anrede" required autofocus>-->
+            <div class="row form-group mb-1 ml-0 mr-0">
+                <label class="mb-1" for="salutation">Anrede</label>
+                <select class="form-control" id="salutation" name="salutation">
+                    <option value="Herr">Herr</option>
+                    <option value="Frau">Frau</option>
+                </select>
             </div>
-            <div class="row mb-1">
-                <label class="sr-only" for="firstname">Vorname</label>
-                <input class="form-control" type="text" id="firstname" placeholder="Vorname" required autofocus>
+            <div class="row">
+                <div class="col-sm form-group row mb-1 ml-0 mr-0">
+                    <label class="mb-1" for="firstname">Vorname</label>
+                    <input class="form-control" type="text" id="firstname" name="firstname" placeholder="Vorname" required>
+                </div>
+                <div class="col-sm form-group row mb-1 ml-0 mr-0">
+                    <label class="mb-1" for="lastname">Nachname</label>
+                    <input class="form-control" type="text" id="lastname" name="lastname" placeholder="Nachname" required>
+                </div>
             </div>
-            <div class="row mb-1">
-                <label class="sr-only" for="lastname">Nachname</label>
-                <input class="form-control" type="text" id="lastname" placeholder="Nachname" required autofocus>
+            <div class="row form-group row mb-1 ml-0 mr-0">
+                <label class="mb-1" for="email">E-Mail Adresse</label>
+                <input class="form-control" type="email" id="email" name="email" placeholder="E-Mail Adresse" required>
             </div>
-            <div class="row mb-1">
-                <label class="sr-only" for="email" >E-Mail Adresse</label>
-                <input class="form-control" type="email" id="email" placeholder="E-Mail Adresse" required autofocus>
+            <div class="row">
+                <div class="col-sm form-group row mb-1 ml-0 mr-0">
+                    <label class="mb-1" for="password">Passwort</label>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="Passwort" required>
+                </div>
+                <div class="col-sm form-group row mb-1 ml-0 mr-0">
+                    <label class="mb-1" for="lastname">Passwort bestätigen</label>
+                    <input class="form-control" type="password" id="passwordconfirmation" name="passwordconfirmation" placeholder="Passwort bestätigen" required>
+                </div>
             </div>
-            <input class="form-control" type="password" id="password" placeholder="Passwort">
-            <input class="form-control" type="password" id="passwordRepeated" placeholder="Password bestätigen">
-            <button class="btn btn-lg btn-primary btn-block" id="registerBtn" name="signup"> Abschicken</button>
+            <div class="mt-3">
+                <button class="btn btn-lg btn-primary btn-block font-weight-bold text-uppercase" id="registerBtn">Jetzt registrieren</button>
+            </div>
         </form>
     </div>
-</div>
+</main>
