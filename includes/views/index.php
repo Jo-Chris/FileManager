@@ -113,7 +113,9 @@
             </div>
         </div>
         <div class="col rightcolumn h-100">
-            <div class="h-100 p-3">Details</div>
+            <div class="h-100 p-3">
+                <h5 class="text-center">Details</h5>
+            </div>
         </div>
     </div>
 </main>
