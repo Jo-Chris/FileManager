@@ -7,7 +7,7 @@ body {
 
 /* line 7, ../scss/main.scss */
 body {
-  background: #fff;
+  background: #F5F5F5;
 }
 
 /* line 10, ../scss/main.scss */
@@ -22,20 +22,17 @@ body {
 
 /* Login */
 /* line 21, ../scss/main.scss */
-.login {
-  margin: auto;
-  max-width: 330px;
-  padding: 15px;
-  width: 100%;
+.login .container {
+  max-width: 375px;
 }
 
-/* line 27, ../scss/main.scss */
-.login > form .checkbox {
+/* line 24, ../scss/main.scss */
+.login form .checkbox {
   font-weight: 400;
 }
 
-/* line 30, ../scss/main.scss */
-.login > form .form-control {
+/* line 27, ../scss/main.scss */
+.login form .form-control {
   box-sizing: border-box;
   font-size: 16px;
   height: auto;
@@ -43,111 +40,4 @@ body {
   position: relative;
 }
 
-/* line 37, ../scss/main.scss */
-.login > form input[type="password"] {
-  margin-bottom: 10px;
-  margin-top: 5px;
-}
-
-/* register.php (outsourcing...) */
-.register {
-  margin:auto;
-  width:33%;
-}
-
-.register form > label {
-  box-sizing: border-box;
-  width: 100%;
-  text-align: left;
-}
-
-.register form > input {
-  margin-bottom: 10px;
-}
-
-button {
-  margin-top: 20px;
-  width:33%;
-}
-
-/* index.php (outsourcing...) */
-h1, h2 {
-  color: #0b88ff
-}
-.jumbotron {
-  margin-bottom: 0;
-  background-color: lightgray;
-}
-
-.navbar .navbar-nav > li {
-  display:inline-block;
-  text-decoration: none;
-  margin-left: 15px;
-  font-size: 24px;
-  color: #09afff;
-}
-
-.nav {
-  background-color: gray;
-}
-
-.navbar-nav > li > a:hover {
-  color: #fff;
-}
-
-.navbar-nav > li > a {
-  text-decoration: none;
-}
-
-#mainHeading {
-  color: #343a40;
-}
-
-.mainStage {
-  margin: auto;
-  width: 100%;
-}
-
-.mainStage > h1 {
-  text-align: center;
-  margin: 10px;
-}
-
-.mainStage > .boxContainer {
-  width: 75%;
-  margin: 50px auto;
-  display: flex;
-  justify-content: space-between;
-}
-
-.mainStage > .boxContainer > .container {
-  text-align: center;
-  display: inline-block;
-  width: 250px;
-  height: 550px;
-  background: #343a40;
-  color: #fff;
-  box-shadow: 15px 19px 38px rgba(0,0,0,0.30), 15px 15px 12px rgba(0,0,0,0.22);
-}
-
-.mid {
-  width: 90%;
-  padding: 15px;
-  margin: 20px auto;
-  background: #343a40;
-  color: #fff;
-  box-shadow: 5px 5px 10px rgba(0,0,0,0.30), 5px 5px 5px rgba(0,0,0,0.22);
-}
-
-/* FOOTER */
-.footerBox {
-  width: 90%;
-  margin: 50px auto;
-  display: flex;
-  text-align: center;
-  justify-content: space-between;
-}
-
-
-
-
+/**/
