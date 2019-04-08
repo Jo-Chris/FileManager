@@ -7,19 +7,15 @@ body {
 body {
   background: #F5F5F5;
 }
-.main {
-  align-items: center;
-  -ms-flex-align: center;
-  display: -ms-flexbox;
-  display: flex;
-  height: 100%;
-  text-align: center;
-}
 
 /* Login */
 
+.main.login {
+  display: flex;
+  min-height: 100%;
+}
 .login .container {
-  max-width: 375px;
+  max-width: 320px;
 }
 .login form .checkbox {
   font-weight: 400;
@@ -32,4 +28,40 @@ body {
   position: relative;
 }
 
-/**/
+/* Registrierung */
+
+.main.register {
+  display: flex;
+  min-height: 100%;
+}
+.register .container {
+  max-width: 500px;
+}
+
+/* Übersicht */
+
+header.overview {
+  height: 56px !important;
+  position: fixed !important;
+  z-index: 2 !important;
+}
+main.overview {
+  padding-top: 72px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+main.overview .leftcolumn > div,
+main.overview .maincolumn > div,
+main.overview .rightcolumn > div {
+  background: #FFFFFF;
+}
+main.overview .leftcolumn ul.nav {
+  list-style: none;
+  padding: 0;
+}
+main.overview .leftcolumn ul.nav li {
+  list-style: none;
+}
+main.overview .leftcolumn ul.nav li ul {
+  padding-left: 20px;
+}

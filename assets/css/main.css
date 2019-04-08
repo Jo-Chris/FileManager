@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Main */
 /* line 3, ../scss/main.scss */
 html,
@@ -10,28 +11,24 @@ body {
   background: #F5F5F5;
 }
 
-/* line 10, ../scss/main.scss */
-.main {
-  align-items: center;
-  -ms-flex-align: center;
-  display: -ms-flexbox;
-  display: flex;
-  height: 100%;
-  text-align: center;
-}
-
 /* Login */
-/* line 21, ../scss/main.scss */
-.login .container {
-  max-width: 375px;
+/* line 13, ../scss/main.scss */
+.main.login {
+  display: flex;
+  min-height: 100%;
 }
 
-/* line 24, ../scss/main.scss */
+/* line 17, ../scss/main.scss */
+.login .container {
+  max-width: 320px;
+}
+
+/* line 20, ../scss/main.scss */
 .login form .checkbox {
   font-weight: 400;
 }
 
-/* line 27, ../scss/main.scss */
+/* line 23, ../scss/main.scss */
 .login form .form-control {
   box-sizing: border-box;
   font-size: 16px;
@@ -40,4 +37,52 @@ body {
   position: relative;
 }
 
-/**/
+/* Registrierung */
+/* line 33, ../scss/main.scss */
+.main.register {
+  display: flex;
+  min-height: 100%;
+}
+
+/* line 37, ../scss/main.scss */
+.register .container {
+  max-width: 500px;
+}
+
+/* ├£bersicht */
+/* line 43, ../scss/main.scss */
+header.overview {
+  height: 56px !important;
+  position: fixed !important;
+  z-index: 2 !important;
+}
+
+/* line 48, ../scss/main.scss */
+main.overview {
+  padding-top: 72px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* line 53, ../scss/main.scss */
+main.overview .leftcolumn > div,
+main.overview .maincolumn > div,
+main.overview .rightcolumn > div {
+  background: #FFFFFF;
+}
+
+/* line 58, ../scss/main.scss */
+main.overview .leftcolumn ul.nav {
+  list-style: none;
+  padding: 0;
+}
+
+/* line 62, ../scss/main.scss */
+main.overview .leftcolumn ul.nav li {
+  list-style: none;
+}
+
+/* line 65, ../scss/main.scss */
+main.overview .leftcolumn ul.nav li ul {
+  padding-left: 20px;
+}
