@@ -3,11 +3,11 @@
 	define("API_CALL", true);
 	require_once(__DIR__ . "/includes/initialize.php");
 
-	$user = new User();
-	$user->authenticate();
+	/*$user = new User();
+	$user->authenticate();*/
 
-	class ApiController
-	{
+	class ApiController{
+
 		public function run(){
 
 			global $restfulservices;
@@ -20,12 +20,10 @@
 			$rightpart = $parts[1];
 
 			if ($rightpart == ""){
-
 				$jsonResponse = new JSON();
 				$jsonResponse->result = false;
 				$jsonResponse->setMessage("No Service specified! You need to specify a service when you call the API!");
 				$jsonResponse->send();
-
 			} else {
 
 				$serviceParts = explode("/", $rightpart);

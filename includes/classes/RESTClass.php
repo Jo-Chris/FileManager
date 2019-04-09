@@ -2,35 +2,35 @@
 
 	/**
 		* Class: RESTClass
-		* @function: getRequest, createRequest, saveRequest, deleteRequest, processRequest, returnJSON
+		* @function: getData, createData, saveData, deleteData, processData, returnJSON
 	*/
 
 	abstract class RESTClass {
 
-		abstract protected function getRequest($data);
-		abstract protected function createRequest($data);
-		abstract protected function saveRequest($data);
-		abstract protected function deleteRequest($data);
+		abstract protected function getData($data);
+		/*abstract protected function createData($data);
+		abstract protected function saveData($data);
+		abstract protected function deleteData($data);*/
 
 		/**
-			* Process request
+			* Process data
 			* @param $method
 			* @param $data
 		*/
-		public function processRequest($method, $data){
+		public function processData($method, $data){
 			switch($method){
-				case "post":
-					$this->createRequest($data);
+				/*case "post":
+					$this->createData($data);
 					break;
 				case "put":
-					$this->saveRequest($data);
+					$this->saveData($data);
 					break;
 				case "delete":
-					$this->deleteRequest($data);
+					$this->deleteData($data);
 					break;
-				case "get":
+				case "get":*/
 				default:
-					$this->getRequest($data);
+					$this->getData($data);
 					break;
 			};
 		}
