@@ -2,9 +2,9 @@
 
     // --- Database - Config --- //
 
-    define("DB_HOST", "localhost");
-    define("DB_NAME", "filemanager");
-    define("DB_USER", "root");
-    define("DB_PASS", "12345");
+    define("DB_HOST", "mysqlsvr78.world4you.com");
+    define("DB_NAME", "7076779db1");
+    define("DB_USER", "sql3368157");
+    define("DB_PASS", "td8t@b8");
 
 ?>
