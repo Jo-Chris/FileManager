@@ -1,6 +1,6 @@
 <?php
 
-    class User {
+    class User extends Database {
 
         private $user_firstname;
         private $user_lastname;
@@ -9,11 +9,55 @@
         private $user_active;
         private $user_activationKey;
 
-        public function __construct($user_firstname, $user_lastname, $user_email, $user_password){
-            $this->$user_firstname = $user_firstname;
-            $this->$user_lastname = $user_lastname;
-            $this->$user_email = $user_email;
-            $this->$user_password = $user_password; //encrypt
+        private $isLoggedIn = false;
+
+        public function __construct() {
+
+        }
+
+
+        public static function createUser($userdata){
+            $db = new Database();
+
+            $user_firstname = $db->escapeString($userdata['firstname']);
+            $user_lastname = $db->escapeString($userdata['lastname']);
+            $user_email = $db->escapeString($userdata['email']);
+            $user_password = $db->escapeString($userdata['password']);
+
+            $sql = "INSERT INTO `user`(`firstname`, `lastname`, `email`, `password`) VALUES ($user_firstname, $user_lastname, $user_email, $user_password)";
+            $db->query($sql);
+        }
+
+        public function login($email, $password){
+            $sql = "SELECT `email`,`password` FROM `user` WHERE `name`='" . $this->escapeString($email) . "'";
+            $result = $this->query($sql);
+
+
+            if($this->numRows($result) == 0){
+                $this->isLoggedIn = false;
+                return false; //username not found!
+            }
+
+            $row = $this->fetchObject($result);
+
+            if(password_verify($password, $row->password)){
+                $this->user_email = $email;
+                $this->id = $row->id;
+                $this->isLoggedIn = true;
+
+                return true;
+            }
+
+            $this->isLoggedIn = false;
+            return false;
+
+        }
+
+        public function redirectToIndex()
+        {
+            header('Location: '.INDEX_URL);
+            header('Status: 303');
+            exit();
         }
 
         public function getUserLastname(){

@@ -3,7 +3,7 @@
 ?>
 <main class="main register">
     <div class="container m-auto">
-        <form class="form-signup mb-3 mt-3">
+        <form class="form-signup mb-3 mt-3" action="register" method="POST">
             <div class="mb-0">
                 <h1 class="h2 font-weight-normal mb-0 text-center w-100">Registrierung</h1>
             </div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <button class="btn btn-lg btn-primary btn-block font-weight-bold text-uppercase" id="registerBtn">Jetzt registrieren</button>
+                <button class="btn btn-lg btn-primary btn-block font-weight-bold text-uppercase" type="submit" name="action" id="registerBtn">Jetzt registrieren</button>
             </div>
         </form>
     </div>
