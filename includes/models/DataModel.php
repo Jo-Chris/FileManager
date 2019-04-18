@@ -2,7 +2,7 @@
 
 	/**
 		* Class: DataModel
-		* @function: run
+		* @function: getDataFromDirectory
 	*/
 
 	class DataModel {
@@ -13,9 +13,14 @@
 			$files = array();
 
 			if (file_exists($directory)){
+
+			    echo "2";
+			    return;
+
 				$response = scandir($directory);
+
 				foreach ($response as $file){
-					if (is_dir($dir . "/" . $file)){		
+					if (is_dir($directory . "/" . $file)){
 						$files[] = array(
 							"name" => $file,
 							"type" => "folder",
@@ -29,6 +34,7 @@
 						);
 					};
 				};
+
 			};
 
 			return (object) $files;

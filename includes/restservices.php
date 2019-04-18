@@ -2,6 +2,6 @@
 
     // --- REST-Services --- //
 
-    $restfulservices[] = array("Data", "processData");
+    $restfulservices[] = array("Data", "processRequest");
 
 ?>

@@ -1,23 +1,41 @@
 <?php
 
-	/**
-		* Class: Data
-		* @function: __construc, __destruct, getData
-	*/
+    /**
+        * Class: Data
+        * @function: __construct, __destruct, getRequest, createRequest, saveRequest, deleteRequest
+    */
 
-	class Data extends RESTClass {
+    class Data extends RESTClass {
 
-		protected function getData($directory){
+        public function __construct(){}
 
-			$data = DataModel::getDataFromDirectory($directory);
+        public function __destruct(){}
 
-			$jsonResponse = new JSON();
-			$jsonResponse->result = true;
-			$jsonResponse->setData($data);
-			$jsonResponse->send();
+        protected function getRequest($data){
 
-		}
+            $data["directory"] = "cloud";
 
-	}
+            if (isset($data["directory"])){
+
+                $dataForView = DataModel::getDataFromDirectory($data["directory"]);
+
+                return;
+
+                $jsonResponse = new JSON();
+                $jsonResponse->result = true;
+                $jsonResponse->setData($dataForView);
+                $jsonResponse->send();
+
+            };
+
+        }
+
+        protected function createRequest($data){}
+
+        protected function saveRequest($data){}
+
+        protected function deleteRequest($data){}
+
+    }
 
 ?>
