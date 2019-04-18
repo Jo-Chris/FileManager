@@ -2,6 +2,6 @@
 
     // --- REST-Services --- //
 
-    $restfulservices[] = array("Address", "processRequest");
+    $restfulservices[] = array("Data", "processRequest");
 
 ?>
