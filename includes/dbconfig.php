@@ -2,6 +2,7 @@
 
     // --- Database - Config --- //
 
+<<<<<<< HEAD
     /* Live-Mode */
 
     /*define("DB_HOST", "mysqlsvr78.world4you.com");
@@ -11,6 +12,8 @@
 
     /* Test-Mode */
 
+=======
+>>>>>>> feature-rest
     define("DB_HOST", "localhost");
     define("DB_NAME", "filemanager");
     define("DB_USER", "root");

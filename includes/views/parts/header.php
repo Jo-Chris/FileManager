@@ -10,5 +10,6 @@
 	<link href="assets/css/main.css" rel="stylesheet">
 	<script src="assets/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/js/core.js" type="text/javascript"></script>
 </head>
 <body>
