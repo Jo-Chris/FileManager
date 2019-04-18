@@ -22,6 +22,7 @@
 	if (!function_exists("classAutoLoader")){
 
 		function classAutoLoader($fileName){
+
 			if (file_exists(__DIR__ . "/classes/" . $fileName . ".php")){
 				require_once(__DIR__ . "/classes/" . $fileName . ".php");
 			} else if (file_exists(__DIR__ . "/models/" . $fileName . ".php")){
@@ -33,6 +34,7 @@
 			} else {
 				throw new Exception("Unable to load $fileName.");
 			};
+
 		};
 
 	};

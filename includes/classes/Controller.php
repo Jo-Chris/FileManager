@@ -10,6 +10,7 @@
 		protected $viewFileName = "";
 		public $pageName = "";
 		protected $view = null;
+        protected $loginRequired = true;
 		protected $user = null;
 
 		abstract function run();
@@ -20,7 +21,12 @@
 
 			$this->user = new User();
 
-			// Show view of current page by filename
+            if ($this->loginRequired){
+                $this->user->authenticate();
+            } else {
+                define("LOGGED_IN", false);
+            };
+
 			$this->view = new View($this->viewFileName, $pageName);
 
 			$this->run();

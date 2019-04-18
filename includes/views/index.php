@@ -55,7 +55,7 @@
                     <a class="nav-link" href="#" id="user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-lg"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user">
                         <a class="dropdown-item" href="#">Mein Konto</a>
-                        <a class="dropdown-item" href="#">Abmelden</a>
+                        <a class="dropdown-item" href="logout">Abmelden</a>
                     </div>
                 </li>
             </ul>

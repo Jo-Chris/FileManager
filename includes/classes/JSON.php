@@ -2,7 +2,7 @@
 
 	/**
 		* Class: JSON
-		* @function: __set, setData, setMessage, getData, send
+		* @function: __construct, __set, setData, setMessage, getData, send
 	*/
 
 	class JSON {

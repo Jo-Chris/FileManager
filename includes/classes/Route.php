@@ -40,6 +40,7 @@
 				};
 			};
 
+            define("LOGGED_IN", false);
 			// Show 404 error page
 			$view = new View("404");
 			http_response_code(404);
