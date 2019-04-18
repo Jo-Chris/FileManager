@@ -25,8 +25,8 @@
                 </label>
             </div>
             <div>
-                <button class="btn btn-lg btn-primary btn-block font-weight-bold text-uppercase" type="submit">Login</button>
-                <a href="<?php echo URL_PATH; ?>/register" class="btn btn-lg btn btn-outline-primary btn-block font-weight-bold text-uppercase" id="register">Register</a>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+                <a href="<?php echo URL_PATH; ?>/register" class="btn btn-lg btn btn-outline-primary btn-block text-uppercase" id="register">Registrieren</a>
             </div>
         </form>
     </div>

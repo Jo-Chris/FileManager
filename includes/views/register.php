@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <button class="btn btn-lg btn-primary btn-block font-weight-bold text-uppercase" type="submit" id="registerBtn">Jetzt registrieren</button>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="registerBtn">Jetzt registrieren</button>
             </div>
         </form>
     </div>
