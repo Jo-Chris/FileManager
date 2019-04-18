@@ -36,11 +36,11 @@
             <div class="row">
                 <div class="col-sm form-group row mb-1 ml-0 mr-0">
                     <label class="mb-1" for="password">Passwort</label>
-                    <input class="form-control" type="text" name="password" id="password" placeholder="Passwort" required>
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Passwort" required>
                 </div>
                 <div class="col-sm form-group row mb-1 ml-0 mr-0">
                     <label class="mb-1" for="lastname">Passwort bestätigen</label>
-                    <input class="form-control" type="text" name="passwordconfirmation" id="passwordconfirmation" placeholder="Passwort bestätigen" required>
+                    <input class="form-control" type="password" name="passwordconfirmation" id="passwordconfirmation" placeholder="Passwort bestätigen" required>
                 </div>
             </div>
             <div class="mt-3">

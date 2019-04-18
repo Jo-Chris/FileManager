@@ -9,7 +9,7 @@
 
 		private $arrData = array();
 		private $result = false;
-		private $message = '';
+		private $message = "";
 
 		public function __construct(){}
 

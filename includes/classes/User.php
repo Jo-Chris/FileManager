@@ -84,7 +84,7 @@
 
         public function login($email, $password){
 
-            $sql = "SELECT `id`,`password` FROM `user` WHERE `email` = '" . $this->escapeString($email) . "'";
+            $sql = "SELECT `id`,`password`, `active` FROM `user` WHERE `email` = '" . $this->escapeString($email) . "'";
             $result = $this->query($sql);
 
             if ($this->numRows($result) == 0){
@@ -94,7 +94,7 @@
 
             $row = $this->fetchObject($result);
 
-            if (password_verify($password, $row->password)){
+            if (password_verify($password, $row->password) && $row->active){
 
                 $this->email = $email;
                 $this->id = $row->id;
@@ -198,8 +198,9 @@
             $lastname = $db->escapeString($data["lastname"]);
             $email = $db->escapeString($data["email"]);
             $password = password_hash($db->escapeString($data["password"]), PASSWORD_DEFAULT);
+            $activationKey = password_hash($db->escapeString($data["email"]), PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO `user`(`gender`, `firstname`, `lastname`, `email`, `password`, `active`, `activationKey`, `roleID`) VALUES('" . $gender . "', '" . $firstname . "', '" . $lastname . "', '" . $email . "', '" . $password . "', 1, '0123456789', 1)";
+            $sql = "INSERT INTO `user`(`gender`, `firstname`, `lastname`, `email`, `password`, `active`, `activationKey`, `roleID`) VALUES('" . $gender . "', '" . $firstname . "', '" . $lastname . "', '" . $email . "', '" . $password . "', 0, '" . $activationKey . "', 1)";
             $db->query($sql);
 
         }
