@@ -65,35 +65,7 @@
 <main class="overview container mw-100 pb-3 pt-3 h-100">
     <div class="row h-100">
         <div class="col leftcolumn h-100">
-            <div class="h-100 p-3 pl-4">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link p-0 active" href="#"><i class="fas fa-plus-square"></i> home</a>
-                        <ul>
-                            <li class="nav-item">
-                                <a class="nav-link p-0" href="#"><i class="fas fa-plus-square"></i> studium</a>
-                                <ul>
-                                    <li class="nav-item">
-                                        <a class="nav-link p-0" href="#"><i class="fas fa-folder"></i> kurse</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link p-0" href="#"><i class="fas fa-folder"></i> uebungen</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link p-0" href="#"><i class="fas fa-folder"></i> projekte</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link p-0" href="#"><i class="fas fa-folder"></i> privat</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link p-0" href="#"><i class="fas fa-folder"></i> projekte</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            <div class="h-100"></div>
         </div>
         <div class="col-8 maincolumn h-100">
             <div class="h-100 p-3 pl-4">

@@ -7,39 +7,60 @@
 
 	class DataModel {
 
+
 		public static function getDataFromDirectory($directory){
 
-			$directory = "cloud";
-			$files = array();
+            $files = array();
 
-			if (file_exists($directory)){
+            // Check if directory exists
 
-			    echo "2";
-			    return;
+            if (file_exists($directory)){
 
-				$response = scandir($directory);
+                // Scan directory
 
-				foreach ($response as $file){
-					if (is_dir($directory . "/" . $file)){
-						$files[] = array(
-							"name" => $file,
-							"type" => "folder",
-							"path" => $directory . "/" . $file
-						);
-					} else {
-						$files[] = array(
-							"name" => $file,
-							"type" => "file",
-							"path" => $directory . "/" . $file
-						);
-					};
-				};
+                $response = scandir($directory);
 
-			};
+                foreach ($response as $file){
 
-			return (object) $files;
+                    // Ignore hidden files and directories
 
-		}
+                    if (!$file || $file[0] == "."){
+                        continue;
+                    };
+
+                    if (!is_dir($directory . "/" . $file)){
+
+                        // File
+
+                        $files[] = array(
+                            "extension" => pathinfo($file, PATHINFO_EXTENSION),
+                            "name" => $file,
+                            "path" => $directory . "/" . $file,
+                            "type" => "file",
+                            "size" => filesize($directory . "/" . $file)
+                        );
+
+                    } else {
+
+                        // Directory
+
+                        $files[] = array(
+                            "items" => self::getDataFromDirectory($directory . "/" . $file),
+                            "name" => $file,
+                            "path" => $directory . "/" . $file,
+                            "type" => "folder",
+                            "size" => filesize($directory . "/" . $file)
+                        );
+
+                    };
+
+                };
+
+            };
+
+            return (object) $files;
+
+        }
 		
 	}
 

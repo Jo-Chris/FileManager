@@ -65,24 +65,23 @@ main.overview {
 }
 
 /* line 53, ../scss/main.scss */
-main.overview .leftcolumn > div,
 main.overview .maincolumn > div,
 main.overview .rightcolumn > div {
   background: #FFFFFF;
 }
 
-/* line 58, ../scss/main.scss */
+/* line 57, ../scss/main.scss */
 main.overview .leftcolumn ul.nav {
   list-style: none;
   padding: 0;
 }
 
-/* line 62, ../scss/main.scss */
+/* line 61, ../scss/main.scss */
 main.overview .leftcolumn ul.nav li {
   list-style: none;
 }
 
-/* line 65, ../scss/main.scss */
+/* line 64, ../scss/main.scss */
 main.overview .leftcolumn ul.nav li ul {
   padding-left: 20px;
 }

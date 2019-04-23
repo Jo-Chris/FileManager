@@ -2,11 +2,7 @@
 
     /**
         * Class: Data
-<<<<<<< HEAD
-        * @function: getRequest, createRequest, saveRequest, deleteRequest
-=======
         * @function: __construct, __destruct, getRequest, createRequest, saveRequest, deleteRequest
->>>>>>> feature-rest
     */
 
     class Data extends RESTClass {
@@ -22,8 +18,6 @@
             if (isset($data["directory"])){
 
                 $dataForView = DataModel::getDataFromDirectory($data["directory"]);
-
-                return;
 
                 $jsonResponse = new JSON();
                 $jsonResponse->result = true;

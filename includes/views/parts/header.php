@@ -10,6 +10,12 @@
 	<link href="assets/css/main.css" rel="stylesheet">
 	<script src="assets/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/js/core.js" type="text/javascript"></script>
+    <?php if($this->current == "index"): ?>
+        <link href="assets/css/bootstrap-treeview.min.css" rel="stylesheet">
+        <script src="assets/js/bootstrap.treeview.min.js" type="text/javascript"></script>
+        <script src="assets/js/core.js" type="text/javascript"></script>
+        <script src="assets/js/classes/Overview.js" type="text/javascript"></script>
+    <?php endif; ?>
+
 </head>
 <body>
