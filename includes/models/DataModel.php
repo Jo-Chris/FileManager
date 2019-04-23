@@ -74,11 +74,19 @@
 		*/
 		public static function createDirectory($name, $path){
 
-            $msg = null;
+            $msg = "";
 
-            //if (mkdir(URL_PATH & "/" + ROOT_URL, 0777, true)) 
+            if (!file_exists($path . "/" . $name)){
+                if (mkdir($path . "/" . $name, 0777, true)){
+                    $msg = "Folder successfully created";
+                } else {
+                    $msg = "Folder couldn't be created";
+                };
+            } else {
+                $msg = "Folder already exists";
+            }; 
 
-            return (object) $msg;
+            return $msg;
 
         }
 
@@ -89,9 +97,19 @@
 		*/
 		public static function createFile($name, $path){
 
-            $msg = null;
+            $msg = "";
 
-            return (object) $msg;
+            if (!file_exists($path . "/" . $name)){
+                if (mkdir($path . "/" . $name, 0777, true)){
+                    $msg = "File successfully created";
+                } else {
+                    $msg = "File couldn't be created";
+                };
+            } else {
+                $msg = "File already exists";
+            }; 
+
+            return $msg;
 
         }
 		

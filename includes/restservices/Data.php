@@ -38,7 +38,7 @@
 
                 $jsonResponse = new JSON();
                 $jsonResponse->result = true;
-                $jsonResponse->setData($dataForView);
+                $jsonResponse->setMessage($dataForView);
                 $jsonResponse->send();
 
             } else {
