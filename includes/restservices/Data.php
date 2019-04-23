@@ -17,6 +17,9 @@
                 $data["directory"] = ROOT_URL;           
             };
 
+            echo $data["directory"];
+            return;
+
             $dataForView = DataModel::getDataFromDirectory($data["directory"]);
 
             $jsonResponse = new JSON();
