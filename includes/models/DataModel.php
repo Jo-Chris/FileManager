@@ -3,10 +3,16 @@
 	/**
 		* Class: DataModel
 		* @function: getDataFromDirectory
-	*/
-
+    */
+    
+    
 	class DataModel {
 
+        /**
+			* Get data from directory
+            * @param $directory(string)
+            * @return $files(object)
+		*/
 		public static function getDataFromDirectory($directory){
 
             $files = array();
@@ -58,6 +64,34 @@
             };
 
             return (object) $files;
+
+        }
+
+        /**
+			* Create new directory
+            * @param $name(string), $path(string)
+            * @return $msg(string)
+		*/
+		public static function createDirectory($name, $path){
+
+            $msg = null;
+
+            //if (mkdir(URL_PATH & "/" + ROOT_URL, 0777, true)) 
+
+            return (object) $msg;
+
+        }
+
+        /**
+			* Create new file
+            * @param $name(string), $path(string)
+            * @return $msg(object)
+		*/
+		public static function createFile($name, $path){
+
+            $msg = null;
+
+            return (object) $msg;
 
         }
 		
