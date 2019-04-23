@@ -12,10 +12,10 @@ class Overview {
 
             if (item.type === "folder"){
                 html += '<li class="list-group-item list-group-item-action rounded-0" id="tree-list">';
-                    html += '<span class="d-flex justify-content-between align-items-center directory">';
+                    html += '<span class="d-flex justify-content-between align-items-center directory" data-path="' + item.path + '">';
                         html += item.name;
                         if (typeof item.items !== "undefined" && item.items.length > 0){
-                            html += '<span class="badge badge-primary badge-pill">' + item.items.length + '</span>';
+                            html += '<span class="badge badge-primary badge-pill ">' + item.items.length + '</span>';
                         };
                     html += '</span>';
                     if (typeof item.items !== "undefined" && item.items.length > 0){

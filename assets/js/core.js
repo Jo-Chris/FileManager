@@ -21,25 +21,51 @@ $(document).ready(function(){
 
     // Click event tree view
     document.getElementById('tree-container').addEventListener('click', clickFn);
+    document.getElementById('main-list').addEventListener('click', setActiveEl);
 
     function clickFn(e){
         if(e.target.classList.contains('directory')){
-            //something is broken with the first "directory" --> others work
-
             //fetch api with current folder
-            loadDirectory(e.target.innerHTML)
-            .then(res => console.log(res));
+            const data = loadDirectory(e.target.getAttribute("data-path"))
+            .then(res => showDirectoryData(res.data[0]));
         }
     }
 
-    async function loadDirectory(directory){
+    function setActiveEl(e){
+        //get the clicked element, add class .active for blue background
+        //remove from every other element 
+    }
 
-        const res = await fetch('api/data')
+    //this directory needs to get the path of the folder
+    async function loadDirectory(directory){
+        const res = await fetch(`api/data/?directory=${directory}`)    //api/data?direc
 
         console.log("Will do a fetch for directory: " + directory);
        
         const data = await res.json();
 
         return data;
+    }
+
+    function showDirectoryData(directoryData){
+        const mainTable = document.querySelector('#tbody-table');
+        console.log(mainTable);
+
+        const newRow = document.createElement('tr');
+
+        newRow.innerHTML = 
+        `<tr>
+            <td>....</td>
+            <td>${directoryData.name}</td>
+            <td>${directoryData.size}</td>
+            <td>....</td>
+        </tr>
+        `;
+
+        mainTable.append(newRow);
+    }
+
+    function showActiveElement(e){
+        e.classList += "active";
     }
 });

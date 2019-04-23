@@ -69,24 +69,19 @@
         </div>
         <div class="col-8 maincolumn h-100">
             <div class="h-100 p-3 pl-4">
-                <ul class="list-unstyled">
-                    <li class="m-0">
-                        <p class="mb-1"><i class="fas fa-file-pdf"></i> Datei-01.pdf</p>
-                    </li>
-                    <li class="dropdown-divider"></li>
-                    <li class="m-0">
-                        <p class="mb-1"><i class="fas fa-file-word"></i> Datei-02.docx</p>
-                    </li>
-                    <li class="dropdown-divider"></li>
-                    <li class="m-0">
-                        <p class="mb-1"><i class="fas fa-file-excel"></i> Datei-03.xlsx</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col rightcolumn h-100">
-            <div class="h-100 p-3">
-                <h5 class="text-center">Details</h5>
+                <!-- change to blue --> 
+                <table class="table" id="main-list">
+                    <thead>
+                        <th scope="col"></th>
+                        <th scope="col">Dateinname</th>
+                        <th scope="col">Größe</th>
+                        <th scope="col">Zuletzt bearbeitet</th>
+                    </thead>
+                    <tbody id="tbody-table">     
+                        <!-- Dynamic Content follows here -->
+                    </tbody>                
+                
+                </table>
             </div>
         </div>
     </div>
