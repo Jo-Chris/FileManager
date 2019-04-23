@@ -19,4 +19,10 @@ $(document).ready(function(){
         }
     });
 
+    // Click event tree view list
+
+    $(".leftcolumn > div").on("click", "ul li", function(){
+        $(this).toggleClass("active");
+    });
+
 });

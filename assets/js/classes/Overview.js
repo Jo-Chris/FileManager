@@ -1,20 +1,26 @@
 class Overview {
-    constructor(){
-
-
-
-    };
     writeTreeView(data){
 
-        let html = "<ul class='list-group'>";
+        if (data.length === 0){
+            return "";
+        };
 
-        $(data).each(function(index){
+        let html = "<ul class='list-group mt-3'>",
+            that = this;
 
-            let item = data[index];
+        data.forEach(function(item){
 
             if (item.type === "folder"){
-                html += '<li class="list-group-item list-group-item-action">';
-                    html += '<span>' + item.name + '</span>';
+                html += '<li class="list-group-item list-group-item-action rounded-0">';
+                    html += '<span class="d-flex justify-content-between align-items-center">';
+                        html += item.name;
+                        if (typeof item.items !== "undefined" && item.items.length > 0){
+                            html += '<span class="badge badge-primary badge-pill">' + item.items.length + '</span>';
+                        };
+                    html += '</span>';
+                    if (typeof item.items !== "undefined" && item.items.length > 0){
+                        html += that.writeTreeView(item.items);
+                    };
                 html += '</li>';
             };
 

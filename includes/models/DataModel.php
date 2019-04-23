@@ -45,7 +45,7 @@
                         // Directory
 
                         $files[] = array(
-                            "items" => self::getDataFromDirectory($directory . "/" . $file),
+                            "items" => (array) self::getDataFromDirectory($directory . "/" . $file),
                             "name" => $file,
                             "path" => $directory . "/" . $file,
                             "type" => "folder",

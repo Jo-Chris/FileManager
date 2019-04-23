@@ -53,14 +53,21 @@ main.overview {
 main.overview .maincolumn > div,
 main.overview .rightcolumn > div {
   background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, .125);
+  overflow: auto;
 }
-main.overview .leftcolumn ul.nav {
-  list-style: none;
-  padding: 0;
+main.overview .leftcolumn > div {
+  overflow: auto;
 }
-main.overview .leftcolumn ul.nav li {
-  list-style: none;
+main.overview .leftcolumn > div > ul {
+  margin-top: 0 !important;
 }
-main.overview .leftcolumn ul.nav li ul {
-  padding-left: 20px;
+main.overview .leftcolumn > div ul li {
+  cursor: pointer;
+}
+main.overview .leftcolumn > div > ul li ul {
+  display: none;
+}
+main.overview .leftcolumn > div > ul li.active > ul {
+  display: block;
 }
