@@ -11,9 +11,6 @@
 
     class Data extends RESTClass {
 
-<<<<<<< HEAD
-        protected function getRequest($data){}
-=======
         public function __construct(){}
 
         public function __destruct(){}
@@ -36,7 +33,6 @@
             };
 
         }
->>>>>>> feature-rest
 
         protected function createRequest($data){}
 
