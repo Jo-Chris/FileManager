@@ -11,8 +11,8 @@ class Overview {
         data.forEach(function(item){
 
             if (item.type === "folder"){
-                html += '<li class="list-group-item list-group-item-action rounded-0">';
-                    html += '<span class="d-flex justify-content-between align-items-center">';
+                html += '<li class="list-group-item list-group-item-action rounded-0" id="tree-list">';
+                    html += '<span class="d-flex justify-content-between align-items-center directory">';
                         html += item.name;
                         if (typeof item.items !== "undefined" && item.items.length > 0){
                             html += '<span class="badge badge-primary badge-pill">' + item.items.length + '</span>';

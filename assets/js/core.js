@@ -20,7 +20,26 @@ $(document).ready(function(){
     });
 
     // Click event tree view
+    document.getElementById('tree-container').addEventListener('click', clickFn);
 
-    
+    function clickFn(e){
+        if(e.target.classList.contains('directory')){
+            //something is broken with the first "directory" --> others work
 
+            //fetch api with current folder
+            loadDirectory(e.target.innerHTML)
+            .then(res => console.log(res));
+        }
+    }
+
+    async function loadDirectory(directory){
+
+        const res = await fetch('api/data')
+
+        console.log("Will do a fetch for directory: " + directory);
+       
+        const data = await res.json();
+
+        return data;
+    }
 });

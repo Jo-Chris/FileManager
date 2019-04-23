@@ -65,7 +65,7 @@
 <main class="overview container mw-100 pb-3 pt-3 h-100">
     <div class="row h-100">
         <div class="col leftcolumn h-100">
-            <div class="h-100"></div>
+            <div class="h-100" id="tree-container"></div>
         </div>
         <div class="col-8 maincolumn h-100">
             <div class="h-100 p-3 pl-4">
