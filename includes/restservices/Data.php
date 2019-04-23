@@ -26,7 +26,28 @@
 
         }
 
-        protected function createRequest($data){}
+        protected function createRequest($data){
+
+            if (isset($data["name"]) && isset($data["path"])){
+
+                if ($data["type"] === "folder"){
+                    $dataForView = DataModel::createDirectory($data["name"], $data["path"]);
+                } else {
+                    $dataForView = DataModel::createFile($data["name"], $data["path"]);
+                };
+
+                $jsonResponse = new JSON();
+                $jsonResponse->result = true;
+                $jsonResponse->setData($dataForView);
+                $jsonResponse->send();
+
+            } else {
+                $jsonResponse = new JSON();
+                $jsonResponse->result = false;
+                $jsonResponse->send();
+            };
+
+        }
 
         protected function saveRequest($data){}
 
