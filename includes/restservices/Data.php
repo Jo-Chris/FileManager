@@ -13,18 +13,16 @@
 
         protected function getRequest($data){
 
-            $data["directory"] = "cloud";
-
-            if (isset($data["directory"])){
-
-                $dataForView = DataModel::getDataFromDirectory($data["directory"]);
-
-                $jsonResponse = new JSON();
-                $jsonResponse->result = true;
-                $jsonResponse->setData($dataForView);
-                $jsonResponse->send();
-
+            if (!isset($data["directory"])){
+                $data["directory"] = ROOT_URL;           
             };
+
+            $dataForView = DataModel::getDataFromDirectory($data["directory"]);
+
+            $jsonResponse = new JSON();
+            $jsonResponse->result = true;
+            $jsonResponse->setData($dataForView);
+            $jsonResponse->send();
 
         }
 

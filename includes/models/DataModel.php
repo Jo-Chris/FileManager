@@ -7,7 +7,6 @@
 
 	class DataModel {
 
-
 		public static function getDataFromDirectory($directory){
 
             $files = array();
