@@ -28,7 +28,7 @@
                 <input class="form-control" type="text" name="keyword" placeholder="Suchen nach...">
             </form>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
+                <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort-amount-down"></i> Sortieren</a>
                     <div class="dropdown-menu" aria-labelledby="sort">
                         <a class="dropdown-item" href="#"><i class="fas fa-check fa-sm text-primary"></i> Name</a>
@@ -50,7 +50,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="settings">
                         <a class="dropdown-item" href="#">Optionen</a>
                     </div>
-                </li>
+                </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-lg"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user">
