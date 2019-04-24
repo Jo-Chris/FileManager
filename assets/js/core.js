@@ -1,5 +1,9 @@
 
+// guess we should use a pattern here, or use a better approach avoiding globals
+//get the current path you're in
 let currentPath = '';
+//retrieve the current folder content (for deleting)
+let currentFolderContent = [];
 
 $(document).ready(function(){
 
@@ -14,17 +18,17 @@ $(document).ready(function(){
         success: function(result){
 
             // Write tree view
-
             if (result.data.length > 0){
                 $(".leftcolumn > div ").append(overview.writeTreeView(result.data));
             };
-
         }
     });
 
-    // Click event tree view
+    // Click events
     document.getElementById('tree-container').addEventListener('click', clickFn);
+    document.getElementById('tbody-table').addEventListener('click', removeSingleItem);
 
+    //show folder content
     function clickFn(e){
         if(e.target.classList.contains('directory')){
             //fetch api with current folder
@@ -45,9 +49,8 @@ $(document).ready(function(){
     }
 
     /**
-     * @param {*} directoryData - loads the data from a specific directory
-     * and displays it in the table
-     * forEach if scheme is ready
+     * (1) Display the content of the current Folder
+     * @param {*} directoryData - loads the data from a specific directory and displays it in the table 
      */
     function showDirectoryData(directoryData){        
         //clear current view
@@ -64,36 +67,44 @@ $(document).ready(function(){
                 <td>${data.name}</td>
                 <td>${data.size}</td>
                 <td>${formatDate(new Date())}</td>
-                <td class="pull-right"> <button class="btn btn-danger pull-right"> Löschen </button> </td>
+                <td class="pull-right"> <button class="btn btn-danger pull-right deleteItem"> Löschen </button> </td>
             </tr>
             `;
 
-            document.querySelector('tbody').append(newRow);            
+            //append the row
+            document.querySelector('tbody').append(newRow);       
+            //update the foldercontent
+            updateFolderContent();    
         });
     }
 
     /**
      * 
-     * @param {*} date - the date given by the background formatted 
+     * @param {*} e the element that should be removed
      */
-    function formatDate(date){
-        return `${date.getDate()} / ${formatMonth(date.getMonth()+1)} / ${date.getFullYear()} um ${date.getHours()}:${date.getMinutes()}`;
-    }
-
-    /**
-     * helper method for formatting a month 
-     * @param {*} month get the current month and append 0 if under 10
-     */
-    function formatMonth(month){
-        if(month < 10){
-            return `0${month}`;
-        }else{
-            return month;
+    function removeSingleItem(e) {
+        if(e.target.classList.contains('deleteItem')){
+            e.target.parentNode.parentNode.remove();
         }
     }
 
+    /**
+     * @param {*} date - the date given by the background formatted 
+     */
+    function formatDate(date){
+        let month = date.getMonth();
+        month = month < 10 ? `0${month+1}` : month+1;
 
+        return `${date.getDate()}/${month}/${date.getFullYear()} um ${date.getHours()}:${date.getMinutes()}`;
+    }
 
+    function updateFolderContent(){
+        let folderContent = document.getElementsByName('tr');
+
+        folderContent.forEach((el) => {
+            console.log("Arrays" + el);
+        });
+    }
 });
 
 
