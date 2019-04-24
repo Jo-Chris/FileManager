@@ -67,16 +67,23 @@
         <div class="col leftcolumn h-100">
             <div class="h-100" id="tree-container"></div>
         </div>
-        <div class="col-8 maincolumn h-100">
+
+        <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->
+        <aside class="text-center mb-3" id="selectedAction" style="display: none;">
+            <button class="btn btn-danger clear-table">Remove items</button>
+            <button class="btn btn-primary transfer-items"id=>Transfer items</button>
+        </aside>
             <div class="h-100 p-3 pl-4">
-                <!-- change to blue --> 
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg" id="searchbar" placeholder="Suche...">
+                </div>
                 <table class="table" id="main-list">
-                    <thead>
-                        <th scope="col"></th>
-                        <th scope="col">Dateinname</th>
-                        <th scope="col">Größe</th>
-                        <th scope="col">Zuletzt bearbeitet</th>
-                        <th scope="col"></th>
+                    <thead class="">
+                        <th scope="col" class="table-dark"></th>
+                        <th scope="col" class="table-dark">Dateinname</th>
+                        <th scope="col" class="table-dark">Größe</th>
+                        <th scope="col" class="table-dark">Zuletzt bearbeitet</th>
+                        <th scope="col" class="table-dark"></th>
 
                     </thead>
                     <tbody id="tbody-table">     
@@ -85,9 +92,10 @@
                 
                 </table>
             </div>
-        </div>
+        </div> 
     </div>
 </main>
+    
 <?php
     echo $this->footer;
 ?>
