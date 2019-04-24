@@ -3,12 +3,11 @@ $(document).ready(function(){
     $.ajax({
         url: "api/data",
         data: {
-            "name": "Ordner - 03",
-            "path" : "cloud/Ordner - 01",
-            "type": "folder"
+            "name": "Ordner - 012",
+            "path" : "cloud"
         },
         dataType: "json",
-        method: "POST",
+        method: "DELETE",
         success: function(result){
 
             console.log(result);

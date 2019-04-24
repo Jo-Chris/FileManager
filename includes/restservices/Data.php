@@ -30,11 +30,7 @@
 
             if (isset($data["name"]) && isset($data["path"])){
 
-                if ($data["type"] === "folder"){
-                    $dataForView = DataModel::createDirectory($data["name"], $data["path"]);
-                } else {
-                    $dataForView = DataModel::createFile($data["name"], $data["path"]);
-                };
+                $dataForView = DataModel::createDirectory($data["name"], $data["path"]);
 
                 $jsonResponse = new JSON();
                 $jsonResponse->result = true;
@@ -51,7 +47,26 @@
 
         protected function saveRequest($data){}
 
-        protected function deleteRequest($data){}
+        protected function deleteRequest($data){
+
+            if (isset($data["name"]) && isset($data["path"])){
+
+                $path = $data["path"] . "/" . $data["name"];
+
+                $dataForView = DataModel::deleteData($path);
+
+                $jsonResponse = new JSON();
+                $jsonResponse->result = true;
+                $jsonResponse->setMessage($dataForView);
+                $jsonResponse->send();
+
+            } else {
+                $jsonResponse = new JSON();
+                $jsonResponse->result = false;
+                $jsonResponse->send();
+            }
+
+        }
 
     }
 

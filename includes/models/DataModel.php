@@ -10,8 +10,8 @@
 
         /**
 			* Get data from directory
-            * @param $directory(string)
-            * @return $files(object)
+            * @param: $directory(string)
+            * @return: $files(object)
 		*/
 		public static function getDataFromDirectory($directory){
 
@@ -69,8 +69,8 @@
 
         /**
 			* Create new directory
-            * @param $name(string), $path(string)
-            * @return $msg(string)
+            * @param: $name(string), $path(string)
+            * @return: $msg(string)
 		*/
 		public static function createDirectory($name, $path){
 
@@ -91,23 +91,45 @@
         }
 
         /**
-			* Create new file
-            * @param $name(string), $path(string)
-            * @return $msg(object)
+			* Delete file or directory
+            * @param: $path(string)
+            * @return: $msg(object)
 		*/
-		public static function createFile($name, $path){
+		public static function deleteData($path){
 
             $msg = "";
 
-            if (!file_exists($path . "/" . $name)){
-                if (mkdir($path . "/" . $name, 0777, true)){
-                    $msg = "File successfully created";
-                } else {
-                    $msg = "File couldn't be created";
+            if (is_link($path)){
+
+                unlink($path);
+                $msg = "File successfully deleted";
+
+            } elseif (is_dir($path)){
+
+                $objects = scandir($path);
+                $ok = true;
+
+                if (is_array($objects)){
+                    foreach ($objects as $file){
+                        if ($file !== "." && $file !== ".."){
+                            if (!self::deleteData($path . "/" . $file)){
+                                $ok = false;
+                            };
+                        };
+                    };
                 };
+
+                if ($ok){
+                    rmdir($path);
+                    $msg = "Folder successfully deleted";
+                };
+
+            } elseif (is_file($path)){
+                unlink($path);
+                $msg = "File successfully deleted";
             } else {
-                $msg = "File already exists";
-            }; 
+                $msg = "Folder or file couldn't be deleted";
+            };
 
             return $msg;
 
