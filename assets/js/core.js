@@ -1,4 +1,3 @@
-
 // guess we should use a pattern here, or use a better approach avoiding globals
 // get the current path you're in
 let globalPathVar = '';
@@ -198,7 +197,7 @@ $(document).ready(function(){
      */
     function searchForFiles(){
         //if the user removes all entered chars, get the old stuff back in 
-         showDirectoryData(getTableAsArray);
+         showDirectoryData(globalArrayVal);
          //clear current view
          document.querySelector('tbody').innerHTML='';
          //get the length
