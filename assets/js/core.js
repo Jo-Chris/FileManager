@@ -1,3 +1,6 @@
+
+let currentPath = '';
+
 $(document).ready(function(){
 
     const overview = new Overview();
@@ -21,19 +24,13 @@ $(document).ready(function(){
 
     // Click event tree view
     document.getElementById('tree-container').addEventListener('click', clickFn);
-    document.getElementById('main-list').addEventListener('click', setActiveEl);
 
     function clickFn(e){
         if(e.target.classList.contains('directory')){
             //fetch api with current folder
             const data = loadDirectory(e.target.getAttribute("data-path"))
-            .then(res => showDirectoryData(res.data[0]));
+            .then(res => showDirectoryData(res.data));
         }
-    }
-
-    function setActiveEl(e){
-        //get the clicked element, add class .active for blue background
-        //remove from every other element 
     }
 
     //this directory needs to get the path of the folder
@@ -47,25 +44,56 @@ $(document).ready(function(){
         return data;
     }
 
-    function showDirectoryData(directoryData){
-        const mainTable = document.querySelector('#tbody-table');
-        console.log(mainTable);
+    /**
+     * @param {*} directoryData - loads the data from a specific directory
+     * and displays it in the table
+     * forEach if scheme is ready
+     */
+    function showDirectoryData(directoryData){        
+        //clear current view
+        document.querySelector('tbody').innerHTML='';
+        //get the length
+        let id = document.querySelector('tbody').rows.length;
 
-        const newRow = document.createElement('tr');
+        directoryData.forEach(data => {
+            const newRow = document.createElement('tr');
 
-        newRow.innerHTML = 
-        `<tr>
-            <td>....</td>
-            <td>${directoryData.name}</td>
-            <td>${directoryData.size}</td>
-            <td>....</td>
-        </tr>
-        `;
+            newRow.innerHTML = 
+            `<tr class="dynRow" data-id="${id++}">
+                <td><input type="checkbox" value="1" name="filedata" class="form-control"></input></td>
+                <td>${data.name}</td>
+                <td>${data.size}</td>
+                <td>${formatDate(new Date())}</td>
+                <td class="pull-right"> <button class="btn btn-danger pull-right"> Löschen </button> </td>
+            </tr>
+            `;
 
-        mainTable.append(newRow);
+            document.querySelector('tbody').append(newRow);            
+        });
     }
 
-    function showActiveElement(e){
-        e.classList += "active";
+    /**
+     * 
+     * @param {*} date - the date given by the background formatted 
+     */
+    function formatDate(date){
+        return `${date.getDate()} / ${formatMonth(date.getMonth()+1)} / ${date.getFullYear()} um ${date.getHours()}:${date.getMinutes()}`;
     }
+
+    /**
+     * helper method for formatting a month 
+     * @param {*} month get the current month and append 0 if under 10
+     */
+    function formatMonth(month){
+        if(month < 10){
+            return `0${month}`;
+        }else{
+            return month;
+        }
+    }
+
+
+
 });
+
+

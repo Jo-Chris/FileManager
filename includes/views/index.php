@@ -76,6 +76,7 @@
                         <th scope="col">Dateinname</th>
                         <th scope="col">Größe</th>
                         <th scope="col">Zuletzt bearbeitet</th>
+                        <th scope="col"></th>
                     </thead>
                     <tbody id="tbody-table">     
                         <!-- Dynamic Content follows here -->
