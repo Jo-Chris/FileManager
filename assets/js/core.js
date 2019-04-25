@@ -1,6 +1,6 @@
 // guess we should use a pattern here, or use a better approach avoiding globals
 // get the current path you're in
-let globalPathVar = '';
+let globalPathVar = [];
 
 //bad approach, bad smell (saves the currentTable as array after every fetch)
 let globalArrayVal = '';
@@ -49,6 +49,8 @@ $(document).ready(function(){
         
         const data = await res.json();
 
+        //setGlobalPath
+
         return data;
     }
 
@@ -81,6 +83,8 @@ $(document).ready(function(){
 
         //DELETE LATER --> bad smell
         globalArrayVal = getTableAsArray();
+        //get global
+        console.log(setGlobalPath(globalPathVar));
     }
 
     /**
@@ -227,6 +231,15 @@ $(document).ready(function(){
          });
     }
 
+    function setGlobalPath(path){
+        tempArr = [];
+        paths = path.split('/');
+        paths.forEach((el)=>{
+           tempArr.push(el); 
+        });
+
+        return tempArr;
+    }
 });
 
 
