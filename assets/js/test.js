@@ -1,11 +1,25 @@
 $(document).ready(function(){
 
+    // GET
+
     $.ajax({
         url: "api/data",
+        dataType: "json",
+        method: "GET",
+        success: function(result){
+
+            console.log(result);
+
+        }
+    });
+
+    // CREATE
+
+    /*$.ajax({
+        url: "api/data",
         data: {
-            "name": "Ordner - 01",
-            "path" : "cloud/Ordner - 01",
-            "type": "folder"
+            name: "Ordner - 04",
+            path: "cloud"
         },
         dataType: "json",
         method: "POST",
@@ -15,5 +29,22 @@ $(document).ready(function(){
 
         }
     });
+
+    // DELETE
+
+    $.ajax({
+        url: "api/data",
+        data: {
+            name: "Ordner - 04",
+            path: "cloud"
+        },
+        dataType: "json",
+        method: "DELETE",
+        success: function(result){
+
+            console.log(result);
+
+        }
+    });*/
 
 });

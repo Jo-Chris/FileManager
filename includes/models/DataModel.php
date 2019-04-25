@@ -2,7 +2,7 @@
 
 	/**
 		* Class: DataModel
-		* @function: getDataFromDirectory
+		* @function: getDataFromDirectory, createDirectory, deleteData
     */
     
     
@@ -10,8 +10,8 @@
 
         /**
 			* Get data from directory
-            * @param $directory(string)
-            * @return $files(object)
+            * @param: $directory(string)
+            * @return: $files(object)
 		*/
 		public static function getDataFromDirectory($directory){
 
@@ -33,16 +33,19 @@
                         continue;
                     };
 
-                    if (!is_dir($directory . "/" . $file)){
+                    $path = $directory . "/" . $file;
+
+                    if (!is_dir($path)){
 
                         // File
 
                         $files[] = array(
+                            "date_modified" => filemtime($path),
                             "extension" => pathinfo($file, PATHINFO_EXTENSION),
                             "name" => $file,
-                            "path" => $directory . "/" . $file,
+                            "path" => $path,
                             "type" => "file",
-                            "size" => filesize($directory . "/" . $file)
+                            "size" => filesize($path)
                         );
 
                     } else {
@@ -50,11 +53,12 @@
                         // Directory
 
                         $files[] = array(
-                            "items" => (array) self::getDataFromDirectory($directory . "/" . $file),
+                            "date_modified" => filemtime($path),
+                            "items" => (array) self::getDataFromDirectory($path),
                             "name" => $file,
-                            "path" => $directory . "/" . $file,
+                            "path" => $path,
                             "type" => "folder",
-                            "size" => filesize($directory . "/" . $file)
+                            "size" => filesize($path)
                         );
 
                     };
@@ -69,29 +73,69 @@
 
         /**
 			* Create new directory
-            * @param $name(string), $path(string)
-            * @return $msg(string)
+            * @param: $name(string), $path(string)
+            * @return: $msg(string)
 		*/
-		public static function createDirectory($name, $path){
+		public static function createDirectory($path){
 
-            $msg = null;
+            $msg = "";
 
-            //if (mkdir(URL_PATH & "/" + ROOT_URL, 0777, true)) 
+            if (!file_exists($path)){
+                if (mkdir($path, 0777, true)){
+                    $msg = "Folder successfully created";
+                } else {
+                    $msg = "Folder couldn't be created";
+                };
+            } else {
+                $msg = "Folder already exists";
+            }; 
 
-            return (object) $msg;
+            return $msg;
 
         }
 
         /**
-			* Create new file
-            * @param $name(string), $path(string)
-            * @return $msg(object)
+			* Delete file or directory
+            * @param: $path(string)
+            * @return: $msg(object)
 		*/
-		public static function createFile($name, $path){
+		public static function deleteData($path){
 
-            $msg = null;
+            $msg = "";
 
-            return (object) $msg;
+            if (is_link($path)){
+
+                unlink($path);
+                $msg = "File successfully deleted";
+
+            } elseif (is_dir($path)){
+
+                $objects = scandir($path);
+                $ok = true;
+
+                if (is_array($objects)){
+                    foreach ($objects as $file){
+                        if ($file !== "." && $file !== ".."){
+                            if (!self::deleteData($path . "/" . $file)){
+                                $ok = false;
+                            };
+                        };
+                    };
+                };
+
+                if ($ok){
+                    rmdir($path);
+                    $msg = "Folder successfully deleted";
+                };
+
+            } elseif (is_file($path)){
+                unlink($path);
+                $msg = "File successfully deleted";
+            } else {
+                $msg = "Folder or file couldn't be deleted";
+            };
+
+            return $msg;
 
         }
 		
