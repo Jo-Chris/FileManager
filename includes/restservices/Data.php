@@ -30,7 +30,8 @@
 
             if (isset($data["name"]) && isset($data["path"])){
 
-                $dataForView = DataModel::createDirectory($data["name"], $data["path"]);
+                $path = $data["path"] . "/" . $data["name"];
+                $dataForView = DataModel::createDirectory($path);
 
                 $jsonResponse = new JSON();
                 $jsonResponse->result = true;
@@ -52,7 +53,6 @@
             if (isset($data["name"]) && isset($data["path"])){
 
                 $path = $data["path"] . "/" . $data["name"];
-
                 $dataForView = DataModel::deleteData($path);
 
                 $jsonResponse = new JSON();

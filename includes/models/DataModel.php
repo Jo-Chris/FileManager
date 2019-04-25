@@ -2,7 +2,7 @@
 
 	/**
 		* Class: DataModel
-		* @function: getDataFromDirectory
+		* @function: getDataFromDirectory, createDirectory, deleteData
     */
     
     
@@ -33,16 +33,19 @@
                         continue;
                     };
 
-                    if (!is_dir($directory . "/" . $file)){
+                    $path = $directory . "/" . $file;
+
+                    if (!is_dir($path)){
 
                         // File
 
                         $files[] = array(
+                            "date_modified" => filemtime($path),
                             "extension" => pathinfo($file, PATHINFO_EXTENSION),
                             "name" => $file,
-                            "path" => $directory . "/" . $file,
+                            "path" => $path,
                             "type" => "file",
-                            "size" => filesize($directory . "/" . $file)
+                            "size" => filesize($path)
                         );
 
                     } else {
@@ -50,11 +53,12 @@
                         // Directory
 
                         $files[] = array(
-                            "items" => (array) self::getDataFromDirectory($directory . "/" . $file),
+                            "date_modified" => filemtime($path),
+                            "items" => (array) self::getDataFromDirectory($path),
                             "name" => $file,
-                            "path" => $directory . "/" . $file,
+                            "path" => $path,
                             "type" => "folder",
-                            "size" => filesize($directory . "/" . $file)
+                            "size" => filesize($path)
                         );
 
                     };
@@ -72,12 +76,12 @@
             * @param: $name(string), $path(string)
             * @return: $msg(string)
 		*/
-		public static function createDirectory($name, $path){
+		public static function createDirectory($path){
 
             $msg = "";
 
-            if (!file_exists($path . "/" . $name)){
-                if (mkdir($path . "/" . $name, 0777, true)){
+            if (!file_exists($path)){
+                if (mkdir($path, 0777, true)){
                     $msg = "Folder successfully created";
                 } else {
                     $msg = "Folder couldn't be created";
