@@ -16,6 +16,7 @@
         <link href="assets/css/bootstrap-treeview.min.css" rel="stylesheet">
         <script src="assets/js/bootstrap.treeview.min.js" type="text/javascript"></script>
 		<script src="assets/js/classes/core.js" type="text/javascript"></script>
+		<script src="assets/js/test.js" type="text/javascript"></script>
         <script src="assets/js/classes/Overview.js" type="text/javascript"></script>
     <?php endif; ?>
 

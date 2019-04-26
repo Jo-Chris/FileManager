@@ -35,22 +35,30 @@ $(document).ready(function(){
          * (4) show that folder within another <ul> and put a class "hide" 
          * (5) if no folder follows, end. else go to (3)
          */
-        console.log(data[1]);
-
         //first, create it for a single item, if done and working, loop through
-        let html= `<li class="list-group-item list-group-item-action rounded-0" id="tree-list">${data[1].name}</li>`;
-        let uHTML = '';
+        let html= ``;
+        
+        //it works, but only for 2 folders... so there needs to be a while loop iterating through the complete structure adding all inner folders..
+        data.forEach((el) => {
 
-        data[1].items.forEach((el) => {
-            if(el.type === "folder"){
-                uHTML = `
-                <ul class='list-group mt-3'>
-                    <li class="list-group-item list-group-item-action rounded-0">${el.name}</li>
-                </ul>
-                `;
+            html += `<ul class="list-group-item list-group-item-action rounded-0 directory" data-path="${el.path}">${el.name}
+                     <span class="badge badge-primary badge-pill"> ${el.items.length} </span>`;
+
+            if(el.items.length >= 1 ){
+                html +=`<ul>`
+                el.items.forEach((el) => {
+                    if(el.type === 'folder'){
+                        html += `<li style="display:none" class="list-group-item list-group-item-action rounded-0 inner-folder directory" data-path="${el.path}">${el.name}
+                                 <span class="badge badge-primary badge-pill"> ${el.items.length} </span></li>`;
+                    }
+                });
+                html +=`</ul>`
             }
-            html += uHTML;
+            html += `</ul>`
         })
+
+
+         
 
         document.getElementById('tree-container').innerHTML = html;
     }
@@ -84,14 +92,19 @@ $(document).ready(function(){
     //show folder content
     function clickFn(e){
         if(e.target.classList.contains('directory')){
+            console.log('clicked! ' + e.target.getAttribute("data-path"));
             //fetch api with current folder
             const data = loadDirectory(e.target.getAttribute("data-path"))
             .then(res => showDirectoryData(res.data));
         }
-
-        //if folder contains subFolders, show them too!
-
-
+        
+        //if the third childNode is undefined, this folder does not have any subfolders
+        if(e.target.childNodes[2] !== undefined){
+            //the third childNode contains what we want.. so display that fuck
+            for (let i = 0; i < e.target.childNodes[2].childNodes.length; i++){
+                e.target.childNodes[2].childNodes[i].style.display = "inline-block"
+            }    
+        } 
     }
 
     //this directory needs to get the path of the folder
@@ -137,8 +150,6 @@ $(document).ready(function(){
 
         //DELETE LATER --> bad smell
         globalArrayVal = getTableAsArray();
-        //get global
-        console.log(setGlobalPath(globalPathVar));
     }
 
     /**
@@ -226,9 +237,6 @@ $(document).ready(function(){
                 lastModified: tableData.rows[i].cells[3].innerHTML
             });
         }
-
-        console.log(arr);
-
         return arr;
     }
 
@@ -481,7 +489,6 @@ $(document).ready(function(){
             default:
                 iconClass = 'fa fa-info-circle';
         }
-        console.log(iconClass);
         return iconClass;
     }
 });

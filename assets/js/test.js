@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $(".navbar-nav > li > a#upload").click(function(){
-
+        console.log('test'); //not working
         let html = '';
 
         html += '<form id="formUpload" action="#" method="post" enctype="multipart/form-data">';
