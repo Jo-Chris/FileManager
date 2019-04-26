@@ -167,16 +167,23 @@ $(document).ready(function(){
     };
 
     function clearTable(e){
+
         const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
 
         if(e.target.classList.contains('clear-table')){
-            console.log('hit');
-            checkboxes.forEach((el)=>{
-                if(el.checked){
-                    el.parentNode.parentNode.remove();
+            
+            bootbox.confirm('Sind sie sicher?', (res) =>{
+                if(!res){
+                    return;
+                }else{
+                    checkboxes.forEach((el)=>{
+                        if(el.checked){
+                            el.parentNode.parentNode.remove();
+                        }   
+                        //if removing is done, hideDetails again
+                            hideDetails();
+                    });
                 }
-                //if removing is done, hideDetails again
-                hideDetails();
             });
         }
     }
@@ -303,7 +310,10 @@ $(document).ready(function(){
         const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
         checkboxes.forEach((el) => {
             el.checked = true;
-        })
+        });
+
+        document.getElementById('selectedAction').style.display = 'block';  
+
     }
 
     function deSelectAll(){
@@ -311,13 +321,17 @@ $(document).ready(function(){
         checkboxes.forEach((el) => {
             el.checked = false;
         });
+
+        hideDetails();
     }
 
     function reverseSelection(){
         const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
         checkboxes.forEach((el) => {
             el.checked ? el.checked = false : el.checked = true;
-        })
+        });
+
+        showDetails();
     }
     
     /**
