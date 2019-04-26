@@ -33,6 +33,7 @@ $(document).ready(function(){
     document.getElementById('select-all').addEventListener('click', selectAll);
     document.getElementById('de-select-all').addEventListener('click', deSelectAll);
     document.getElementById('reverse-selection').addEventListener('click', reverseSelection);
+    
 
     //show folder content
     function clickFn(e){
@@ -41,6 +42,10 @@ $(document).ready(function(){
             const data = loadDirectory(e.target.getAttribute("data-path"))
             .then(res => showDirectoryData(res.data));
         }
+
+        //if folder contains subFolders, show them too!
+        
+
     }
 
     //this directory needs to get the path of the folder
