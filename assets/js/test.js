@@ -5,7 +5,8 @@ $(document).ready(function(){
         let html = '';
 
         html += '<form id="formUpload" action="#" method="post" enctype="multipart/form-data">';
-            html += '<input type="file" name="filename[]" multiple>';
+            html += '<input id="uploadPath" type="hidden" name="path" value="cloud/Ordner - 02">'
+            html += '<input id="uploadFiles" type="file" name="files[]" multiple>';
             html += '<button type="submit" class="btn btn-primary">Upload</button>';
         html += "</form>";
 
@@ -17,24 +18,29 @@ $(document).ready(function(){
 
         e.preventDefault();
 
-        var formData = new FormData($(this)[0]);
+        let formData = new FormData(),
+            files = document.getElementById("uploadFiles").files;
 
-        console.log(formData);
+        for ( let i = 0; i < files.length; i++){
+            formData.append("files[]", files[i]);
+        };
+
+        formData.append("path", document.getElementById("uploadPath").value);
+
+        $.ajax({
+            cache: false,
+            contentType: false,
+            data: formData,
+            dataType: "json",
+            method: "POST",
+            processData: false,
+            url: "api/upload",
+            success: function(result){
+                console.log(result);
+            }
+        });
 
     });
-
-    // GET
-
-    /*$.ajax({
-        url: "api/upload",
-        dataType: "json",
-        method: "POST",
-        success: function(result){
-
-            console.log(result);
-
-        }
-    });*/
 
     // CREATE
 

@@ -11,7 +11,20 @@
 
         protected function createRequest($data){
 
+            if (isset($data["path"]) && isset($_FILES["files"])){
 
+                $dataForView = UploadModel::uploadFile($data["path"], $_FILES["files"]);
+
+                $jsonResponse = new JSON();
+                $jsonResponse->result = true;
+                $jsonResponse->setMessage($dataForView);
+                $jsonResponse->send();
+
+            } else {
+                $jsonResponse = new JSON();
+                $jsonResponse->result = false;
+                $jsonResponse->send();
+            };
 
         }
 
