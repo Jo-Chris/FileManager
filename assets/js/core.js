@@ -71,14 +71,14 @@ $(document).ready(function(){
             const newRow = document.createElement('tr');
 
             newRow.innerHTML = 
-            `<tr class="dynRow" data-id="${id++}">
-                <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox"></input></td>
-                <td class="table-light"><button class="btn mr-2"><i class="fas fa-${determineFileIcon(data.name)} fa-3x"></i></button>${data.name}</td>
-                <td class="table-light">${data.size}</td>
-                <td class="table-light">${formatDate(new Date())}</td>
-                <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"> Löschen </button> </td>
-            </tr>
-            `;
+                `<tr class="dynRow" data-id="${id++}">
+                    <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
+                    <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
+                    <td class="table-light">${data.size}</td>
+                    <td class="table-light">${formatDate(new Date())}</td>
+                    <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="far fa-trash-alt"></i> Löschen </button> </td>
+                </tr>
+                `;
 
             //append the row
             document.querySelector('tbody').append(newRow);       
@@ -189,8 +189,10 @@ $(document).ready(function(){
      * @todo saving the tableData into an global array is... well, shit
      */
     function searchForFiles(){
-        //if the user removes all entered chars, get the old stuff back in 
-         showDirectoryData(globalArrayVal);
+        //if the user removes all entered chars, get the old stuff back in
+         if (document.querySelector('#searchbar').value == ''){
+            showDirectoryData(globalArrayVal);
+         }
          //clear current view
          document.querySelector('tbody').innerHTML='';
          //get the length
@@ -210,7 +212,7 @@ $(document).ready(function(){
                     <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)}"></i></button>${data.name}</td>
                     <td class="table-light">${data.size}</td>
                     <td class="table-light">${formatDate(new Date())}</td>
-                    <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="far fa-trash-alt"></i> Löschen </button> </td>
+                    <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="fa fa-file-word"></i> Löschen </button> </td>
                 </tr>
                 `;
 
@@ -267,6 +269,7 @@ $(document).ready(function(){
      */
     function determineFileIcon(filename){
         let fileending = filename.split('.')[1];
+        let iconClass = 'fa fa-info-circle';
         
         switch (fileending) {
             case 'ico':
@@ -283,7 +286,7 @@ $(document).ready(function(){
             case 'tif':
             case 'tiff':
             case 'svg':
-                iconClass = 'fa fa-picture-o';
+                iconClass = 'fas fa-file-image';
                 break;
             case 'passwd':
             case 'ftpquota':
@@ -303,14 +306,14 @@ $(document).ready(function(){
             case 'map':
             case 'lock':
             case 'dtd':
-                iconClass = 'fa fa-file-code-o';
+                iconClass = 'fa fa-file-code';
                 break;
             case 'txt':
             case 'ini':
             case 'conf':
             case 'log':
             case 'htaccess':
-                iconClass = 'fa fa-file-text-o';
+                iconClass = 'fa fa-file-alt';
                 break;
             case 'css':
             case 'less':
@@ -323,7 +326,7 @@ $(document).ready(function(){
             case 'gz':
             case 'tar':
             case '7z':
-                iconClass= 'fa fa-file-archive-o';
+                iconClass= 'fa fa-file-archive';
                 break;
             case 'php':
             case 'php4':
@@ -340,7 +343,7 @@ $(document).ready(function(){
                 break;
             case 'xml':
             case 'xsl':
-                iconClass = 'fa fa-file-excel-o';
+                iconClass = 'fa fa-file-excel';
                 break;
             case 'wav':
             case 'mp3':
@@ -376,29 +379,29 @@ $(document).ready(function(){
             case '3gp':
             case 'asf':
             case 'wmv':
-                iconClass = 'fa fa-file-video-o';
+                iconClass = 'fa fa-file-video';
                 break;
             case 'eml':
             case 'msg':
-                iconClass = 'fa fa-envelope-o';
+                iconClass = 'fa fa-envelope';
                 break;
             case 'xls':
             case 'xlsx':
-                iconClass = 'fa fa-file-excel-o';
+                iconClass = 'fa fa-file-excel';
                 break;
             case 'csv':
-                iconClass= 'fa fa-file-text-o';
+                iconClass= 'fa fa-file-text';
                 break;
             case 'bak':
                 iconClass = 'fa fa-clipboard';
                 break;
             case 'doc':
             case 'docx':
-                iconClass= 'fa fa-file-word-o';
+                iconClass= 'fa fa-file-word';
                 break;
             case 'ppt':
             case 'pptx':
-                iconClass= 'fa fa-file-powerpoint-o';
+                iconClass= 'fa fa-file-powerpoint';
                 break;
             case 'ttf':
             case 'ttc':
@@ -410,18 +413,18 @@ $(document).ready(function(){
                 iconClass = 'fa fa-font';
                 break;
             case 'pdf':
-                iconClass = 'fa fa-file-pdf-o';
+                iconClass = 'fa fa-file-pdf';
                 break;
             case 'psd':
             case 'ai':
             case 'eps':
             case 'fla':
             case 'swf':
-                iconClass = 'fa fa-file-image-o';
+                iconClass = 'fa fa-file-image';
                 break;
             case 'exe':
             case 'msi':
-                iconClass = 'fa fa-file-o';
+                iconClass = 'fa fa-file';
                 break;
             case 'bat':
                 iconClass = 'fa fa-terminal';
@@ -429,6 +432,7 @@ $(document).ready(function(){
             default:
                 iconClass = 'fa fa-info-circle';
         }
+        console.log(iconClass);
         return iconClass;
     }
 });
