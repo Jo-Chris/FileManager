@@ -65,7 +65,10 @@
 <main class="overview container mw-100 pb-3 pt-3 h-100">
     <div class="row h-100">
         <div class="col leftcolumn h-100">
-            <div class="h-100" id="tree-container"></div>
+            <div class="h-100" id="tree-container">
+                
+                <!-- dynamic tree structure will appear here -->
+            </div>
         </div>
 
         <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->

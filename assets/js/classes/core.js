@@ -7,15 +7,61 @@ let globalArrayVal = '';
 
 $(document).ready(function(){
 
-    const overview = new Overview();
-    // Load all directories for tree view
+    //at application start, fetch data
+    setUpTreeStructure();
 
+    async function fetchCloudData(){
+        const res = await fetch('api/data');
 
-    $.ajax({
+        console.log('feching order structure');
+
+        const data = await res.json();
+        //console.log(data);
+        return data;
+    }
+
+    function setUpTreeStructure(){
+        //fetch data from cloud
+        fetchCloudData()
+        .then(res => createTreeView(res.data));
+    }
+
+    function createTreeView(data){
+        /**
+         * this happens:
+         * (1) get a folder
+         * (2) show that folder in the list
+         * (3) check if this folder does have a subfolder
+         * (4) show that folder within another <ul> and put a class "hide" 
+         * (5) if no folder follows, end. else go to (3)
+         */
+        console.log(data[1]);
+
+        //first, create it for a single item, if done and working, loop through
+        let html= `<li class="list-group-item list-group-item-action rounded-0" id="tree-list">${data[1].name}</li>`;
+        let uHTML = '';
+
+        data[1].items.forEach((el) => {
+            if(el.type === "folder"){
+                uHTML = `
+                <ul class='list-group mt-3'>
+                    <li class="list-group-item list-group-item-action rounded-0">${el.name}</li>
+                </ul>
+                `;
+            }
+            html += uHTML;
+        })
+
+        document.getElementById('tree-container').innerHTML = html;
+    }
+
+/*     $.ajax({
         url: "api/data",
         dataType: "json",
         method: "GET",
         success: function(result){
+            //result 
+            console.log(result);
 
             // Write tree view
             if (result.data.length > 0){
@@ -23,7 +69,7 @@ $(document).ready(function(){
             };
         }
     });
-
+ */
     // Click events
     document.getElementById('tree-container').addEventListener('click', clickFn);
     document.getElementById('tbody-table').addEventListener('click', removeSingleItem);
@@ -44,7 +90,7 @@ $(document).ready(function(){
         }
 
         //if folder contains subFolders, show them too!
-        
+
 
     }
 
@@ -56,8 +102,6 @@ $(document).ready(function(){
         globalPathVar = `${directory}`;
         
         const data = await res.json();
-
-        //setGlobalPath
 
         return data;
     }
