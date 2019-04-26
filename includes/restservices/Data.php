@@ -2,14 +2,10 @@
 
     /**
         * Class: Data
-        * @function: __construct, __destruct, getRequest, createRequest, saveRequest, deleteRequest
+        * @function: getRequest, createRequest, saveRequest, deleteRequest
     */
 
     class Data extends RESTClass {
-
-        public function __construct(){}
-
-        public function __destruct(){}
 
         protected function getRequest($data){
 

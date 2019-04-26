@@ -5,7 +5,6 @@
 		* @function: getDataFromDirectory, createDirectory, deleteData
     */
     
-    
 	class DataModel {
 
         /**
