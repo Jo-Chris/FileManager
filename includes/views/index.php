@@ -91,6 +91,11 @@
                     </tbody>                
                 
                 </table>
+                <div id="button-action-container" class="text-center" style="display: none;">
+                    <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer"></i> Alle auswählen</button>
+                    <button id="de-select-all" class="btn btn-outline-primary"><i class="fas fa-minus-circle"></i> Auswahl zurücksetzen</button>
+                    <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt"></i>Auswahl umkehren</button>
+                </div>
             </div>
         </div> 
     </div>

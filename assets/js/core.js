@@ -30,6 +30,9 @@ $(document).ready(function(){
     document.getElementById('tbody-table').addEventListener('click', showDetails);
     document.getElementById('maincol').addEventListener('click', clearTable);
     document.getElementById('searchbar').addEventListener('keyup', searchForFiles);
+    document.getElementById('select-all').addEventListener('click', selectAll);
+    document.getElementById('de-select-all').addEventListener('click', deSelectAll);
+    document.getElementById('reverse-selection').addEventListener('click', reverseSelection);
 
     //show folder content
     function clickFn(e){
@@ -45,7 +48,7 @@ $(document).ready(function(){
         const res = await fetch(`api/data/?directory=${directory}`)    //api/data?direc
 
         console.log("fetching... " + directory);
-        globalPathVar = `api/data/?directory=${directory}`;
+        globalPathVar = `${directory}`;
         
         const data = await res.json();
 
@@ -79,6 +82,8 @@ $(document).ready(function(){
 
             //append the row
             document.querySelector('tbody').append(newRow);       
+            //if fetch was successful, show the action-buttons
+            showBottomActions();
         });
 
         //DELETE LATER --> bad smell
@@ -177,23 +182,7 @@ $(document).ready(function(){
 
         return arr;
     }
-    /**
-     * 
-     * @param {*} filename get the filename and return the appropriate icon
-     */
-    function determineFileIcon(filename){
-        let fileending = filename.split('.')[1];
-        let iconClass = 'file-alt' //looks good as a standard icon
-        
-        //check if some major files are within
-        if(fileending === 'docx') iconClass = 'file-word';
-        if(fileending === 'png' || fileending === 'jpg' || fileending === 'jpeg' || fileending == 'gif' ) iconClass = 'file-image';
-        if(fileending === 'ppx') iconClass = 'file-powerpoint';
-        if(fileending === 'xls') iconClass = 'file-excel';
-        if(fileending === 'csv') iconClass = 'file-csv';
 
-        return iconClass;
-    }
 
     /**
      * This function is based on a indexOf comparison and filters through the array
@@ -218,10 +207,10 @@ $(document).ready(function(){
                 newRow.innerHTML = 
                 `<tr class="dynRow" data-id="${id++}">
                     <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
-                    <td class="table-light"> <button class="btn mr-2"> <i class="fas fa-${determineFileIcon(data.name)} fa-3x"></i> </button>${data.name}</td>
+                    <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)}"></i></button>${data.name}</td>
                     <td class="table-light">${data.size}</td>
                     <td class="table-light">${formatDate(new Date())}</td>
-                    <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"> Löschen </button> </td>
+                    <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="far fa-trash-alt"></i> Löschen </button> </td>
                 </tr>
                 `;
 
@@ -239,6 +228,208 @@ $(document).ready(function(){
         });
 
         return tempArr;
+    }  
+    
+    
+
+    /****************************
+     * Bottom Action Area       *
+     ****************************/
+
+    function showBottomActions(){
+        document.getElementById('button-action-container').style.display = 'block';
+    }
+
+    function selectAll(){
+        const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+        checkboxes.forEach((el) => {
+            el.checked = true;
+        })
+    }
+
+    function deSelectAll(){
+        const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+        checkboxes.forEach((el) => {
+            el.checked = false;
+        });
+    }
+
+    function reverseSelection(){
+        const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+        checkboxes.forEach((el) => {
+            el.checked ? el.checked = false : el.checked = true;
+        })
+    }
+    
+    /**
+     * 
+     * @param {*} filename get the filename and return the appropriate icon
+     */
+    function determineFileIcon(filename){
+        let fileending = filename.split('.')[1];
+        
+        switch (fileending) {
+            case 'ico':
+            case 'gif':
+            case 'jpg':
+            case 'jpeg':
+            case 'jpc':
+            case 'jp2':
+            case 'jpx':
+            case 'xbm':
+            case 'wbmp':
+            case 'png':
+            case 'bmp':
+            case 'tif':
+            case 'tiff':
+            case 'svg':
+                iconClass = 'fa fa-picture-o';
+                break;
+            case 'passwd':
+            case 'ftpquota':
+            case 'sql':
+            case 'js':
+            case 'json':
+            case 'sh':
+            case 'config':
+            case 'twig':
+            case 'tpl':
+            case 'md':
+            case 'gitignore':
+            case 'c':
+            case 'cpp':
+            case 'cs':
+            case 'py':
+            case 'map':
+            case 'lock':
+            case 'dtd':
+                iconClass = 'fa fa-file-code-o';
+                break;
+            case 'txt':
+            case 'ini':
+            case 'conf':
+            case 'log':
+            case 'htaccess':
+                iconClass = 'fa fa-file-text-o';
+                break;
+            case 'css':
+            case 'less':
+            case 'sass':
+            case 'scss':
+                iconClass = 'fa fa-css3';
+                break;
+            case 'zip':
+            case 'rar':
+            case 'gz':
+            case 'tar':
+            case '7z':
+                iconClass= 'fa fa-file-archive-o';
+                break;
+            case 'php':
+            case 'php4':
+            case 'php5':
+            case 'phps':
+            case 'phtml':
+                iconClass= 'fa fa-code';
+                break;
+            case 'htm':
+            case 'html':
+            case 'shtml':
+            case 'xhtml':
+                iconClass = 'fa fa-html5';
+                break;
+            case 'xml':
+            case 'xsl':
+                iconClass = 'fa fa-file-excel-o';
+                break;
+            case 'wav':
+            case 'mp3':
+            case 'mp2':
+            case 'm4a':
+            case 'aac':
+            case 'ogg':
+            case 'oga':
+            case 'wma':
+            case 'mka':
+            case 'flac':
+            case 'ac3':
+            case 'tds':
+                iconClass= 'fa fa-music';
+                break;
+            case 'm3u':
+            case 'm3u8':
+            case 'pls':
+            case 'cue':
+                iconClass = 'fa fa-headphones';
+                break;
+            case 'avi':
+            case 'mpg':
+            case 'mpeg':
+            case 'mp4':
+            case 'm4v':
+            case 'flv':
+            case 'f4v':
+            case 'ogm':
+            case 'ogv':
+            case 'mov':
+            case 'mkv':
+            case '3gp':
+            case 'asf':
+            case 'wmv':
+                iconClass = 'fa fa-file-video-o';
+                break;
+            case 'eml':
+            case 'msg':
+                iconClass = 'fa fa-envelope-o';
+                break;
+            case 'xls':
+            case 'xlsx':
+                iconClass = 'fa fa-file-excel-o';
+                break;
+            case 'csv':
+                iconClass= 'fa fa-file-text-o';
+                break;
+            case 'bak':
+                iconClass = 'fa fa-clipboard';
+                break;
+            case 'doc':
+            case 'docx':
+                iconClass= 'fa fa-file-word-o';
+                break;
+            case 'ppt':
+            case 'pptx':
+                iconClass= 'fa fa-file-powerpoint-o';
+                break;
+            case 'ttf':
+            case 'ttc':
+            case 'otf':
+            case 'woff':
+            case 'woff2':
+            case 'eot':
+            case 'fon':
+                iconClass = 'fa fa-font';
+                break;
+            case 'pdf':
+                iconClass = 'fa fa-file-pdf-o';
+                break;
+            case 'psd':
+            case 'ai':
+            case 'eps':
+            case 'fla':
+            case 'swf':
+                iconClass = 'fa fa-file-image-o';
+                break;
+            case 'exe':
+            case 'msi':
+                iconClass = 'fa fa-file-o';
+                break;
+            case 'bat':
+                iconClass = 'fa fa-terminal';
+                break;
+            default:
+                iconClass = 'fa fa-info-circle';
+        }
+        return iconClass;
     }
 });
 
