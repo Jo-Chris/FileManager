@@ -1,1 +1,162 @@
-html,body{height:100%}body{background:#F5F5F5}.main.login{display:flex;min-height:100%}.login .container{max-width:320px}.login form .checkbox{font-weight:400}.login form .form-control{box-sizing:border-box;font-size:16px;height:auto;padding:10px;position:relative}.main.register{display:flex;min-height:100%}.register .container{max-width:500px}header.overview{height:56px !important;position:fixed !important;z-index:2 !important}main.overview{padding-top:72px !important;position:relative !important;z-index:1 !important}main.overview .maincolumn>div,main.overview .rightcolumn>div{background:#FFFFFF;border:1px solid rgba(0,0,0,0.125);overflow:auto}main.overview .leftcolumn>div{overflow:auto}main.overview .leftcolumn>div>ul{margin-top:0 !important}main.overview .leftcolumn>div ul li{cursor:pointer}main.overview .leftcolumn>div>ul li ul{display:none}main.overview .leftcolumn>div>ul li.active>ul{display:block}
+@charset "UTF-8";
+/* Main */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #F5F5F5;
+}
+
+/* Login */
+.main.login {
+  display: flex;
+  min-height: 100%;
+}
+
+.login .container {
+  max-width: 320px;
+}
+
+.login form .checkbox {
+  font-weight: 400;
+}
+
+.login form .form-control {
+  box-sizing: border-box;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  position: relative;
+}
+
+/* Registrierung */
+.main.register {
+  display: flex;
+  min-height: 100%;
+}
+
+.register .container {
+  max-width: 500px;
+}
+
+/* ├£bersicht */
+header.overview {
+  height: 56px !important;
+  position: fixed !important;
+  z-index: 2 !important;
+}
+
+main.overview {
+  padding-top: 72px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+main.overview .maincolumn > div,
+main.overview .leftcolumn > div {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  overflow: auto;
+}
+
+/* Tree view */
+main.overview .leftcolumn .file-list {
+  margin: 0;
+  padding: 0;
+}
+
+main.overview .leftcolumn .file-list ul {
+  border-left: 1px dotted #AAAAAA;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 0 20px;
+}
+
+main.overview .leftcolumn .file-list li {
+  cursor: pointer;
+  list-style-type: none;
+  position: relative;
+}
+
+main.overview .leftcolumn .file-list li a::before {
+  color: #007BFF !important;
+  content: "\f07b";
+  display: block;
+  font-family: "Font Awesome 5 Free";
+  font-size: 20px;
+  left: 0;
+  line-height: 25px;
+  list-style-type: none;
+  position: absolute;
+  top: 0;
+  width: 20px;
+}
+
+main.overview .leftcolumn .file-list li a {
+  color: #212529;
+  display: block;
+  line-height: 25px;
+  padding: 0 0 0 30px;
+  text-decoration: none;
+  transition: color 300ms ease;
+}
+
+main.overview .leftcolumn .file-list li.selected > a,
+main.overview .leftcolumn .file-list li a:hover {
+  color: #007BFF !important;
+}
+
+main.overview .leftcolumn .file-list li a::after {
+  border-bottom: 1px dotted #AAAAAA;
+  content: "";
+  display: block;
+  height: 1px;
+  left: -20px;
+  position: absolute;
+  top: 12px;
+  width: 10px;
+}
+
+main.overview .leftcolumn .file-list > li > a::after {
+  display: none !important;
+}
+
+main.overview .leftcolumn .file-list li a span {
+  position: relative;
+  top: 2px;
+}
+
+main.overview .leftcolumn .file-list li.folder-root {
+  list-style-type: none;
+}
+
+main.overview .leftcolumn .file-list li.folder-root a {
+  text-decoration: none;
+}
+
+main.overview .leftcolumn .file-list li.folder-root.closed a::before {
+  color: #FFD04E;
+  content: "\f07b";
+}
+
+main.overview .leftcolumn .file-list li.folder-root.open a::before {
+  content: "\f07c";
+}
+
+main.overview .leftcolumn .file-list li.folder-root ul {
+  transition: all 300ms ease-in-out;
+  overflow: hidden;
+}
+
+main.overview .leftcolumn .file-list li.folder-root.closed > ul {
+  max-height: 0;
+  opacity: 0;
+}
+
+main.overview .leftcolumn .file-list li.folder-root.open > ul {
+  display: block;
+  max-height: 1000px;
+  opacity: 1;
+}

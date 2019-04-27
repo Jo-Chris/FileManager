@@ -8,21 +8,5 @@
 	<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" rel="stylesheet">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/css/main.css" rel="stylesheet">
-
-	<script src="assets/js/jquery-3.3.1.min.js" type="text/javascript"></script>
-	<script src="assets/js/popper.min.js"></script>
-	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="assets/js/bootbox.min.js"></script>
-
-
-	
-    <?php if($this->current == "index"): ?>
-        <link href="assets/css/bootstrap-treeview.min.css" rel="stylesheet">
-        <script src="assets/js/bootstrap.treeview.min.js" type="text/javascript"></script>
-		<script src="assets/js/classes/core.js" type="text/javascript"></script>
-		<script src="assets/js/fileOperations.js" type="text/javascript"></script>
-        <script src="assets/js/classes/Overview.js" type="text/javascript"></script>
-    <?php endif; ?>
-
 </head>
 <body>

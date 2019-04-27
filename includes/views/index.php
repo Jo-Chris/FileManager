@@ -65,18 +65,17 @@
 <main class="overview container mw-100 pb-3 pt-3 h-100">
     <div class="row h-100">
         <div class="col leftcolumn h-100">
-            <div class="h-100" id="tree-container">
+            <div class="h-100 pb-4 pl-4 pr-4 pt-3" id="tree-container">
                 
                 <!-- dynamic tree structure will appear here -->
             </div>
         </div>
-
         <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->
-        <aside class="text-center mb-3" id="selectedAction" style="display: none;">
-            <button class="btn btn-danger clear-table">Remove items</button>
-            <button class="btn btn-primary transfer-items"id=>Transfer items</button>
-        </aside>
-            <div class="h-100 p-3 pl-4">
+            <aside class="text-center mb-3" id="selectedAction" style="display: none;">
+                <button class="btn btn-danger clear-table">Remove items</button>
+                <button class="btn btn-primary transfer-items"id=>Transfer items</button>
+            </aside>
+            <div class="h-100 p-3">
                 <div class="form-group">
                     <input type="text" class="form-control input-lg" id="searchbar" placeholder="Suche...">
                 </div>
@@ -87,12 +86,10 @@
                         <th scope="col" class="table-dark">Größe</th>
                         <th scope="col" class="table-dark">Zuletzt bearbeitet</th>
                         <th scope="col" class="table-dark"></th>
-
                     </thead>
                     <tbody id="tbody-table">     
                         <!-- Dynamic Content follows here -->
-                    </tbody>                
-                
+                    </tbody>
                 </table>
                 <div id="button-action-container" class="text-center" style="display: none;">
                     <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer"></i> Alle auswählen</button>
@@ -103,7 +100,6 @@
         </div> 
     </div>
 </main>
-    
 <?php
     echo $this->footer;
 ?>
