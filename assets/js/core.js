@@ -5,9 +5,18 @@ let globalPathVar = [];
 //bad approach, bad smell (saves the currentTable as array after every fetch)
 let globalArrayVal = '';
 
+
+
+/*********************************************************************************
+ *            T R E E  S T R U C T U R E     &   F E T C H I N G                 *
+ *********************************************************************************/
+
 //at application start, fetch data
 setUpTreeStructure();
 
+/**
+ * @returns a data-obj containing fetched data
+ */
 async function fetchCloudData(){
     const res = await fetch('api/data');
 
@@ -18,35 +27,28 @@ async function fetchCloudData(){
     return data;
 }
 
+/**
+ * create tree structure
+ */
 function setUpTreeStructure(){
     //fetch data from cloud
     fetchCloudData()
         .then(res => {
-
             let html = `<ul>`;
                     html += createTreeView(res.data);
                 html += `</ul>`;
-
             document.getElementById('tree-container').innerHTML = html;
 
             $('#tree-container > ul').filetree({
                 collapsed: true
             });
-
         });
 }
 
+/**
+ * fill tree with data
+ */
 function createTreeView(data){
-
-    /**
-        * this happens:
-        * (1) get a folder
-        * (2) show that folder in the list
-        * (3) check if this folder does have a subfolder
-        * (4) show that folder within another <ul> and put a class "hide"
-        * (5) if no folder follows, end. else go to (3)
-    */
-
     let html = ``;
 
     data.forEach((el) => {
@@ -86,21 +88,10 @@ function createTreeView(data){
 
 }
 
-/*     $.ajax({
-    url: "api/data",
-    dataType: "json",
-    method: "GET",
-    success: function(result){
-        //result
-        console.log(result);
+/*********************************************************************************
+ *                      D O M   M A N I P U L A T I O N                          *
+ *********************************************************************************/
 
-        // Write tree view
-        if (result.data.length > 0){
-            $(".leftcolumn > div ").append(overview.writeTreeView(result.data));
-        };
-    }
-});
-*/
 // Click events
 document.getElementById('tbody-table').addEventListener('click', removeSingleItem);
 document.getElementById('tbody-table').addEventListener('click', showDetails);
@@ -119,8 +110,19 @@ async function loadDirectory(directory){
 
     const data = await res.json();
 
+    //after fetch is done and folders appear, show the searchbar and current path-value
+    showPathAndSearchbar(directory);
+
     return data;
 }
+
+function showPathAndSearchbar(path){
+   //show the container (path-value + searchbar)
+   document.getElementById('seachbar-path-container').style.display = "inline-flex";
+   //set the value of the current folder
+   document.getElementById('path-value').textContent = path;
+}
+
 
 /**
  * Display the content of the current Folder
@@ -143,16 +145,20 @@ function showDirectoryData(directoryData){
                 <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
                 <td class="table-light">${calcRealSize(data.size)}</td>
                 <td class="table-light">${formatDate(data.date_modified)}</td>
-                <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="far fa-trash-alt"></i> Löschen </button> </td>
+                <td class="table-light" align-right"> 
+                    <button class="btn btn-danger float-right deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+                    <button class="btn btn-primary float-right downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button> 
+                </td>
             </tr>
             `;
 
         //append the row
         document.querySelector('tbody').append(newRow);
-        //if fetch was successful, show the action-buttons
-        showBottomActions();
+
     });
 
+    //if fetch was successful, show the action-buttons
+    showBottomActions();
     //DELETE LATER --> bad smell
     globalArrayVal = getTableAsArray();
 }
@@ -219,30 +225,6 @@ function showDetails(e){
 }
 
 /**
- * @param {*} date - the date given by the background formatted
- */
-function formatDate(date){
-    //create new date from unix timestamp
-    let newDate = new Date(date*1000);
-    
-    return newDate.toLocaleString();  // f.e 26.4.2019, 20:04:43  
-}
-
-function calcRealSize(byte){
-    if(byte === 0){
-        return 0;
-    }
-
-    if(byte < 1000){
-        return `${byte/1024} KByte`;
-    }else if (byte < 10_000){
-        return `${byte/1024} KByte`;
-    }else if (byte < 100_000){
-        return `${byte/1024}`
-    }
-}
-
-/**
  * hide the action-dialog
  */
 function hideDetails(){
@@ -270,6 +252,7 @@ function getTableAsArray(){
 /**
  * This function is based on a indexOf comparison and filters through the array
  * @todo saving the tableData into an global array is... well, shit
+ * @todo the algorithm for searching items needs an overhaul 
  */
 function searchForFiles(){
     //if the user removes all entered chars, get the old stuff back in
@@ -286,40 +269,27 @@ function searchForFiles(){
      let enteredText = document.querySelector('#searchbar').value;
 
      tableData.forEach((data) => {
+         
         if(!data.name.toLowerCase().indexOf(enteredText)){
             const newRow = document.createElement('tr');
 
             newRow.innerHTML =
             `<tr class="dynRow" data-id="${id++}">
                 <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
-                <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)}"></i></button>${data.name}</td>
-                <td class="table-light">${data.size}</td>
-                <td class="table-light">${formatDate(new Date())}</td>
-                <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="fa fa-file-word"></i> Löschen </button> </td>
+                <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
+                <td class="table-light">${calcRealSize(data.size)}</td>
+                <td class="table-light">${formatDate(data.date_modified)}</td>
+                <td class="table-light" align-right"> 
+                <button class="btn btn-danger float-right deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+                <button class="btn btn-primary float-right downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
             </tr>
-            `;
+        `;
 
             //append the row
             document.querySelector('tbody').append(newRow);
         }
      });
 }
-
-function setGlobalPath(path){
-    tempArr = [];
-    paths = path.split('/');
-    paths.forEach((el)=>{
-       tempArr.push(el);
-    });
-
-    return tempArr;
-}
-
-
-
-/****************************
- * Bottom Action Area       *
- ****************************/
 
 function showBottomActions(){
     document.getElementById('button-action-container').style.display = 'block';
@@ -353,9 +323,78 @@ function reverseSelection(){
     showDetails();
 }
 
+
+
+/*********************************************************************************
+ *                      U T I L I T Y   F U N C T I O N S                        *
+ *********************************************************************************/
+
+
+/**
+ * 
+ * @param {*} num number to be rounded 
+ * @param {*} n numnber of decimals
+ * @returns a rounded digit
+ */
+function roundTo(num, n){
+    let f = Math.pow(10, n);
+    return Math.round(num * f)/f;
+}
+
+/**
+ * 
+ * @param {*} path get the current path
+ * @returns a path-array
+ */
+function setGlobalPath(path){
+    tempArr = [];
+    paths = path.split('/');
+    paths.forEach((el)=>{
+       tempArr.push(el);
+    });
+
+    return tempArr;
+}
+
+/**
+ * @param {*} date - the date given by the background 
+ * @returns a readable date
+ */
+function formatDate(date){
+    //create new date from unix timestamp
+    let newDate = new Date(date*1000);
+    
+    return newDate.toLocaleString();  // f.e 26.4.2019, 20:04:43  
+}
+
+/**
+ * 
+ * @param {*} byte - the size of a file
+ * @return its real size 
+ */
+function calcRealSize(byte){
+    if(byte === 0){
+        return `0  Byte`;
+    }
+
+    if (byte < 1000){
+        return `${byte} Byte`
+    }
+    if (byte < 1000000){
+        return `${roundTo(byte/1000, 2)} KB`
+    }else if(byte < 1000000000){
+        return `${roundTo(byte/1000000, 2)} MB`;
+    //gues our application isnt construed for GByte (until now!) 
+    }else{
+        return `${roundTo(byte/1000, 2)} GB`
+    } 
+}
+
+
 /**
  *
  * @param {*} filename get the filename and return the appropriate icon
+ * @returns the font-awesome icon-class for the specific @param filename
  */
 function determineFileIcon(filename){
     let fileending = filename.split('.')[1];
@@ -523,6 +562,12 @@ function determineFileIcon(filename){
             iconClass = 'fa fa-info-circle';
     }
     return iconClass;
+
+
 }
+
+
+
+
 
 

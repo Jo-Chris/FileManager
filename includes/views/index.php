@@ -72,14 +72,21 @@
         </div>
         <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->
             <aside class="text-center mb-3" id="selectedAction" style="display: none;">
-                <button class="btn btn-danger clear-table">Remove items</button>
-                <button class="btn btn-primary transfer-items"id=>Transfer items</button>
+                <!-- <h3 class="choosenElements"></h1>-->
+                <button class="btn btn-danger clear-table"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
+                <button class="btn btn-info transfer-items"><i class="fas fa-random pr-2"></i>Transferieren</button>
+                <button class="btn btn-primary transfer-items"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
             </aside>
             <div class="h-100 p-3">
-                <div class="form-group">
-                    <input type="text" class="form-control input-lg" id="searchbar" placeholder="Suche...">
+                <div class="input-group mb-3" id="seachbar-path-container" style="display: none;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="path-value"></span>
+                    </div>
+                    <input type="text" class="form-control" id="searchbar" aria-describedby="basic-addon3" placeholder="Suche...">
                 </div>
-                <table class="table" id="main-list">
+
+
+                <table class="table mt-0" id="main-list">
                     <thead class="">
                         <th scope="col" class="table-dark"></th>
                         <th scope="col" class="table-dark">Dateinname</th>
