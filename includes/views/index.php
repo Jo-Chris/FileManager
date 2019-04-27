@@ -71,12 +71,7 @@
             </div>
         </div>
         <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->
-            <aside class="text-center mb-3" id="selectedAction" style="display: none;">
-                <!-- <h3 class="choosenElements"></h1>-->
-                <button class="btn btn-danger clear-table"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
-                <button class="btn btn-info transfer-items"><i class="fas fa-random pr-2"></i>Transferieren</button>
-                <button class="btn btn-primary transfer-items"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
-            </aside>
+            
             <div class="h-100 p-3">
                 <div class="input-group mb-3" id="seachbar-path-container" style="display: none;">
                     <div class="input-group-prepend">
@@ -98,10 +93,19 @@
                         <!-- Dynamic Content follows here -->
                     </tbody>
                 </table>
-                <div id="button-action-container" class="text-center" style="display: none;">
+                
+                <div id="button-action-container" class="text-left" style="display: none;">
+                    <hr style="background-size: 4px; border-top: 4px solid #ccc; border-color: #ccc;">
+                    
                     <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer"></i> Alle auswählen</button>
                     <button id="de-select-all" class="btn btn-outline-primary"><i class="fas fa-minus-circle"></i> Auswahl zurücksetzen</button>
                     <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt"></i>Auswahl umkehren</button>
+
+                    <button class="btn btn-danger clear-table invisible float-right mr-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
+                    <button class="btn btn-info transfer-items invisible float-right mr-2 ml-2" id="down-transfer-btn"><i class="fas fa-random pr-2"></i>Transferieren</button>
+                    <button class="btn btn-primary transfer-items invisible float-right" id="down-download-btn"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
+                </div>
+
                 </div>
             </div>
         </div> 

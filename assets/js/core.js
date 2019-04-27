@@ -217,18 +217,13 @@ function showDetails(e){
     //if greater than 2, show action Dialog
     if(cbCounter >= 2){
         if(e.target.classList.contains('checkbox')){
-            document.getElementById('selectedAction').style.display = 'block';
+            // here todo boi 
+
+
         }
     }else{
         hideDetails();
     }
-}
-
-/**
- * hide the action-dialog
- */
-function hideDetails(){
-    document.getElementById('selectedAction').style.display = 'none';
 }
 
 /**
@@ -291,6 +286,21 @@ function searchForFiles(){
      });
 }
 
+function showBottomButtons(bool){
+    if(bool){
+        document.querySelector('#down-remove-btn').classList.remove('invisible');
+        document.querySelector('#down-transfer-btn').classList.remove('invisible');
+        document.querySelector('#down-download-btn').classList.remove('invisible');
+    }else{
+        document.querySelector('#down-remove-btn').classList.remove('visible');
+        document.querySelector('#down-remove-btn').classList.add('invisible');
+        document.querySelector('#down-remove-btn').classList.remove('visible');
+        document.querySelector('#down-transfer-btn').classList.add('invisible');
+        document.querySelector('#down-remove-btn').classList.remove('visible');
+        document.querySelector('#down-download-btn').classList.add('invisible');
+    }
+}
+
 function showBottomActions(){
     document.getElementById('button-action-container').style.display = 'block';
 }
@@ -301,8 +311,7 @@ function selectAll(){
         el.checked = true;
     });
 
-    document.getElementById('selectedAction').style.display = 'block';
-
+    showBottomButtons(true);
 }
 
 function deSelectAll(){
@@ -311,7 +320,7 @@ function deSelectAll(){
         el.checked = false;
     });
 
-    hideDetails();
+    showBottomButtons(false);
 }
 
 function reverseSelection(){
@@ -384,7 +393,7 @@ function calcRealSize(byte){
         return `${roundTo(byte/1000, 2)} KB`
     }else if(byte < 1000000000){
         return `${roundTo(byte/1000000, 2)} MB`;
-    //gues our application isnt construed for GByte (until now!) 
+    //guess our application isnt construed for GByte (until now!) 
     }else{
         return `${roundTo(byte/1000, 2)} GB`
     } 
