@@ -2,7 +2,7 @@
 
     /**
         * Class: UploadModel
-        * @function:
+        * @function: uploadFile
     */
 
     class UploadModel {
