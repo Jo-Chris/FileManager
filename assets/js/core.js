@@ -135,12 +135,14 @@ function showDirectoryData(directoryData){
     directoryData.forEach(data => {
         const newRow = document.createElement('tr');
 
+        console.log(data);
+
         newRow.innerHTML =
             `<tr class="dynRow" data-id="${id++}">
                 <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
                 <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
-                <td class="table-light">${data.size}</td>
-                <td class="table-light">${formatDate(new Date())}</td>
+                <td class="table-light">${calcRealSize(data.size)}</td>
+                <td class="table-light">${formatDate(data.date_modified)}</td>
                 <td class="table-light" align-right"> <button class="btn btn-danger float-right deleteItem"><i class="far fa-trash-alt"></i> Löschen </button> </td>
             </tr>
             `;
@@ -220,10 +222,24 @@ function showDetails(e){
  * @param {*} date - the date given by the background formatted
  */
 function formatDate(date){
-    let month = date.getMonth();
-    month = month < 10 ? `0${month+1}` : month+1;
+    //create new date from unix timestamp
+    let newDate = new Date(date*1000);
+    
+    return newDate.toLocaleString();  // f.e 26.4.2019, 20:04:43  
+}
 
-    return `${date.getDate()}/${month}/${date.getFullYear()} um ${date.getHours()}:${date.getMinutes()}`;
+function calcRealSize(byte){
+    if(byte === 0){
+        return 0;
+    }
+
+    if(byte < 1000){
+        return `${byte/1024} KByte`;
+    }else if (byte < 10_000){
+        return `${byte/1024} KByte`;
+    }else if (byte < 100_000){
+        return `${byte/1024}`
+    }
 }
 
 /**
