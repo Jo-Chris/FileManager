@@ -1,9 +1,9 @@
 <?php
 
     /**
-     * Class: Upload
-     * @function:
-     */
+        * Class: Upload
+        * @function: getRequest, createRequest, saveRequest, deleteRequest
+    */
 
     class Upload extends RESTClass {
 
