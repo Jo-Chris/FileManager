@@ -95,46 +95,77 @@
 
         /**
 			* Delete file or directory
-            * @param: $path(string)
+            * @param: $files(array)
             * @return: $msg(object)
 		*/
-		public static function deleteData($path){
+		public static function deleteData($files){
 
-            $msg = "";
+            $msg = array();
 
-            if (is_link($path)){
+            for ($i = 0; $i < count($files); $i++){
 
-                unlink($path);
-                $msg = "File successfully deleted";
+                $path = $files[$i]["path"] . "/" . $files[$i]["name"];
 
-            } elseif (is_dir($path)){
+                if (is_link($path)){
 
-                $objects = scandir($path);
-                $ok = true;
+                    unlink($path);
 
-                if (is_array($objects)){
-                    foreach ($objects as $file){
-                        if ($file !== "." && $file !== ".."){
-                            if (!self::deleteData($path . "/" . $file)){
-                                $ok = false;
+                    $msg[] = array(
+                        "name" => $files[$i]["name"],
+                        "path" => $files[$i]["path"],
+                        "message" => "File successfully deleted"
+                    );
+
+                } elseif (is_dir($path)){
+
+                    $objects = scandir($path);
+                    $ok = true;
+
+                    if (is_array($objects)){
+                        foreach ($objects as $file) {
+                            if ($file !== "." && $file !== "..") {
+                                if (!self::deleteData($path . "/" . $file)) {
+                                    $ok = false;
+                                };
                             };
                         };
                     };
+
+                    if ($ok){
+
+                        rmdir($path);
+
+                        $msg[] = array(
+                            "name" => $files[$i]["name"],
+                            "path" => $files[$i]["path"],
+                            "message" => "Folder successfully deleted"
+                        );
+
+                    };
+
+                } elseif (is_file($path)){
+
+                    unlink($path);
+
+                    $msg[] = array(
+                        "name" => $files[$i]["name"],
+                        "path" => $files[$i]["path"],
+                        "message" => "File successfully deleted"
+                    );
+
+                } else {
+
+                    $msg[] = array(
+                        "name" => $files[$i]["name"],
+                        "path" => $files[$i]["path"],
+                        "message" => "Folder or file couldn't be deleted"
+                    );
+
                 };
 
-                if ($ok){
-                    rmdir($path);
-                    $msg = "Folder successfully deleted";
-                };
-
-            } elseif (is_file($path)){
-                unlink($path);
-                $msg = "File successfully deleted";
-            } else {
-                $msg = "Folder or file couldn't be deleted";
             };
 
-            return $msg;
+            return (object) $msg;
 
         }
 

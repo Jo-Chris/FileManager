@@ -50,10 +50,9 @@
 
         protected function deleteRequest($data){
 
-            if (isset($data["name"]) && isset($data["path"])){
+            if (isset($data["files"])){
 
-                $path = $data["path"] . "/" . $data["name"];
-                $dataForView = DataModel::deleteData($path);
+                $dataForView = DataModel::deleteData($data["files"]);
 
                 $jsonResponse = new JSON();
                 $jsonResponse->result = true;
