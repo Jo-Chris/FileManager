@@ -17,7 +17,7 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-md-0 mr-auto">
-                <input class="form-control" type="text" name="keyword" placeholder="Suchen nach...">
+                <input class="form-control" type="text" name="keyword" id="global-search" placeholder="Suchen nach...">
             </form>
             <ul class="navbar-nav">
                 <!--<li class="nav-item dropdown">

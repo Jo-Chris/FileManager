@@ -5,6 +5,9 @@ let globalPathVar = [];
 //bad approach, bad smell (saves the currentTable as array after every fetch)
 let globalArrayVal = '';
 
+//for deleting items
+let mainPath = '';
+
 
 
 /*********************************************************************************
@@ -100,6 +103,7 @@ document.getElementById('searchbar').addEventListener('keyup', searchForFiles);
 document.getElementById('select-all').addEventListener('click', selectAll);
 document.getElementById('de-select-all').addEventListener('click', deSelectAll);
 document.getElementById('reverse-selection').addEventListener('click', reverseSelection);
+document.getElementById('global-search').addEventListener('keyup', showSearchResults);
 
 //this directory needs to get the path of the folder
 async function loadDirectory(directory){
@@ -112,6 +116,8 @@ async function loadDirectory(directory){
 
     //after fetch is done and folders appear, show the searchbar and current path-value
     showPathAndSearchbar(directory);
+    //the next bad smell...
+    mainPath = directory;
 
     return data;
 }
@@ -157,20 +163,34 @@ function showDirectoryData(directoryData){
  */
 function removeSingleItem(e) {
 
-    bootbox.confirm('Sind sie sicher?', (res) =>{
-        if(!res){
-            return;
-        }else{
-            if(e.target.classList.contains('deleteItem')){
-            e.target.parentNode.parentNode.remove();
+    if(e.target.classList.contains('deleteItem')){
+        bootbox.confirm('Sind sie sicher?', (res) =>{
+            if(!res){
+                return;
+            }else{
+                //get name and path
+                let name = e.target.parentNode.parentNode.children[0].lastChild.textContent;
+                //current path is always displayed at top
+                let path = mainPath;
+                //create an array containing the name and the path of the element to be deleted
+                let arr = [];
+                arr.push(createDelteJSONArray(name, path));
+                
+                // Delete from UI 
+                e.target.parentNode.parentNode.remove();
+                
+                // Delete from DB
+
             }
-        }
-    });
+        });
+    };
 }
 
 function clearTable(e){
 
     const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+    //delete arr
+    let deleteArr = [];
 
     if(e.target.classList.contains('clear-table')){
         bootbox.confirm('Sind sie sicher?', (res) =>{
@@ -179,9 +199,19 @@ function clearTable(e){
             }else{
                 checkboxes.forEach((el)=>{
                     if(el.checked){
+                        //get the name of the current file
+                        let name = el.parentNode.lastChild.textContent;
+                        //current path is always displayed at top
+                        let path = mainPath;
+
+                        console.log(deleteArr.push(createDelteJSONArray(name, path)));
+                        //Delete from UI
                         el.parentNode.parentNode.remove();
                     }
                 });
+
+                //this array contains all items that should be deleted
+                console.log(deleteArr);
             }
         });
     }
@@ -259,6 +289,31 @@ function searchForFiles(){
      });
 }
 
+async function globalSearch(){
+    let searchVal = document.getElementById('global-search').value;
+
+    console.log('fetching for..' + searchVal);
+
+    const res = await fetch(`api/data/?mode=search&key=[${searchVal}]`)    //api/data?direc
+
+    //console.log("fetching... " + directory);
+    //globalPathVar = `${directory}`;
+
+    const data = await res.json();
+
+    return data;
+}
+
+function showSearchResults(){
+    globalSearch().then(res => {
+        res.data.forEach((data) => {
+            //noch kein zugriff auf data, da data ordner umfasst
+            console.log(data);
+            displayTableData(data);
+        })
+    });
+}
+
 
 function displayTableData(data){
     console.log(data.size);
@@ -270,7 +325,7 @@ function displayTableData(data){
             <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
             <td class="table-light">${calcRealSize(data.size)}</td>
             <td class="table-light">${formatDate(data.date_modified)}</td>
-            <td class="table-light align-center"> 
+            <td class="table-light text-center"> 
             <button class="btn btn-danger  deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
             <button class="btn btn-primary  downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
         </tr>
@@ -330,9 +385,23 @@ function reverseSelection(){
  *                      U T I L I T Y   F U N C T I O N S                        *
  *********************************************************************************/
 
-
 /**
  * 
+ * @param {*} arr that contains a name and a path
+ */
+ function createDelteJSONArray(name, path){
+    //get the arr of objects to delete
+    let deleteJSON = [];
+    
+    deleteJSON.push({
+            name: name,
+            path: path
+        });
+
+    return deleteJSON;
+ }
+
+/**
  * @param {*} num number to be rounded 
  * @param {*} n numnber of decimals
  * @returns a rounded digit
