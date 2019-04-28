@@ -9,45 +9,99 @@
 
         /**
             * Download file
-            * @param: $path(string), $name(string)
+            * @param: $files(array)
         */
-        public static function downloadFile($path, $name){
+        public static function downloadFile($files){
 
             // Check if file exists
 
-            if (file_exists($path . "/" . $name)){
+            $filesArray = json_decode($files, true);
 
-                // Check if file or directory
+            if (count($filesArray) > 1){
 
-                if (is_file($path . "/" . $name)){
+                // Multiple download
 
-                    // Write header for download
+                $filename = "download.zip";
 
-                    header("Content-Description: File Transfer");
-                    header("Content-Type: application/octet-stream");
-                    header("Content-Disposition: attachment; filename=" . basename($path . "/" . $name) . "");
-                    header("Content-Transfer-Encoding: binary");
-                    header("Connection: Keep-Alive");
-                    header("Expires: 0");
-                    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                    header("Pragma: public");
-                    header("Content-Length: " . filesize($path . "/" . $name));
+                // Create zip file
 
-                    // Delete output puffer
+                $zip = new ZipArchive;
 
-                    ob_end_clean();
+                if ($zip->open($filename, ZipArchive::CREATE) === TRUE){
 
-                    // Read file
+                    for ($i = 0; $i < count($filesArray); $i++){
+                        if (file_exists($filesArray[$i]["path"] . "/" . $filesArray[$i]["name"])){
+                            $zip->addFile($filesArray[$i]["path"] . "/" . $filesArray[$i]["name"]);
+                        };
+                    };
 
-                    readfile($path . "/" . $name);
+                };
+
+                $zip->close();
+
+                // Download zip file
+
+                header("Content-Type: application/zip");
+                header("Content-Disposition: attachment; filename=" . basename($filename). "");
+                header("Content-Length: " . filesize($filename));
+
+                // Delete output puffer
+
+                ob_end_clean();
+
+                // Read file
+
+                readfile($filename);
+
+                // Delete file
+
+                unlink($filename);
+
+                exit;
+
+            } else {
+
+                // Single download
+
+                if (file_exists($filesArray[0]["path"] . "/" . $filesArray[0]["name"])){
+
+                    // Check if file or directory
+
+                    if (is_file($filesArray[0]["path"] . "/" . $filesArray[0]["name"])){
+
+                        // Write header for download
+
+                        header("Content-Description: File Transfer");
+                        header("Content-Type: application/octet-stream");
+                        header("Content-Disposition: attachment; filename=" . basename($filesArray[0]["path"] . "/" . $filesArray[0]["name"]) . "");
+                        header("Content-Transfer-Encoding: binary");
+                        header("Connection: Keep-Alive");
+                        header("Expires: 0");
+                        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+                        header("Pragma: public");
+                        header("Content-Length: " . filesize($filesArray[0]["path"] . "/" . $filesArray[0]["name"]));
+
+                        // Delete output puffer
+
+                        ob_end_clean();
+
+                        // Read file
+
+                        readfile($filesArray[0]["path"] . "/" . $filesArray[0]["name"]);
+
+                        exit;
+
+                    };
+
+                } else {
+
+                    header("HTTP/1.0 404 Not Found", true, 404);
+                    header("Location: " . URL_PATH . "/404");
+
                     exit;
 
                 };
 
-            } else {
-                header("HTTP/1.0 404 Not Found", true, 404);
-                header("Location: " . URL_PATH . "/404");
-                exit;
             };
 
         }

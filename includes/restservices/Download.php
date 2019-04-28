@@ -8,8 +8,8 @@
     class Download extends RESTClass {
 
         protected function getRequest($data){
-            if (isset($data["path"]) && isset($data["name"])){
-                $dataForView = DownloadModel::downloadFile($data["path"], $data["name"]);
+            if (isset($data["files"])){
+                $dataForView = DownloadModel::downloadFile($data["files"]);
             };
         }
 
