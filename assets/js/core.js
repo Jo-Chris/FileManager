@@ -132,25 +132,14 @@ function showDirectoryData(directoryData){
     //clear current view
     document.querySelector('tbody').innerHTML='';
     //get the length
-    let id = document.querySelector('tbody').rows.length;
+    
 
     directoryData.forEach(data => {
         const newRow = document.createElement('tr');
 
         console.log(data);
 
-        newRow.innerHTML =
-            `<tr class="dynRow" data-id="${id++}">
-                <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
-                <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
-                <td class="table-light">${calcRealSize(data.size)}</td>
-                <td class="table-light">${formatDate(data.date_modified)}</td>
-                <td class="table-light" align-right"> 
-                    <button class="btn btn-danger float-right deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-                    <button class="btn btn-primary float-right downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button> 
-                </td>
-            </tr>
-            `;
+        newRow.innerHTML = displayTableData(data);
 
         //append the row
         document.querySelector('tbody').append(newRow);
@@ -168,14 +157,16 @@ function showDirectoryData(directoryData){
  */
 function removeSingleItem(e) {
 
-    /**
-     * @todo add the confirmation dialog here, maybe with bootstrap module
-     */
-
-    if(e.target.classList.contains('deleteItem')){
-        e.target.parentNode.parentNode.remove();
-    }
-};
+    bootbox.confirm('Sind sie sicher?', (res) =>{
+        if(!res){
+            return;
+        }else{
+            if(e.target.classList.contains('deleteItem')){
+            e.target.parentNode.parentNode.remove();
+            }
+        }
+    });
+}
 
 function clearTable(e){
 
@@ -191,8 +182,6 @@ function clearTable(e){
                     if(el.checked){
                         el.parentNode.parentNode.remove();
                     }
-                    //if removing is done, hideDetails again
-                        hideDetails();
                 });
             }
         });
@@ -219,10 +208,8 @@ function showDetails(e){
         if(e.target.classList.contains('checkbox')){
             // here todo boi 
 
-
         }
-    }else{
-        hideDetails();
+        showBottomButtons(false);
     }
 }
 
@@ -256,10 +243,7 @@ function searchForFiles(){
      }
      //clear current view
      document.querySelector('tbody').innerHTML='';
-     //get the length
-     let id = document.querySelector('tbody').rows.length;
-     // currentTabledata is currently global... so just access it this way now, we'll find
-     // a better way later
+
      let tableData = globalArrayVal;
      let enteredText = document.querySelector('#searchbar').value;
 
@@ -268,23 +252,33 @@ function searchForFiles(){
         if(!data.name.toLowerCase().indexOf(enteredText)){
             const newRow = document.createElement('tr');
 
-            newRow.innerHTML =
-            `<tr class="dynRow" data-id="${id++}">
-                <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
-                <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
-                <td class="table-light">${calcRealSize(data.size)}</td>
-                <td class="table-light">${formatDate(data.date_modified)}</td>
-                <td class="table-light" align-right"> 
-                <button class="btn btn-danger float-right deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-                <button class="btn btn-primary float-right downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
-            </tr>
-        `;
-
+            newRow.innerHTML = displayTableData(data);
+            
             //append the row
             document.querySelector('tbody').append(newRow);
         }
      });
 }
+
+
+function displayTableData(data){
+    console.log(data.size);
+
+    let id = document.querySelector('tbody').rows.length;
+
+    return `
+        <tr class="dynRow" data-id="${id++}">
+            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
+            <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
+            <td class="table-light">${calcRealSize(data.size)}</td>
+            <td class="table-light">${formatDate(data.date_modified)}</td>
+            <td class="table-light" align-right"> 
+            <button class="btn btn-danger float-right deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+            <button class="btn btn-primary float-right downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
+        </tr>
+    `;
+}
+
 
 function showBottomButtons(bool){
     if(bool){
