@@ -42,6 +42,15 @@ $(document).ready(function(){
 
     });
 
+    $.ajax({
+        url: "api/data/?mode=search&key=Datei-01.txt",
+        dataType: "json",
+        method: "GET",
+        success: function(result){
+            console.log(result);
+        }
+    });
+
     // CREATE
 
     /*$.ajax({
