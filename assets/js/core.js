@@ -173,7 +173,6 @@ function clearTable(e){
     const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
 
     if(e.target.classList.contains('clear-table')){
-
         bootbox.confirm('Sind sie sicher?', (res) =>{
             if(!res){
                 return;
@@ -268,13 +267,12 @@ function displayTableData(data){
 
     return `
         <tr class="dynRow" data-id="${id++}">
-            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class="form-control checkbox" ></input></td>
-            <td class="table-light"><button class="btn mr-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
+            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
             <td class="table-light">${calcRealSize(data.size)}</td>
             <td class="table-light">${formatDate(data.date_modified)}</td>
-            <td class="table-light" align-right"> 
-            <button class="btn btn-danger float-right deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-            <button class="btn btn-primary float-right downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
+            <td class="table-light align-center"> 
+            <button class="btn btn-danger  deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+            <button class="btn btn-primary  downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
         </tr>
     `;
 }

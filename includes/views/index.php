@@ -71,20 +71,19 @@
                     <input type="text" class="form-control" id="searchbar" aria-describedby="basic-addon3" placeholder="Suche...">
                 </div>
 
-
-                <table class="table mt-0" id="main-list">
-                    <thead class="">
-                        <th scope="col" class="table-dark"></th>
-                        <th scope="col" class="table-dark">Dateinname</th>
-                        <th scope="col" class="table-dark">Größe</th>
-                        <th scope="col" class="table-dark">Zuletzt bearbeitet</th>
-                        <th scope="col" class="table-dark"></th>
-                    </thead>
-                    <tbody id="tbody-table">     
-                        <!-- Dynamic Content follows here -->
-                    </tbody>
-                </table>
-                
+                <div class="table-responsive-lg">
+                    <table class="table mt-0 align-middle" id="main-list">
+                        <thead class="">
+                            <th scope="col" class="table-dark col-1">Dateinname</th>
+                            <th scope="col" class="table-dark col-1">Größe</th>
+                            <th scope="col" class="table-dark col-1">Zuletzt bearbeitet</th>
+                            <th scope="col" class="table-dark col-1 text-center">Aktionen</th>
+                        </thead>
+                        <tbody id="tbody-table">     
+                            <!-- Dynamic Content follows here -->
+                        </tbody>
+                    </table>
+                </div>
                 <div id="button-action-container" class="text-left" style="display: none;">
                     <hr style="background-size: 4px; border-top: 4px solid #ccc; border-color: #ccc;">
                     
