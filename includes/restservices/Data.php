@@ -13,7 +13,11 @@
                 $data["directory"] = ROOT_URL;           
             };
 
-            $dataForView = DataModel::getDataFromDirectory($data["directory"]);
+            if (isset($data["mode"]) && isset($data["key"]) && $data["mode"] === "search"){
+                $dataForView = DataModel::getDataForSearch($data["directory"], $data["key"]);
+            } else {
+                $dataForView = DataModel::getDataFromDirectory($data["directory"]);
+            };
 
             $jsonResponse = new JSON();
             $jsonResponse->result = true;

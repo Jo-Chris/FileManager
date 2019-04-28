@@ -137,6 +137,66 @@
             return $msg;
 
         }
+
+        /**
+            * Get data for search
+            * @param: $directory(string), $key(string)
+            * @return: $files(object)
+        */
+        public static function getDataForSearch($directory, $key){
+
+            $files = array();
+
+            // Check if directory exists
+
+            if (file_exists($directory)){
+
+                // Scan directories
+
+                $response = scandir($directory);
+
+                foreach ($response as $file){
+
+                    // Ignore hidden files and directories
+
+                    if (!$file || $file[0] == "."){
+                        continue;
+                    };
+
+                    if (is_dir($directory . "/" . $file)){
+
+                        // Directory
+
+                        $path = $directory . "/" . $file;
+
+                        return (array) self::getDataForSearch($path, $key);
+
+                    } else {
+
+                        // File
+
+                        if (preg_match("/" . $key . "/i", $file)){
+
+                            $files[] = array(
+                                "date_modified" => filemtime($directory . "/" . $file),
+                                "extension" => pathinfo($file, PATHINFO_EXTENSION),
+                                "name" => $file,
+                                "path" => $directory,
+                                "type" => "file",
+                                "size" => filesize($directory . "/" . $file)
+                            );
+
+                        };
+
+                    };
+
+                };
+
+            };
+
+            return (object) $files;
+
+        }
 		
 	}
 
