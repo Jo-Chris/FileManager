@@ -10,18 +10,10 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav mr-5">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="new" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus fa-sm"></i> Neu</a>
-                    <div class="dropdown-menu" aria-labelledby="new">
-                        <a class="dropdown-item" href="#">Ordner</a>
-                        <a class="dropdown-item" href="#">Datei</a>
-                    </div>
+                    <a class="nav-link" href="#" id="new" aria-haspopup="true" aria-expanded="false"><i class="fas fa-plus fa-sm"></i> Neu</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="upload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cloud-upload-alt"></i> Upload</a>
-                    <div class="dropdown-menu" aria-labelledby="upload">
-                        <a class="dropdown-item" href="#">Ordner</a>
-                        <a class="dropdown-item" href="#">Datei</a>
-                    </div>
+                    <a class="nav-link" href="#" id="upload" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cloud-upload-alt"></i> Upload</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-md-0 mr-auto">
@@ -54,7 +46,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle fa-lg"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user">
-                        <a class="dropdown-item" href="#">Mein Konto</a>
                         <a class="dropdown-item" href="logout">Abmelden</a>
                     </div>
                 </li>
