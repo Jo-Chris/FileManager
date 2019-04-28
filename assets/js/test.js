@@ -70,7 +70,7 @@ $(document).ready(function(){
 
     // DELETE
 
-    $.ajax({
+    /*$.ajax({
         url: "api/data",
         data: {
             files: [
@@ -95,6 +95,19 @@ $(document).ready(function(){
             console.log(result);
 
         }
-    });
+    });*/
+
+    var files = [
+        {
+            name: "Datei-01.txt",
+            path: "cloud/Ordner - 02"
+        },
+        {
+            name: "Datei-04.txt",
+            path: "cloud/Ordner - 02"
+        }
+    ];
+
+    window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
 
 });
