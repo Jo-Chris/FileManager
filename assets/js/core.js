@@ -98,12 +98,14 @@ function createTreeView(data){
 // Click events
 document.getElementById('tbody-table').addEventListener('click', removeSingleItem);
 document.getElementById('tbody-table').addEventListener('click', showDetails);
-document.getElementById('maincol').addEventListener('click', clearTable);
+document.getElementById('maincol').addEventListener('click', removeAllItems);
 document.getElementById('searchbar').addEventListener('keyup', searchForFiles);
 document.getElementById('select-all').addEventListener('click', selectAll);
 document.getElementById('de-select-all').addEventListener('click', deSelectAll);
 document.getElementById('reverse-selection').addEventListener('click', reverseSelection);
 document.getElementById('global-search').addEventListener('keyup', showSearchResults);
+document.getElementById('tbody-table').addEventListener('click', download);
+document.getElementById('button-action-container').addEventListener('click', downloadMultiple);
 
 //this directory needs to get the path of the folder
 async function loadDirectory(directory){
@@ -142,8 +144,6 @@ function showDirectoryData(directoryData){
 
     directoryData.forEach(data => {
         const newRow = document.createElement('tr');
-
-        console.log(data);
 
         newRow.innerHTML = displayTableData(data);
 
@@ -186,7 +186,7 @@ function removeSingleItem(e) {
     };
 }
 
-function clearTable(e){
+function removeAllItems(e){
 
     const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
     //delete arr
@@ -216,6 +216,60 @@ function clearTable(e){
         });
     }
 }
+
+/**
+ * 
+ * @param {*} files - array containing name and path property
+ */
+function download(e){
+   
+    //Check for a "single-item-download" --> button next to the file
+    if(e.target.classList.contains('downloadItem')){
+        let name = e.target.parentNode.parentNode.childNodes[1].lastChild.textContent;
+        let path = mainPath;
+        let files = [];
+        files.push({
+            name: name,
+            path: path
+        });
+       
+        console.log(files);
+        
+        /**@todo exception handling! */
+        window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+
+        return res;
+    }
+}
+
+function downloadMultiple(e){
+    //Check for a multiple-download (bottom Action group)
+
+    if(e.target.classList.contains('download-items')){
+            
+        console.log('hit');
+        /**
+         * (1) get the length of elements (checkboxes)
+         * (2) get the data out of that shitload
+         * (3) download
+         */
+        //length of elements
+        const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+        let arr = [];
+        
+        for (let i = 0; i < checkboxes.length; i++){
+            arr.push({
+               name: checkboxes[i].parentNode.lastChild.textContent,
+               path: console.log(mainPath)
+        });
+
+        //after everything is ready, get those files
+        window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(arr);
+        }
+    }
+}
+
+
 
 /**
  * If more than 2 checkboxed are checked, a further actionDialog appears
@@ -281,7 +335,7 @@ function searchForFiles(){
         if(!data.name.toLowerCase().indexOf(enteredText)){
             const newRow = document.createElement('tr');
 
-            newRow.innerHTML = displayTableData(data);
+            newRow.innerHTML = showDirectoryData(data);
             
             //append the row
             document.querySelector('tbody').append(newRow);
@@ -289,32 +343,49 @@ function searchForFiles(){
      });
 }
 
+/**
+ * async fetch function - fetch data from api (userSearch input)
+ * @returns data promise
+ */
 async function globalSearch(){
     let searchVal = document.getElementById('global-search').value;
 
+    if(searchVal === ''){
+        document.getElementById('tbody-table').innerHTML = '';
+        return;
+    }
+
     console.log('fetching for..' + searchVal);
 
-    const res = await fetch(`api/data/?mode=search&key=[${searchVal}]`)    //api/data?direc
+    const res = await fetch(`api/data/?mode=search&key=${searchVal}`)    //api/data?direc
 
     //console.log("fetching... " + directory);
     //globalPathVar = `${directory}`;
-
+    
     const data = await res.json();
 
     return data;
 }
-
+/**
+ * handel promise from @function globalSearch and fill the table with data
+ */
 function showSearchResults(){
-    globalSearch().then(res => {
-        res.data.forEach((data) => {
-            //noch kein zugriff auf data, da data ordner umfasst
-            console.log(data);
-            displayTableData(data);
+    globalSearch()
+        .then(res => {
+            
+            console.log(res);
+            //fill table with searched data
+            showDirectoryData(res.data)
         })
-    });
+        .catch(err => {
+            return; //no search provided, so nothing should happen
+        });
 }
 
-
+/**
+ * 
+ * @param {*} data - data to be displayed in the table
+ */
 function displayTableData(data){
     console.log(data.size);
 
@@ -326,13 +397,16 @@ function displayTableData(data){
             <td class="table-light">${calcRealSize(data.size)}</td>
             <td class="table-light">${formatDate(data.date_modified)}</td>
             <td class="table-light text-center"> 
-            <button class="btn btn-danger  deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-            <button class="btn btn-primary  downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
+            <button class="btn btn-danger deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+            <button class="btn btn-primary downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
         </tr>
     `;
 }
 
-
+/**
+ * 
+ * @param {*} bool - true: show Bottom buttons, false: hide bottomButtons
+ */
 function showBottomButtons(bool){
     if(bool){
         document.querySelector('#down-remove-btn').classList.remove('invisible');
@@ -379,27 +453,23 @@ function reverseSelection(){
     showDetails();
 }
 
-
-
 /*********************************************************************************
  *                      U T I L I T Y   F U N C T I O N S                        *
  *********************************************************************************/
-
 /**
- * 
+ *
  * @param {*} arr that contains a name and a path
  */
- function createDelteJSONArray(name, path){
+function createDelteJSONArray(name, path) {
     //get the arr of objects to delete
     let deleteJSON = [];
-    
     deleteJSON.push({
-            name: name,
-            path: path
-        });
-
+        name: name,
+        path: path
+    });
     return deleteJSON;
- }
+}
+
 
 /**
  * @param {*} num number to be rounded 

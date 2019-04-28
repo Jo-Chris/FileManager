@@ -93,7 +93,7 @@
 
                     <button class="btn btn-danger clear-table invisible float-right mr-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
                     <button class="btn btn-info transfer-items invisible float-right mr-2 ml-2" id="down-transfer-btn"><i class="fas fa-random pr-2"></i>Transferieren</button>
-                    <button class="btn btn-primary transfer-items invisible float-right" id="down-download-btn"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
+                    <button class="btn btn-primary download-items invisible float-right" id="down-download-btn"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
                 </div>
 
                 </div>
