@@ -97,7 +97,7 @@ function createTreeView(data){
 
 // Click events
 document.getElementById('tbody-table').addEventListener('click', removeSingleItem);
-document.getElementById('tbody-table').addEventListener('click', showDetails);
+document.getElementById('tbody-table').addEventListener('click', showBottomButtonActionGroup);
 document.getElementById('maincol').addEventListener('click', removeAllItems);
 document.getElementById('searchbar').addEventListener('keyup', searchForFiles);
 document.getElementById('select-all').addEventListener('click', selectAll);
@@ -140,24 +140,25 @@ function showDirectoryData(directoryData){
     document.querySelector('tbody').innerHTML='';
     //get the length
     
+    if(directoryData !== undefined){
+        directoryData.forEach(data => {
+            console.log(data);
+            //push the data to the globalArrayVal
+            globalArrayVal.push(data);
+            const newRow = document.createElement('tr');
 
-    directoryData.forEach(data => {
-        console.log(data);
-        //push the data to the globalArrayVal
-        globalArrayVal.push(data);
-        const newRow = document.createElement('tr');
+            newRow.innerHTML = displayTableData(data);
 
-        newRow.innerHTML = displayTableData(data);
+            //append the row
+            document.querySelector('tbody').append(newRow);
 
-        //append the row
-        document.querySelector('tbody').append(newRow);
+        });
 
-    });
-
-    //if fetch was successful, show the action-buttons
-    showBottomActions();
-    //show tableData
-    console.log(globalArrayVal);
+        //if fetch was successful, show the action-buttons
+        showBottomActions();
+        //show tableData
+        console.log(globalArrayVal);
+    }
 }
 
 /**
@@ -275,7 +276,7 @@ function downloadMultiple(e){
  * enabling the user to remove these elements or (transfer them into another folder or do sth else )
  * @param {*} e
  */
-function showDetails(e){
+function showBottomButtonActionGroup(){
     const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
 
     //every checkbox enabled increases the counter by 1
@@ -287,10 +288,8 @@ function showDetails(e){
     }
     //if greater than 2, show action Dialog
     if(cbCounter >= 2){
-        if(e.target.classList.contains('checkbox')){
-            // here todo boi 
-
-        }
+        showBottomButtons(true);
+    }else{
         showBottomButtons(false);
     }
 }
@@ -447,7 +446,7 @@ function selectAll(){
         el.checked = true;
     });
 
-    showBottomButtons(true);
+    showBottomButtonActionGroup();
 }
 
 function deSelectAll(){
@@ -456,7 +455,7 @@ function deSelectAll(){
         el.checked = false;
     });
 
-    showBottomButtons(false);
+    showBottomButtonActionGroup();
 }
 
 function reverseSelection(){
@@ -465,7 +464,7 @@ function reverseSelection(){
         el.checked ? el.checked = false : el.checked = true;
     });
 
-    showDetails();
+    showBottomButtonActionGroup();
 }
 
 /*********************************************************************************
