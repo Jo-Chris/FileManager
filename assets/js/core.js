@@ -3,7 +3,7 @@
 let globalPathVar = [];
 
 //bad approach, bad smell (saves the currentTable as array after every fetch)
-let globalArrayVal = '';
+let globalArrayVal = [];
 
 //for deleting items
 let mainPath = '';
@@ -118,7 +118,7 @@ async function loadDirectory(directory){
 
     //after fetch is done and folders appear, show the searchbar and current path-value
     showPathAndSearchbar(directory);
-    //the next bad smell...
+    //this var references the current path 
     mainPath = directory;
 
     return data;
@@ -131,7 +131,6 @@ function showPathAndSearchbar(path){
    document.getElementById('path-value').textContent = path;
 }
 
-
 /**
  * Display the content of the current Folder
  * @param {*} directoryData - loads the data from a specific directory and displays it in the table
@@ -143,6 +142,9 @@ function showDirectoryData(directoryData){
     
 
     directoryData.forEach(data => {
+        console.log(data);
+        //push the data to the globalArrayVal
+        globalArrayVal.push(data);
         const newRow = document.createElement('tr');
 
         newRow.innerHTML = displayTableData(data);
@@ -154,8 +156,8 @@ function showDirectoryData(directoryData){
 
     //if fetch was successful, show the action-buttons
     showBottomActions();
-    //DELETE LATER --> bad smell
-    globalArrayVal = getTableAsArray();
+    //show tableData
+    console.log(globalArrayVal);
 }
 
 /**
@@ -218,7 +220,6 @@ function removeAllItems(e){
 }
 
 /**
- * 
  * @param {*} files - array containing name and path property
  */
 function download(e){
@@ -269,8 +270,6 @@ function downloadMultiple(e){
     }
 }
 
-
-
 /**
  * If more than 2 checkboxed are checked, a further actionDialog appears
  * enabling the user to remove these elements or (transfer them into another folder or do sth else )
@@ -299,15 +298,17 @@ function showDetails(e){
 /**
  * Transfers the table data into an array and return it
  * @todo for backend
+ * @deprecated - dont use this anymore
  */
 function getTableAsArray(){
     let tableData = document.getElementById('tbody-table');
     let arr = [];
+
     for (let i = 0; i < tableData.rows.length; i++){
         arr.push({
-            name: tableData.rows[i].cells[1].textContent,
-            size: tableData.rows[i].cells[2].innerHTML,
-            lastModified: tableData.rows[i].cells[3].innerHTML
+            name: tableData.rows[i].cells[0].textContent,
+            size: tableData.rows[i].cells[1].textContent,
+            lastModified: tableData.rows[i].cells[3].textContent
         });
     }
     return arr;
@@ -320,27 +321,60 @@ function getTableAsArray(){
  * @todo the algorithm for searching items needs an overhaul 
  */
 function searchForFiles(){
-    //if the user removes all entered chars, get the old stuff back in
-     if (document.querySelector('#searchbar').value == ''){
-        showDirectoryData(globalArrayVal);
-     }
-     //clear current view
-     document.querySelector('tbody').innerHTML='';
-
-     let tableData = globalArrayVal;
-     let enteredText = document.querySelector('#searchbar').value;
-
-     tableData.forEach((data) => {
-         
-        if(!data.name.toLowerCase().indexOf(enteredText)){
+    /**
+     * i know this is duplicate code.. but we get the raw data, then calculate the bits and bytes and the last modified date 
+     * and that data gets saved.. so either this way or fetching the data again, which is bad
+     */
+    if (document.querySelector('#searchbar').value == ''){
+        globalArrayVal.forEach(data => {
+            //create new row
             const newRow = document.createElement('tr');
+            //create id (for what?)
+            let id = document.querySelector('tbody').rows.length;
 
-            newRow.innerHTML = showDirectoryData(data);
-            
+            newRow.innerHTML = `
+                    <tr class="dynRow" data-id="${id++}">
+                        <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
+                        <td class="table-light">${data.size}</td>
+                        <td class="table-light">${data.date_modified}</td>
+                        <td class="table-light text-center"> 
+                        <button class="btn btn-danger deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+                        <button class="btn btn-primary downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
+                    </tr>
+            `;
             //append the row
             document.querySelector('tbody').append(newRow);
-        }
-     });
+        });
+    }
+    //clear current view
+    document.querySelector('tbody').innerHTML='';
+
+    let tableData = globalArrayVal;
+    console.log(tableData);
+    let enteredText = document.querySelector('#searchbar').value;
+
+    tableData.forEach((data) => {
+        
+    if(!data.name.toLowerCase().indexOf(enteredText)){
+        const newRow = document.createElement('tr');
+
+        let id = document.querySelector('tbody').rows.length;
+
+        newRow.innerHTML = `
+                    <tr class="dynRow" data-id="${id++}">
+                        <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
+                        <td class="table-light">${data.size}</td>
+                        <td class="table-light">${data.date_modified}</td>
+                        <td class="table-light text-center"> 
+                        <button class="btn btn-danger deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
+                        <button class="btn btn-primary downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
+                    </tr>
+            `;
+        
+        //append the row
+        document.querySelector('tbody').append(newRow);
+    }
+    });
 }
 
 /**
@@ -470,7 +504,6 @@ function createDelteJSONArray(name, path) {
     return deleteJSON;
 }
 
-
 /**
  * @param {*} num number to be rounded 
  * @param {*} n numnber of decimals
@@ -482,7 +515,6 @@ function roundTo(num, n){
 }
 
 /**
- * 
  * @param {*} path get the current path
  * @returns a path-array
  */
@@ -508,7 +540,6 @@ function formatDate(date){
 }
 
 /**
- * 
  * @param {*} byte - the size of a file
  * @return its real size 
  */
@@ -529,7 +560,6 @@ function calcRealSize(byte){
         return `${roundTo(byte/1000, 2)} GB`
     } 
 }
-
 
 /**
  *
