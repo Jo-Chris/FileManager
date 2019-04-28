@@ -89,7 +89,11 @@ $(document).ready(function(){
         //platzhalter code
         bootbox.dialog({ 
             message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Dieses Feature steht in Kürze zur Verfügung...</div>', 
-            closeButton: true 
+            closeButton: true, 
+            callback:function(e) {
+                
+                //wird ausgeführt, wenn button clicked
+            }
         })
     });
 });

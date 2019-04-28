@@ -7,5 +7,6 @@
         <script src="assets/js/file-explorer.js" type="text/javascript"></script>
         <script src="assets/js/file-operations.js" type="text/javascript"></script>
     <?php endif; ?>
+    <!-- :-D -->
     </body>
 </html>
