@@ -116,8 +116,11 @@ async function loadDirectory(directory){
 
     const data = await res.json();
 
-    //after fetch is done and folders appear, show the searchbar and current path-value
-    showPathAndSearchbar(directory);
+    if(!directory){
+        //after fetch is done and folders appear, show the searchbar and current path-value
+        showPathAndSearchbar(directory);
+        showFolderIsEmpty();
+    }
     //this var references the current path 
     mainPath = directory;
 
@@ -141,6 +144,10 @@ function showDirectoryData(directoryData){
     //get the length
     
     if(directoryData !== undefined){
+
+        //make table visible
+        document.getElementById('main-table').classList.remove('invisible')
+
         directoryData.forEach(data => {
             console.log(data);
             //push the data to the globalArrayVal
@@ -152,12 +159,9 @@ function showDirectoryData(directoryData){
             //append the row
             document.querySelector('tbody').append(newRow);
 
+            //if fetch was successful, show the action-buttons
+            showBottomActions();
         });
-
-        //if fetch was successful, show the action-buttons
-        showBottomActions();
-        //show tableData
-        console.log(globalArrayVal);
     }
 }
 
@@ -411,8 +415,8 @@ function displayTableData(data){
             <td class="table-light">${calcRealSize(data.size)}</td>
             <td class="table-light">${formatDate(data.date_modified)}</td>
             <td class="table-light text-center"> 
-            <button class="btn btn-danger deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-            <button class="btn btn-primary downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
+            <button class="btn btn-outline-danger deleteItem ml-2"><i class="far fa-trash-alt"></i></button>
+            <button class="btn btn-outline-primary downloadItem "><i class="fas fa-cloud-download-alt "></i></button></td>
         </tr>
     `;
 }

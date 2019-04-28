@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->
-            
+        
             <div class="h-100 p-3">
                 <div class="input-group mb-3" id="seachbar-path-container" style="display: none;">
                     <div class="input-group-prepend">
@@ -70,9 +70,10 @@
                     </div>
                     <input type="text" class="form-control" id="searchbar" aria-describedby="basic-addon3" placeholder="Suche...">
                 </div>
-
-                <div class="table-responsive-lg">
-                    <table class="table mt-0 align-middle" id="main-list">
+                <!-- if table is empty, show our rotating logo-->
+                
+                <div class="table-responsive-lg invisible" id="main-table">
+                    <table class="table table-striped mt-0 align-middle" id="main-list">
                         <thead class="">
                             <th scope="col" class="table-dark col-1">Dateinname</th>
                             <th scope="col" class="table-dark col-1">Größe</th>
@@ -84,6 +85,9 @@
                         </tbody>
                     </table>
                 </div>
+
+                
+
                 <div id="button-action-container" class="text-left" style="display: none;">
                     <hr style="background-size: 4px; border-top: 4px solid #ccc; border-color: #ccc;">
                     
@@ -91,9 +95,9 @@
                     <button id="de-select-all" class="btn btn-outline-primary"><i class="fas fa-minus-circle"></i> Auswahl zurücksetzen</button>
                     <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt"></i>Auswahl umkehren</button>
 
-                    <button class="btn btn-danger clear-table invisible float-right mr-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
-                    <button class="btn btn-info transfer-items invisible float-right mr-2 ml-2" id="down-transfer-btn"><i class="fas fa-random pr-2"></i>Transferieren</button>
-                    <button class="btn btn-primary download-items invisible float-right" id="down-download-btn"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
+                    <button class="btn btn-outline-danger clear-table invisible float-right mr-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
+                    <button class="btn btn-outline-secondary transfer-items invisible float-right mr-2 ml-2" id="down-transfer-btn"><i class="fas fa-random pr-2"></i>Transferieren</button>
+                    <button class="btn btn-outline-primary download-items invisible float-right" id="down-download-btn"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
                 </div>
 
                 </div>
