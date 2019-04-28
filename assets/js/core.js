@@ -332,16 +332,8 @@ function searchForFiles(){
             //create id (for what?)
             let id = document.querySelector('tbody').rows.length;
 
-            newRow.innerHTML = `
-                    <tr class="dynRow" data-id="${id++}">
-                        <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
-                        <td class="table-light">${data.size}</td>
-                        <td class="table-light">${data.date_modified}</td>
-                        <td class="table-light text-center"> 
-                        <button class="btn btn-danger deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-                        <button class="btn btn-primary downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
-                    </tr>
-            `;
+            newRow.innerHTML = displayTableData(data);
+
             //append the row
             document.querySelector('tbody').append(newRow);
         });
@@ -349,27 +341,16 @@ function searchForFiles(){
     //clear current view
     document.querySelector('tbody').innerHTML='';
 
-    let tableData = globalArrayVal;
-    console.log(tableData);
     let enteredText = document.querySelector('#searchbar').value;
 
-    tableData.forEach((data) => {
+    globalArrayVal.forEach((data) => {
         
     if(!data.name.toLowerCase().indexOf(enteredText)){
         const newRow = document.createElement('tr');
 
         let id = document.querySelector('tbody').rows.length;
 
-        newRow.innerHTML = `
-                    <tr class="dynRow" data-id="${id++}">
-                        <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
-                        <td class="table-light">${data.size}</td>
-                        <td class="table-light">${data.date_modified}</td>
-                        <td class="table-light text-center"> 
-                        <button class="btn btn-danger deleteItem ml-2"><i class="far fa-trash-alt"></i> Löschen </button>
-                        <button class="btn btn-primary downloadItem "><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen </button></td>
-                    </tr>
-            `;
+        newRow.innerHTML = newRow.innerHTML = displayTableData(data);
         
         //append the row
         document.querySelector('tbody').append(newRow);
