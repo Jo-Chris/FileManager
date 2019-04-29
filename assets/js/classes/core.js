@@ -1,14 +1,9 @@
-// guess we should use a pattern here, or use a better approach avoiding globals
-// get the current path you're in
-let globalPathVar = [];
-
+//create new Utils
+const utils = new Utils();
 //bad approach, bad smell (saves the currentTable as array after every fetch)
 let globalArrayVal = [];
-
 //for deleting items
 let mainPath = '';
-
-
 
 /*********************************************************************************
  *            T R E E  S T R U C T U R E     &   F E T C H I N G                 *
@@ -112,7 +107,6 @@ async function loadDirectory(directory){
     const res = await fetch(`api/data/?directory=${directory}`)    //api/data?direc
 
     console.log("fetching... " + directory);
-    globalPathVar = `${directory}`;
 
     const data = await res.json();
 
@@ -135,7 +129,7 @@ function showPathAndSearchbar(path){
 }
 
 /**
- * Display the content of the current Folder
+ * Display the content of the current Folder if its not a folder, put it in. if its a folder, put it at the very top
  * @param {*} directoryData - loads the data from a specific directory and displays it in the table
  */
 function showDirectoryData(directoryData){
@@ -149,21 +143,39 @@ function showDirectoryData(directoryData){
         document.getElementById('main-table').classList.remove('invisible')
 
         directoryData.forEach(data => {
-            console.log(data);
-            //push the data to the globalArrayVal
-            globalArrayVal.push(data);
-            const newRow = document.createElement('tr');
+            //If the element is a folder, the next method will handle it by putting it to the top
+            if(data.type !== 'folder'){
+                //push the data to the globalArrayVal
+                globalArrayVal.push(data);
+                const newRow = document.createElement('tr');
 
-            newRow.innerHTML = displayTableData(data);
+                newRow.innerHTML = displayTableData(data);
 
-            //append the row
-            document.querySelector('tbody').append(newRow);
+                //append the row
+                document.querySelector('tbody').append(newRow);
 
-            //if fetch was successful, show the action-buttons
-            showBottomActions();
+                //if fetch was successful, show the action-buttons
+                showBottomActions();
+            }
+        });
+
+        //now if theres a table... move it to the top
+        directoryData.forEach(data => {
+            if(data.type === 'folder'){
+                 //create tr element
+                const newRow = document.createElement('tr');
+                //fill tr with data
+                newRow.innerHTML = displayTableData(data);
+                //now insert that row at the very top
+                const firstRow = document.querySelector('tbody').firstChild;
+                //insert it at the very top
+                document.querySelector('tbody').insertBefore(newRow, firstRow);
+
+            }
         });
     }
 }
+
 
 /**
  * @param {*} e the element that should be removed
@@ -210,8 +222,9 @@ function removeAllItems(e){
                         let name = el.parentNode.lastChild.textContent;
                         //current path is always displayed at top
                         let path = mainPath;
-
-                        console.log(deleteArr.push(createDelteJSONArray(name, path)));
+                        //create array of elements to be deleted
+                        deleteArr.push(createDelteJSONArray(name, path));
+                        
                         //Delete from UI
                         el.parentNode.parentNode.remove();
                     }
@@ -251,12 +264,6 @@ function downloadMultiple(e){
 
     if(e.target.classList.contains('download-items')){
             
-        console.log('hit');
-        /**
-         * (1) get the length of elements (checkboxes)
-         * (2) get the data out of that shitload
-         * (3) download
-         */
         //length of elements
         const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
         let arr = [];
@@ -382,8 +389,6 @@ async function globalSearch(){
     
     const data = await res.json();
 
-    console.log(data);
-
     return data;
 }
 /**
@@ -392,8 +397,6 @@ async function globalSearch(){
 function showSearchResults(){
     globalSearch()
         .then(res => {
-
-            console.log(res.data);
             //fill table with searched data
             showDirectoryData(res.data)
         })
@@ -407,15 +410,14 @@ function showSearchResults(){
  * @param {*} data - data to be displayed in the table
  */
 function displayTableData(data){
-    console.log(data.size);
 
     let id = document.querySelector('tbody').rows.length;
 
     return `
         <tr class="dynRow" data-id="${id++}">
-            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
-            <td class="table-light align-middle">${calcRealSize(data.size)}</td>
-            <td class="table-light align-middle">${formatDate(data.date_modified)}</td>
+            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
+            <td class="table-light align-middle">${utils.calcRealSize(data.size)}</td>
+            <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
             <button class="btn btn-outline-danger deleteItem ml-2 float-right"><i class="far fa-trash-alt"></i></button>
             <button class="btn btn-outline-primary downloadItem float-right"><i class="fas fa-cloud-download-alt "></i></button></td>
@@ -472,264 +474,3 @@ function reverseSelection(){
 
     showBottomButtonActionGroup();
 }
-
-/*********************************************************************************
- *                      U T I L I T Y   F U N C T I O N S                        *
- *********************************************************************************/
-/**
- *
- * @param {*} arr that contains a name and a path
- */
-function createDelteJSONArray(name, path) {
-    //get the arr of objects to delete
-    let deleteJSON = [];
-    deleteJSON.push({
-        name: name,
-        path: path
-    });
-    return deleteJSON;
-}
-
-/**
- * @param {*} num number to be rounded 
- * @param {*} n numnber of decimals
- * @returns a rounded digit
- */
-function roundTo(num, n){
-    let f = Math.pow(10, n);
-    return Math.round(num * f)/f;
-}
-
-/**
- * @param {*} path get the current path
- * @returns a path-array
- */
-function setGlobalPath(path){
-    tempArr = [];
-    paths = path.split('/');
-    paths.forEach((el)=>{
-       tempArr.push(el);
-    });
-
-    return tempArr;
-}
-
-/**
- * @param {*} date - the date given by the background 
- * @returns a readable date
- */
-function formatDate(date){
-    //create new date from unix timestamp
-    let newDate = new Date(date*1000);
-    
-    return newDate.toLocaleString();  // f.e 26.4.2019, 20:04:43  
-}
-
-/**
- * @param {*} byte - the size of a file
- * @return its real size 
- */
-function calcRealSize(byte){
-    if(byte === 0){
-        return `0  Byte`;
-    }
-
-    if (byte < 1000){
-        return `${byte} Byte`
-    }
-    if (byte < 1000000){
-        return `${roundTo(byte/1000, 2)} KB`
-    }else if(byte < 1000000000){
-        return `${roundTo(byte/1000000, 2)} MB`;
-    //guess our application isnt construed for GByte (until now!) 
-    }else{
-        return `${roundTo(byte/1000, 2)} GB`
-    } 
-}
-
-/**
- *
- * @param {*} filename get the filename and return the appropriate icon
- * @returns the font-awesome icon-class for the specific @param filename
- */
-function determineFileIcon(filename, type){
-    let fileending = filename.split('.')[1];
-    let iconClass = 'fa fa-info-circle';
-
-    console.log(type);
-
-    if(type === 'folder'){
-        return 'fa fa-folder-open';
-    }
-
-    switch (fileending) {
-        case 'ico':
-        case 'gif':
-        case 'jpg':
-        case 'jpeg':
-        case 'jpc':
-        case 'jp2':
-        case 'jpx':
-        case 'xbm':
-        case 'wbmp':
-        case 'png':
-        case 'bmp':
-        case 'tif':
-        case 'tiff':
-        case 'svg':
-            iconClass = 'fas fa-file-image';
-            break;
-        case 'passwd':
-        case 'ftpquota':
-        case 'sql':
-        case 'js':
-        case 'json':
-        case 'sh':
-        case 'config':
-        case 'twig':
-        case 'tpl':
-        case 'md':
-        case 'gitignore':
-        case 'c':
-        case 'cpp':
-        case 'cs':
-        case 'py':
-        case 'map':
-        case 'lock':
-        case 'dtd':
-            iconClass = 'fa fa-file-code';
-            break;
-        case 'txt':
-        case 'ini':
-        case 'conf':
-        case 'log':
-        case 'htaccess':
-            iconClass = 'fa fa-file-alt';
-            break;
-        case 'css':
-        case 'less':
-        case 'sass':
-        case 'scss':
-            iconClass = 'fa fa-css3';
-            break;
-        case 'zip':
-        case 'rar':
-        case 'gz':
-        case 'tar':
-        case '7z':
-            iconClass= 'fa fa-file-archive';
-            break;
-        case 'php':
-        case 'php4':
-        case 'php5':
-        case 'phps':
-        case 'phtml':
-            iconClass= 'fa fa-code';
-            break;
-        case 'htm':
-        case 'html':
-        case 'shtml':
-        case 'xhtml':
-            iconClass = 'fa fa-html5';
-            break;
-        case 'xml':
-        case 'xsl':
-            iconClass = 'fa fa-file-excel';
-            break;
-        case 'wav':
-        case 'mp3':
-        case 'mp2':
-        case 'm4a':
-        case 'aac':
-        case 'ogg':
-        case 'oga':
-        case 'wma':
-        case 'mka':
-        case 'flac':
-        case 'ac3':
-        case 'tds':
-            iconClass= 'fa fa-music';
-            break;
-        case 'm3u':
-        case 'm3u8':
-        case 'pls':
-        case 'cue':
-            iconClass = 'fa fa-headphones';
-            break;
-        case 'avi':
-        case 'mpg':
-        case 'mpeg':
-        case 'mp4':
-        case 'm4v':
-        case 'flv':
-        case 'f4v':
-        case 'ogm':
-        case 'ogv':
-        case 'mov':
-        case 'mkv':
-        case '3gp':
-        case 'asf':
-        case 'wmv':
-            iconClass = 'fa fa-file-video';
-            break;
-        case 'eml':
-        case 'msg':
-            iconClass = 'fa fa-envelope';
-            break;
-        case 'xls':
-        case 'xlsx':
-            iconClass = 'fa fa-file-excel';
-            break;
-        case 'csv':
-            iconClass= 'fa fa-file-text';
-            break;
-        case 'bak':
-            iconClass = 'fa fa-clipboard';
-            break;
-        case 'doc':
-        case 'docx':
-            iconClass= 'fa fa-file-word';
-            break;
-        case 'ppt':
-        case 'pptx':
-            iconClass= 'fa fa-file-powerpoint';
-            break;
-        case 'ttf':
-        case 'ttc':
-        case 'otf':
-        case 'woff':
-        case 'woff2':
-        case 'eot':
-        case 'fon':
-            iconClass = 'fa fa-font';
-            break;
-        case 'pdf':
-            iconClass = 'fa fa-file-pdf';
-            break;
-        case 'psd':
-        case 'ai':
-        case 'eps':
-        case 'fla':
-        case 'swf':
-            iconClass = 'fa fa-file-image';
-            break;
-        case 'exe':
-        case 'msi':
-            iconClass = 'fa fa-file';
-            break;
-        case 'bat':
-            iconClass = 'fa fa-terminal';
-            break;
-        default:
-            iconClass = 'fa fa-info-circle';
-    }
-    return iconClass;
-
-
-}
-
-
-
-
-
-
