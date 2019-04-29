@@ -71,7 +71,7 @@
                     <input type="text" class="form-control" id="searchbar" aria-describedby="basic-addon3" placeholder="Suche...">
                 </div>
                 <!-- if table is empty, show our rotating logo-->
-                
+
                 <div class="table-responsive-lg invisible" id="main-table">
                     <table class="table table-striped mt-0 align-middle" id="main-list">
                         <thead class="">
