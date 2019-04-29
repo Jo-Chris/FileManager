@@ -384,6 +384,8 @@ async function globalSearch(){
     
     const data = await res.json();
 
+    console.log(data);
+
     return data;
 }
 /**
@@ -413,7 +415,7 @@ function displayTableData(data){
 
     return `
         <tr class="dynRow" data-id="${id++}">
-            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x text-primary"></i></button>${data.name}</td>
+            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
             <td class="table-light align-middle">${calcRealSize(data.size)}</td>
             <td class="table-light align-middle">${formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
@@ -552,9 +554,15 @@ function calcRealSize(byte){
  * @param {*} filename get the filename and return the appropriate icon
  * @returns the font-awesome icon-class for the specific @param filename
  */
-function determineFileIcon(filename){
+function determineFileIcon(filename, type){
     let fileending = filename.split('.')[1];
     let iconClass = 'fa fa-info-circle';
+
+    console.log(type);
+
+    if(type === 'folder'){
+        return 'fa fa-folder-open';
+    }
 
     switch (fileending) {
         case 'ico':
