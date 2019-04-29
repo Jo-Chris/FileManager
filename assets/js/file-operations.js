@@ -4,11 +4,31 @@ $(document).ready(function(){
     $(".navbar-nav > li > a#upload").click(function(){
 
         bootbox.dialog({
-            title: 'Upload Menu',
-            message: `<form id="formUpload" action="#" method="post" enctype="multipart/form-data">
-            <input id="uploadPath" type="hidden" name="path" value="Ordner A">
-            <input id="uploadFiles" type="file" name="files[]" multiple>
-            <button type="submit" class="btn btn-primary">Upload</button> </form>`,
+            message: `<div class="top-level-container" data-toggle="modal" data-target="#myModal">
+          <div class="modal-header" id="superimportantheader2">
+          <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
+          </div>  
+          <div class="modal-body">
+            <p>Pfad: </p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+              </nav>
+
+              <form>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Datei</label>
+                    <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Name des Ordners">
+                  </div>
+                </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+            <button type="button" class="btn btn-primary">Upload</button>
+          </div>  
+            </div>`,
 
             size: "large",
             onEscape: false,
@@ -88,11 +108,36 @@ $(document).ready(function(){
         //UI vom Max hier rein...
         //platzhalter code
         bootbox.dialog({ 
-            message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Dieses Feature steht in Kürze zur Verfügung...</div>', 
+            message: `<div class="top-level-container">
+            
+            <div class="modal-header" id="superimportantheader">
+            <h2 class="modal-title" id="myModalLabel">Ordner anlegen</h2>
+          </div>
+          <div class="modal-body">
+            <p>Pfad: </p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+              </nav>
+
+              <form>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Name</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Name des Ordners">
+                  </div>
+                </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+            <button type="button" class="btn btn-primary">Anlegen</button>
+          </div>
+            </div>`, 
             closeButton: true, 
             callback:function(e) {
                 
-                //wird ausgeführt, wenn button clicked
+                //Javscript Code heir (aber konzentrier die auf HTML oben)
             }
         })
     });
