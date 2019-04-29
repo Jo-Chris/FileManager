@@ -159,13 +159,13 @@ function showDirectoryData(directoryData){
             }
         });
 
-        //now if theres a table... move it to the top
+        //now if theres a folder... move it to the top
         directoryData.forEach(data => {
             if(data.type === 'folder'){
                  //create tr element
                 const newRow = document.createElement('tr');
                 //fill tr with data
-                newRow.innerHTML = displayTableData(data);
+                newRow.innerHTML = displayTableData(data, true);
                 //now insert that row at the very top
                 const firstRow = document.querySelector('tbody').firstChild;
                 //insert it at the very top
@@ -244,18 +244,16 @@ function download(e){
    
     //Check for a "single-item-download" --> button next to the file
     if(e.target.classList.contains('downloadItem')){
-        let name = e.target.parentNode.parentNode.childNodes[1].lastChild.textContent;
-        let path = mainPath;
-        let files = [];
-        files.push({
-            name: name,
-            path: path
-        });
-        
-        /**@todo exception handling! */
-        window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
 
-        return res;
+            let files = [];
+            files.push({
+                name: e.target.parentNode.parentNode.childNodes[1].lastChild.textContent,
+                path: e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value
+            });
+            console.log('Download item: '+ e.target.parentNode.parentNode.childNodes[1].lastChild.textContent + ' Path: ' +                 e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value);
+            
+            /**@todo exception handling! */
+           //window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
     }
 }
 
@@ -263,15 +261,16 @@ function downloadMultiple(e){
     //Check for a multiple-download (bottom Action group)
 
     if(e.target.classList.contains('download-items')){
-            
         //length of elements
         const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+
         let arr = [];
-        
+
         for (let i = 0; i < checkboxes.length; i++){
+            console.log('Download item: '+ checkboxes[i].parentNode.lastChild.textContent + ' Path: ' + checkboxes[i].parentNode.firstChild.value);
             arr.push({
                name: checkboxes[i].parentNode.lastChild.textContent,
-               path: mainPath
+               path: checkboxes[i].parentNode.firstChild.value
         });
 
         //after everything is ready, get those files
@@ -409,18 +408,18 @@ function showSearchResults(){
  * 
  * @param {*} data - data to be displayed in the table
  */
-function displayTableData(data){
+function displayTableData(data, bool){
 
     let id = document.querySelector('tbody').rows.length;
 
     return `
         <tr class="dynRow" data-id="${id++}">
-            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
+           <td class="table-light align-middle"><input type="checkbox" class=" ${bool ? "invisible" : "visible" } value="${data.path}" name="filedata" ></input><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
             <td class="table-light align-middle">${utils.calcRealSize(data.size)}</td>
             <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
             <button class="btn btn-outline-danger deleteItem ml-2 float-right"><i class="far fa-trash-alt"></i></button>
-            <button class="btn btn-outline-primary downloadItem float-right"><i class="fas fa-cloud-download-alt "></i></button></td>
+            <button class="btn btn-outline-primary downloadItem float-right ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt"></i></button></td>
         </tr>
     `;
 }
