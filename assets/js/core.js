@@ -370,6 +370,8 @@ async function globalSearch(){
 
     if(searchVal === ''){
         document.getElementById('tbody-table').innerHTML = '';
+        //if the searchbar is empty, show the latest visited folder
+        //showDirectoryData(globalArrayVal);
         return;
     }
 
@@ -390,8 +392,8 @@ async function globalSearch(){
 function showSearchResults(){
     globalSearch()
         .then(res => {
-            
-            console.log(res);
+
+            console.log(res.data);
             //fill table with searched data
             showDirectoryData(res.data)
         })
@@ -411,12 +413,12 @@ function displayTableData(data){
 
     return `
         <tr class="dynRow" data-id="${id++}">
-            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x"></i></button>${data.name}</td>
-            <td class="table-light">${calcRealSize(data.size)}</td>
-            <td class="table-light">${formatDate(data.date_modified)}</td>
-            <td class="table-light text-center"> 
-            <button class="btn btn-outline-danger deleteItem ml-2"><i class="far fa-trash-alt"></i></button>
-            <button class="btn btn-outline-primary downloadItem "><i class="fas fa-cloud-download-alt "></i></button></td>
+            <td class="table-light align-middle"><input type="checkbox" value="1" name="filedata" class=""></input><button class="btn mr-2 ml-2"><i class="${determineFileIcon(data.name)} fa-2x text-primary"></i></button>${data.name}</td>
+            <td class="table-light align-middle">${calcRealSize(data.size)}</td>
+            <td class="table-light align-middle">${formatDate(data.date_modified)}</td>
+            <td class="table-light text-center align-middle"> 
+            <button class="btn btn-outline-danger deleteItem ml-2 float-right"><i class="far fa-trash-alt"></i></button>
+            <button class="btn btn-outline-primary downloadItem float-right"><i class="fas fa-cloud-download-alt "></i></button></td>
         </tr>
     `;
 }

@@ -75,10 +75,10 @@
                 <div class="table-responsive-lg invisible" id="main-table">
                     <table class="table table-striped mt-0 align-middle" id="main-list">
                         <thead class="">
-                            <th scope="col" class="table-dark col-1">Dateinname</th>
-                            <th scope="col" class="table-dark col-1">Größe</th>
-                            <th scope="col" class="table-dark col-1">Zuletzt bearbeitet</th>
-                            <th scope="col" class="table-dark col-1 text-center">Aktionen</th>
+                            <th scope="col" class="table-dark col-6 bg-primary">Dateinname</th>
+                            <th scope="col" class="table-dark col-2 bg-primary">Größe</th>
+                            <th scope="col" class="table-dark col-2 bg-primary ">Zuletzt bearbeitet</th>
+                            <th scope="col" class="table-dark col-2 bg-primary text-right">Aktionen</th>
                         </thead>
                         <tbody id="tbody-table">     
                             <!-- Dynamic Content follows here -->
@@ -91,9 +91,9 @@
                 <div id="button-action-container" class="text-left" style="display: none;">
                     <hr style="background-size: 4px; border-top: 4px solid #ccc; border-color: #ccc;">
                     
-                    <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer"></i> Alle auswählen</button>
-                    <button id="de-select-all" class="btn btn-outline-primary"><i class="fas fa-minus-circle"></i> Auswahl zurücksetzen</button>
-                    <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt"></i>Auswahl umkehren</button>
+                    <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer pr-2"></i> Alle auswählen</button>
+                    <button id="de-select-all" class="btn btn-outline-primary ml-2 mr-2"><i class="fas fa-minus-circle pr-2"></i> Auswahl zurücksetzen</button>
+                    <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt pr-2"></i>Auswahl umkehren</button>
 
                     <button class="btn btn-outline-danger clear-table invisible float-right mr-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
                     <button class="btn btn-outline-secondary transfer-items invisible float-right mr-2 ml-2" id="down-transfer-btn"><i class="fas fa-random pr-2"></i>Transferieren</button>
