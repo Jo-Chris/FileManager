@@ -7,6 +7,8 @@
     
 	class DataModel {
 
+	    public static $searchFiles = array();
+
         /**
 			* Get data from directory
             * @param: $directory(string)
@@ -176,8 +178,6 @@
         */
         public static function getDataForSearch($directory, $key){
 
-            $files = array();
-
             // Check if directory exists
 
             if (file_exists($directory)){
@@ -200,7 +200,7 @@
 
                         $path = $directory . "/" . $file;
 
-                        return (array) self::getDataForSearch($path, $key);
+                        self::getDataForSearch($path, $key);
 
                     } else {
 
@@ -208,7 +208,7 @@
 
                         if (preg_match("/" . $key . "/i", $file)){
 
-                            $files[] = array(
+                            self::$searchFiles[] = array(
                                 "date_modified" => filemtime($directory . "/" . $file),
                                 "extension" => pathinfo($file, PATHINFO_EXTENSION),
                                 "name" => $file,
@@ -225,7 +225,7 @@
 
             };
 
-            return (object) $files;
+            return (object) self::$searchFiles;
 
         }
 		

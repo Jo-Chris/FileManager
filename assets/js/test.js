@@ -42,14 +42,14 @@ $(document).ready(function(){
 
     });
 
-    /*$.ajax({
-        url: "api/data/?mode=search&key=Datei-01.txt",
+    $.ajax({
+        url: "api/data/?mode=search&key=txt",
         dataType: "json",
         method: "GET",
         success: function(result){
             console.log(result);
         }
-    });*/
+    });
 
     // CREATE
 
@@ -97,7 +97,7 @@ $(document).ready(function(){
         }
     });*/
 
-    var files = [
+    /*var files = [
         {
             name: "Datei-01.txt",
             path: "cloud/Ordner - 02"
@@ -108,6 +108,6 @@ $(document).ready(function(){
         }
     ];
 
-    window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+    window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);*/
 
 });
