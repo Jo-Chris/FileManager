@@ -238,8 +238,6 @@ function download(e){
             name: name,
             path: path
         });
-       
-        console.log(files);
         
         /**@todo exception handling! */
         window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
@@ -266,7 +264,7 @@ function downloadMultiple(e){
         for (let i = 0; i < checkboxes.length; i++){
             arr.push({
                name: checkboxes[i].parentNode.lastChild.textContent,
-               path: console.log(mainPath)
+               path: mainPath
         });
 
         //after everything is ready, get those files
