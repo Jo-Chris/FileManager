@@ -15,13 +15,12 @@ $(document).ready(function(){
                   <li class="breadcrumb-item active" aria-current="page">Home</li>
                 </ol>
               </nav>
+             
+              <div id="upload"></div>
+              <div class="dropzone" id="dropzone">Hierher ziehen</div> 
+              
+          
 
-              <form>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Datei</label>
-                    <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Name des Ordners">
-                  </div>
-                </form>
 
           </div>
           <div class="modal-footer">
@@ -29,17 +28,17 @@ $(document).ready(function(){
             <button type="button" class="btn btn-primary">Upload</button>
           </div>  
             </div>`,
-
-            size: "large",
+            
             onEscape: false,
             backdrop: true,
             button: {
                 upload: {
                     label: 'Upload',
                     className: 'btn btn-primary',
-                    callback: function(e){
+                    callback: 
+                        function(e){
                         e.preventDefault();
-
+                        
                         let formData = new FormData(),
                             files = document.getElementById("uploadFiles").files;
                 
@@ -61,8 +60,17 @@ $(document).ready(function(){
                                 console.log(result);
                             }
                         });
-                    }
-                }
+                      }
+                      (function(){
+                        var dropzone = document.getElementById('dropzone');
+
+                        dropzone.ondragover = function() {
+                          this.className = 'dropzone dragover';
+                          return false; 
+                        }
+                      }())
+                      
+                      }
             }
         });
 
