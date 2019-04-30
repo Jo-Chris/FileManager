@@ -147,12 +147,15 @@ function showDirectoryData(directoryData){
             if(data.type !== 'folder'){
                 //push the data to the globalArrayVal
                 globalArrayVal.push(data);
+                
                 const newRow = document.createElement('tr');
-
+                //set class of new rom
+                newRow.classList = "dynRow"
+                newRow.setAttribute("data-path", data.path);
                 newRow.innerHTML = displayTableData(data);
 
                 //append the row
-                document.querySelector('tbody').append(newRow);
+                document.querySelector('tbody').appendChild(newRow);
 
                 //if fetch was successful, show the action-buttons
                 showBottomActions();
@@ -193,7 +196,7 @@ function removeSingleItem(e) {
                 let path = mainPath;
                 //create an array containing the name and the path of the element to be deleted
                 let arr = [];
-                arr.push(createDelteJSONArray(name, path));
+                arr.push(utils.createDelteJSONArray(name, path));
                 
                 // Delete from UI 
                 e.target.parentNode.parentNode.remove();
@@ -241,19 +244,18 @@ function removeAllItems(e){
  * @param {*} files - array containing name and path property
  */
 function download(e){
-   
     //Check for a "single-item-download" --> button next to the file
     if(e.target.classList.contains('downloadItem')){
-
+        //console.log('hit');
             let files = [];
             files.push({
                 name: e.target.parentNode.parentNode.childNodes[1].lastChild.textContent,
-                path: e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value
+                path: e.target.parentNode.parentNode.getAttribute('data-path')
             });
-            console.log('Download item: '+ e.target.parentNode.parentNode.childNodes[1].lastChild.textContent + ' Path: ' + e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value);
+            console.log(e.target.parentNode.parentNode.getAttribute('data-path'));
             
             /**@todo exception handling! */
-           window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+          // window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
     }
 }
 
@@ -413,15 +415,14 @@ function displayTableData(data, bool){
     let id = document.querySelector('tbody').rows.length;
 
     return `
-        <tr class="dynRow" data-id="${id++}">
-           <td class="table-light align-middle"><input type="checkbox" class=" ${bool ? "invisible" : "visible" } value="${data.path}" name="filedata" ></input><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
+            <td class="table-light align-middle"><input type="checkbox" class=" ${bool ? "invisible" : "visible" } name="filedata" ></input><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
             <td class="table-light align-middle">${utils.calcRealSize(data.size)}</td>
             <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
             <button class="btn btn-outline-danger deleteItem ml-2 float-right"><i class="far fa-trash-alt"></i></button>
-            <button class="btn btn-outline-primary downloadItem float-right ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt"></i></button></td>
-        </tr>
-    `;
+            <button class="btn btn-outline-primary float-right downloadItem ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt"></i></button></td>
+            </tr>
+            `;
 }
 
 /**
