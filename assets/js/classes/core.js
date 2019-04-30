@@ -3,7 +3,8 @@ const utils = new Utils();
 //bad approach, bad smell (saves the currentTable as array after every fetch)
 let globalArrayVal = [];
 //for deleting items
-let mainPath = '';
+let mainPath = [];
+let mainPathString = "";
 
 /*********************************************************************************
  *            T R E E  S T R U C T U R E     &   F E T C H I N G                 *
@@ -122,7 +123,8 @@ async function loadDirectory(directory){
         showFolderIsEmpty();
     }
     //this var references the current path 
-    mainPath = directory;
+    mainPath = directory.split("/");
+    mainPathString = directory;
 
     return data;
 }
@@ -461,19 +463,96 @@ function displayTableData(data, bool){
 
 
 function newFolder() {
+    //Create new dialog
+    //UI vom Max hier rein...
+    //platzhalter code
+
+    let breadcrumb = "";
+
+    for (let i = 0; i < mainPath.length; i++){
+        breadcrumb += "<li class='breadcrumb-item' aria-current='page'>" + mainPath[i] + "</li>";
+    };
+
+    bootbox.dialog({
+        message: `
+        <div class="top-level-container">
+            <div class="modal-header" id="superimportantheader">
+                <h2 class="modal-title" id="myModalLabel">Ordner anlegen</h2>
+            </div>
+            <div class="modal-body">
+                <p class="m-0">Pfad: </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white p-0">` + breadcrumb + `</ol>
+                </nav>
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Name</label>
+                        <input type="text" class="form-control" id="createFolder" placeholder="Name des Ordners" required>
+                    </div>
+                </form>
+            </div>
+        </div>`,
+        closeButton: true,
+        buttons: {
+            //cancel button
+            cancel: {
+                label: 'Abbrechen',
+                className: 'btn btn-danger',
+                callback: function (e) {
+                    console.log("Test");
+
+                }
+            },
+            create: {
+                label: 'Anlegen',
+                className: 'btn btn-primary',
+                callback: function (e) {
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "api/data",
+                        data: {
+                            name: document.getElementById("createFolder").value,
+                            path: mainPathString
+                        },
+                        dataType: "json",
+                        method: "POST",
+                        success: function(result){
+
+                            setUpTreeStructure();
+
+                            loadDirectory(mainPathString)
+                                .then(res => showDirectoryData(res.data));
+
+                        }
+                    });
+
+                }
+            }
+        }
+    });
+}
+
+function uploadFile() {
+
+    let breadcrumb = "",
+        files;
+
+    for (let i = 0; i < mainPath.length; i++){
+        breadcrumb += "<li class='breadcrumb-item' aria-current='page'>" + mainPath[i] + "</li>";
+    };
+
     bootbox.dialog({
         message: `<div class="top-level-container" data-toggle="modal" data-target="#myModal">
         <div class="modal-header" id="superimportantheader2">
         <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
         </div>  
         <div class="modal-body">
-            <p>Pfad: </p>
+            <p class="m-0">Pfad: </p>
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                <li class="breadcrumb-item active" id="upload-path" aria-current="page">Home</li>
-                </ol>
+                <ol class="breadcrumb bg-white p-0">` + breadcrumb + `</ol>
             </nav>
-            
             <div id="upload"></div>
             <div class="dropzone" id="dropzone">Hierher ziehen</div> 
             </div>
@@ -481,52 +560,45 @@ function newFolder() {
         onEscape: true,
         backdrop: true,
         buttons: {
-              //cancel button
-              cancel: {
-                label: 'Cancel',
+            //cancel button
+            cancel: {
+                label: 'Abbrechen',
                 className: 'btn btn-danger',
                 callback: function(e){
                     console.log("Test");
 
-                }  
-              },
+                }
+            },
 
-              //upload button
-              upload: {
-              label: 'Upload',
-              className: 'btn btn-primary',
-              callback: function(e){
+            //upload button
+            upload: {
+                label: 'Upload',
+                className: 'btn btn-primary',
+                callback: function(e){
 
-                  let files = [];
+                    e.preventDefault();
 
-                  e.preventDefault();
-              
-                  let formData = new FormData();
-          
-                  for ( let i = 0; i < files.length; i++){
-                      formData.append("files[]", files[i]);
-                  };
-          
-                  formData.append("path", document.getElementById("upload-path").value);
+                    let formData = new FormData();
+                    formData.append("files[]", files);
+                    formData.append("path", mainPathString);
 
-                  console.log(formData);
-          
-                  /*$.ajax({
-                      cache: false,
-                      contentType: false,
-                      data: formData,
-                      dataType: "json",
-                      method: "POST",
-                      processData: false,
-                      url: "api/upload",
-                      success: function(result){
-                          console.log(result);
-                      }
-                  });*/
+                    $.ajax({
+                        cache: false,
+                        contentType: false,
+                        data: formData,
+                        dataType: "json",
+                        method: "POST",
+                        processData: false,
+                        url: "api/upload",
+                        success: function(result){
 
-                  console.log("Test");
+                            loadDirectory(mainPathString)
+                                .then(res => showDirectoryData(res.data));
 
-              }  
+                        }
+                    });
+
+                }
             }
         }
     });
@@ -536,58 +608,18 @@ function newFolder() {
     dropzone.ondrop = function (e) {
         e.preventDefault();
         this.className = "dropzone";
-        console.log(files = e.dataTransfer.files);
+        files = e.dataTransfer.files;
     };
 
     dropzone.ondragover = function(){
         this.className = "dropzone dragover";
-        return false; 
+        return false;
     }
 
     dropzone.ondragleave = function(){
         this.className = "dropzone dragleave";
         return false;
     }
-}
-
-function uploadFile() {
-    //Create new dialog
-    console.log('click');
-    //UI vom Max hier rein...
-    //platzhalter code
-    bootbox.dialog({ 
-        message: `
-        <div class="top-level-container">
-            <div class="modal-header" id="superimportantheader">
-                <h2 class="modal-title" id="myModalLabel">Ordner anlegen</h2>
-            </div>
-            <div class="modal-body">
-                <p>Pfad: </p>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">Home</li>
-                    </ol>
-                </nav>
-
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Name</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Name des Ordners">
-                    </div>
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-                <button type="button" class="btn btn-primary">Anlegen</button>
-            </div>
-        </div>`, 
-        closeButton: true, 
-        callback:function(e) {
-            
-            //Javscript Code heir (aber konzentrier die auf HTML oben)
-        }
-    });
 } 
 
 
