@@ -29,12 +29,12 @@
                 $requiredFields = array("gender", "firstname", "lastname", "email", "password", "passwordconfirmation");
 
                 $error = false;
-                $errorFields = array();
+                $this->view->errorMsg = "";
 
                 foreach ($requiredFields as $fieldName){
                     if(!isset($_POST[$fieldName]) || $_POST[$fieldName] == ""){
                         $error = true;
-                        $errorFields[$fieldName] = "Bitte Wert eingeben!";
+                        $this->view->errorMsg = "Bitte alle Pflichtfelder eingeben!";
                     };
                 };
 
@@ -45,10 +45,10 @@
 
                     if (strlen($password) < 8){
                         $error = true;
-                        $errorFields["password"] = "Passwort ist zu kurz! Bitte mindestens 8 Zeichen eingeben";
+                        $this->view->errorMsg = "Passwort ist zu kurz! Bitte mindestens 8 Zeichen eingeben";
                     } else if ($password != $_POST["passwordconfirmation"]){
                         $error = true;
-                        $errorFields["passwordconfirmation"] = "Passwort Wiederholung entspricht nicht dem gleichen Wert von Passwort!";
+                        $this->view->errorMsg = "Passwort Wiederholung entspricht nicht dem gleichen Wert von Passwort!";
                     };
 
                     if (!$error){
@@ -57,30 +57,19 @@
 
                             User::createUser(array("gender" => $_POST["gender"], "firstname" => $_POST["firstname"], "lastname" => $_POST["lastname"], "email" => $email, "email" => $email, "password" => $password));
 
-                            $jsonResponse = new JSON();
-                            $jsonResponse->result = true;
-                            $jsonResponse->setMessage("Benutzer wurde erfolgreich hinzugefügt!");
-                            $jsonResponse->send();
+                            header("HTTP/1.0 200 OK", true, 200);
+                            header("Location: " . URL_PATH . "/login");
+                            exit;
 
                         } else {
-
-                            $errorFields["name"] = "Benutzername ist schon vorhanden!";
-
-                            $jsonResponse = new JSON();
-                            $jsonResponse->result = false;
-                            $jsonResponse->setData(array("errorFields" => $errorFields));
-                            $jsonResponse->send();
-
+                            $this->view->errorMsg = "Benutzername ist schon vorhanden!";
                         };
 
                     };
 
+                } else {
+                    $this->view->errorMsg = "Benutzername konnte nicht registriert werden!";
                 };
-
-                $jsonResponse = new JSON();
-                $jsonResponse->result = false;
-                $jsonResponse->setData(array("errorFields" => $errorFields));
-                $jsonResponse->send();
 
             };
 

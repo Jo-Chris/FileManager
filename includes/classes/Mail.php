@@ -7,18 +7,17 @@
 
     class Mail {
 
-        private $attachment = null;
         private $body = "";
-        private $error = "";
         private $from = "";
-        private $headers = null;
+        private $headers = "";
+        private $replyTo = "";
         private $subject = "";
         private $to = "";
 
-        public function __construct($attachment, $body, $from, $subject, $to){
-            $this->attachment = $attachment;
+        public function __construct($body, $from, $replyTo, $subject, $to){
             $this->body = $body;
             $this->from = $from;
+            $this->replyTo = $replyTo;
             $this->subject = $subject;
             $this->to = $to;
         }
@@ -28,50 +27,29 @@
          */
         public function send(){
 
-            if ($this->to) {
-
-                // Set boundary
-                $boundary = md5(rand(5000, 500000000) . date("r"));
-
-                // Attachment
-
-                if ($this->attachment){
-                    if (file_exists($this->attachment)){
-                        $this->attachment = chunk_split(base64_encode(file_get_contents($this->attachment)));
-                    } else {
-                        $this->error = "Failed to send mail, attachment file \"{$this->attachment}\" not found";
-                        return false;
-                    };
-                };
+            if ($this->to){
 
                 // Headers
 
+                $this->headers = "MIME-Version: 1.0\r\n";
+                $this->headers .= "Content-type: text/html; charset=utf-8\r\n";
+
                 if ($this->from){
-                    $this->headers = "From: {$this->from} \r\nReply-To: {$this->from}";
+                    $this->headers .= "From: {$this->from} \r\nReply-To: {$this->replyTo}\r\n";
                 };
 
-                if ($this->attachment){
-                    $this->headers .= "\r\nMIME-Version: 1.0\r\nContent-Type: text/html; charset=UTF-8\r\nboundary=\"_1_{$boundary}\"";
-                };
-
-                // Body
-
-                if (!$this->body){
-                    $this->error = "Failed to send mail, no message";
-                };
+                $this->headers .= "X-Mailer: PHP ". phpversion();
 
                 // Send mail
 
                 if (mail($this->to, $this->subject, $this->body, $this->headers)){
-                    return true;
+                    return "Mail successfully send";
                 } else {
-                    $this->error = "Failed to send mail (check SMTP settings)";
-                    return false;
+                    return "Mail couldn't be sended";
                 };
 
             } else {
-                $this->error = "Failed to send mail, invalid params";
-                return false;
+                return "Mail couldn't be sended. Please check params";
             };
 
         }

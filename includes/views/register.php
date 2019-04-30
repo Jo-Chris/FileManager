@@ -43,6 +43,9 @@
                     <input class="form-control" type="password" name="passwordconfirmation" id="passwordconfirmation" placeholder="Passwort bestätigen" required>
                 </div>
             </div>
+            <?php if ($this->errorMsg != "" ): ?>
+                <div class="alert alert-danger pb-2 pl-3 pr-3 pt-1 mb-3 mt-2" role="alert"><?php echo $this->errorMsg; ?></div>
+            <?php endif; ?>
             <div class="mt-3">
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="registerBtn">Jetzt registrieren</button>
             </div>
