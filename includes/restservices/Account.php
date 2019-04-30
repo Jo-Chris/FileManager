@@ -1,15 +1,15 @@
 <?php
 
     /**
-        * Class: Download
-        * @function: getRequest, createRequest, saveRequest, deleteRequest
+        * Class: Account
+        * @function: getRequest
     */
 
-    class Download extends RESTClass {
+    class Account extends RESTClass {
 
         protected function getRequest($data){
-            if (isset($data["files"])){
-                DownloadModel::downloadFile($data["files"]);
+            if (isset($data["email"]) && isset($data["activationKey"])){
+                AccountModel::activateUser($data["email"], $data["activationKey"]);
             };
         }
 

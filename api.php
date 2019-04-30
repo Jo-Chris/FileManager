@@ -3,9 +3,6 @@
 	define("API_CALL", true);
 	require_once(__DIR__ . "/includes/initialize.php");
 
-	$user = new User();
-	$user->authenticate();
-
 	class ApiController{
 
 		public function run(){
@@ -29,6 +26,11 @@
 				$serviceParts = explode("/", $rightpart);
 				$serviceName = $serviceParts[0];
 				unset($serviceParts[0]);
+
+				if ($serviceName !== "account"){
+                    $user = new User();
+                    $user->authenticate();
+                };
 
 				switch ($request_method){
 					case "get":
