@@ -3,7 +3,7 @@
 ?>
 <header class="overview">
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary position-fixed w-100 z-">
-        <a class="navbar-brand" href="#">Filemanager</a>
+        <a class="navbar-brand" href="<?php echo URL_PATH; ?>/">Filemanager</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,6 +14,9 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="upload" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cloud-upload-alt"></i> Upload</a>
+                </li>
+                <li class="nav-item dropdown sidebar d-none">
+                    <a class="nav-link" href="#" id="showSideBar" aria-haspopup="true" aria-expanded="false">Ordner</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-md-0 mr-auto">
@@ -53,16 +56,16 @@
         </div>
     </nav>
 </header>
-<main class="overview container mw-100 pb-3 pt-3 h-100">
-    <div class="row h-100">
-        <div class="col leftcolumn h-100">
+<div class="wrapper h-100">
+    <main class="overview container mw-100 pb-3 pt-3 h-100">
+        <div id="sidebar" class="leftcolumn h-100">
             <div class="h-100 pb-4 pl-4 pr-4 pt-3" id="tree-container">
-                
+
                 <!-- dynamic tree structure will appear here -->
             </div>
         </div>
-        <div class="col-10 maincolumn h-100" id="maincol">   <!--sorry for that-->
-        
+        <div class="maincolumn h-100" id="maincol">   <!--sorry for that-->
+
             <div class="h-100 p-3">
                 <div class="input-group mb-3" id="seachbar-path-container" style="display: none;">
                     <div class="input-group-prepend">
@@ -80,17 +83,17 @@
                             <th scope="col" class="table-dark col-2 bg-primary ">Zuletzt bearbeitet</th>
                             <th scope="col" class="table-dark col-2 bg-primary text-right">Aktionen</th>
                         </thead>
-                        <tbody id="tbody-table">     
+                        <tbody id="tbody-table">
                             <!-- Dynamic Content follows here -->
                         </tbody>
                     </table>
                 </div>
 
-                
+
 
                 <div id="button-action-container" class="text-left" style="display: none;">
                     <hr style="background-size: 4px; border-top: 4px solid #ccc; border-color: #ccc;">
-                    
+
                     <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer pr-2"></i> Alle auswählen</button>
                     <button id="de-select-all" class="btn btn-outline-primary ml-2 mr-2"><i class="fas fa-minus-circle pr-2"></i> Auswahl zurücksetzen</button>
                     <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt pr-2"></i>Auswahl umkehren</button>
@@ -102,9 +105,9 @@
 
                 </div>
             </div>
-        </div> 
-    </div>
-</main>
+        </div>
+    </main>
+</div>
 <?php
     echo $this->footer;
 ?>
