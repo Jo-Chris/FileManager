@@ -98,9 +98,8 @@
                     <button id="de-select-all" class="btn btn-outline-primary ml-2 mr-2"><i class="fas fa-minus-circle pr-2"></i> Auswahl zurücksetzen</button>
                     <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt pr-2"></i>Auswahl umkehren</button>
 
-                    <button class="btn btn-outline-danger clear-table invisible float-right mr-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
-                    <button class="btn btn-outline-secondary transfer-items invisible float-right mr-2 ml-2" id="down-transfer-btn"><i class="fas fa-random pr-2"></i>Transferieren</button>
-                    <button class="btn btn-outline-primary download-items invisible float-right" id="down-download-btn"> <i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
+                    <button class="btn btn-outline-danger clear-table invisible float-right  ml-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
+                    <button class="btn btn-outline-primary download-items invisible float-right" id="down-download-btn"><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
                 </div>
 
                 </div>

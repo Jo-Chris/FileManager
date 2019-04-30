@@ -197,20 +197,20 @@ function showDirectoryData(directoryData){
 function removeSingleItem(e) {
 
     if(e.target.classList.contains('deleteItem')){
-        bootbox.confirm('Sind sie sicher?', (res) =>{
+        bootbox.confirm('Sind sie sicher?', (res) => {
             if(!res){
                 return;
             }else{
                 //get name and path
-                let name = e.target.parentNode.parentNode.children[0].lastChild.textContent;
+                let name = e.target.parentNode.parentNode.parentNode.children[0].lastChild.textContent;
                 //current path is always displayed at top
-                let path = e.target.parentNode.parentNode.getAttribute('data-path');
+                let path = e.target.parentNode.parentNode.parentNode.getAttribute('data-path');
                 //create an array containing the name and the path of the element to be deleted
                 let arr = [];
                 arr.push(utils.createDeleteJSONArray(name, path));
                 
                 // Delete from UI 
-                e.target.parentNode.parentNode.remove();
+                e.target.parentNode.parentNode.parentNode.remove();
                 
                 // Delete from DB
                 deleteData(arr);
@@ -227,7 +227,7 @@ function removeAllItems(e){
     let deleteArr = [];
 
     if(e.target.classList.contains('clear-table')){
-        bootbox.confirm('Sind sie sicher?', (res) =>{
+        bootbox.confirm('Sind sie sicher?', (res) => {
             if(!res){
                 return;
             }else{
@@ -247,6 +247,7 @@ function removeAllItems(e){
                 //this array contains all items that should be deleted
                 console.log(deleteArr);
                 //delete from DB
+                //we've still got an bug here!! 
                 deleteDate(deleteArr)
                     .then(data => console.log(data))
                     .catch(err => console.log(err));
@@ -283,8 +284,8 @@ function download(e){
         //console.log('hit');
             let files = [];
             files.push({
-                name: e.target.parentNode.parentNode.childNodes[1].lastChild.textContent,
-                path: e.target.parentNode.parentNode.getAttribute('data-path')
+                name: e.target.parentNode.parentNode.parentNode.childNodes[1].lastChild.textContent,
+                path: e.target.parentNode.parentNode.parentNode.getAttribute('data-path')
             });
             console.log(e.target.parentNode.parentNode.getAttribute('data-path'));
             
@@ -455,8 +456,8 @@ function displayTableData(data, bool){
             <td class="table-light align-middle">${utils.calcRealSize(data.size)}</td>
             <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
-            <button class="btn btn-outline-danger deleteItem ml-2 float-right"><i class="far fa-trash-alt"></i></button>
-            <button class="btn btn-outline-primary float-right downloadItem ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt downloadItem"></i></button></td>
+            <button class="btn btn-outline-danger ml-2 float-right"><i class="far fa-trash-alt deleteItem"></i></button>
+            <button class="btn btn-outline-primary float-right ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt downloadItem"></i></button></td>
             </tr>
             `;
 }
@@ -629,13 +630,10 @@ function uploadFile() {
 function showBottomButtons(bool){
     if(bool){
         document.querySelector('#down-remove-btn').classList.remove('invisible');
-        document.querySelector('#down-transfer-btn').classList.remove('invisible');
         document.querySelector('#down-download-btn').classList.remove('invisible');
     }else{
         document.querySelector('#down-remove-btn').classList.remove('visible');
         document.querySelector('#down-remove-btn').classList.add('invisible');
-        document.querySelector('#down-remove-btn').classList.remove('visible');
-        document.querySelector('#down-transfer-btn').classList.add('invisible');
         document.querySelector('#down-remove-btn').classList.remove('visible');
         document.querySelector('#down-download-btn').classList.add('invisible');
     }
