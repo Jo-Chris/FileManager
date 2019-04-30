@@ -11,6 +11,8 @@ let mainPath = '';
 
 //at application start, fetch data
 setUpTreeStructure();
+//show the folder at application start
+
 
 /**
  * @returns a data-obj containing fetched data
@@ -167,8 +169,11 @@ function showDirectoryData(directoryData){
             if(data.type === 'folder'){
                  //create tr element
                 const newRow = document.createElement('tr');
-                //fill tr with data
+                //create the path attribute
+                newRow.setAttribute("data-path", data.path);
+                //fill the arry
                 newRow.innerHTML = displayTableData(data, true);
+
                 //now insert that row at the very top
                 const firstRow = document.querySelector('tbody').firstChild;
                 //insert it at the very top
@@ -193,19 +198,39 @@ function removeSingleItem(e) {
                 //get name and path
                 let name = e.target.parentNode.parentNode.children[0].lastChild.textContent;
                 //current path is always displayed at top
-                let path = mainPath;
+                let path = e.target.parentNode.parentNode.getAttribute('data-path');
                 //create an array containing the name and the path of the element to be deleted
                 let arr = [];
-                arr.push(utils.createDelteJSONArray(name, path));
+                arr.push(utils.createDeleteJSONArray(name, path));
                 
                 // Delete from UI 
                 e.target.parentNode.parentNode.remove();
                 
                 // Delete from DB
+                deleteFetch(arr);
 
             }
         });
     };
+}
+
+/**
+ * Delete fetch request
+ * @param {*} data - the data to be deleted
+ */
+function deleteFetch(data){
+    return new Promise((res, rej) => {
+        fetch('api/data', {
+            method: 'DELETE',
+            headers: {
+                'Content-type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(() => res('Deleted successfully'))
+            .catch(err => rej(err))
+    });
 }
 
 function removeAllItems(e){
@@ -224,17 +249,19 @@ function removeAllItems(e){
                         //get the name of the current file
                         let name = el.parentNode.lastChild.textContent;
                         //current path is always displayed at top
-                        let path = mainPath;
+                        let path = el.parentElement.parentElement.getAttribute('data-path');
                         //create array of elements to be deleted
-                        deleteArr.push(createDelteJSONArray(name, path));
-                        
+                        deleteArr.push(utils.createDeleteJSONArray(name, path));
                         //Delete from UI
                         el.parentNode.parentNode.remove();
+                        //Delete from DB
                     }
                 });
 
                 //this array contains all items that should be deleted
                 console.log(deleteArr);
+                //delete from DB
+                deleteFetch(deleteArr);
             }
         });
     }
@@ -356,7 +383,7 @@ function searchForFiles(){
 
     globalArrayVal.forEach((data) => {
         
-    if(!data.name.toLowerCase().indexOf(enteredText)){
+    if(!data.name.toLowerCase().contains(enteredText)){
         const newRow = document.createElement('tr');
 
         let id = document.querySelector('tbody').rows.length;

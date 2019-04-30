@@ -8,7 +8,7 @@
     /**
      * @param {*} arr that contains a name and a path
      */
-    createDelteJSONArray(name, path) {
+    createDeleteJSONArray(name, path) {
         //get the arr of objects to delete
         let deleteJSON = [];
         deleteJSON.push({
