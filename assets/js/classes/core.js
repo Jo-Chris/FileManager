@@ -250,10 +250,10 @@ function download(e){
                 name: e.target.parentNode.parentNode.childNodes[1].lastChild.textContent,
                 path: e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value
             });
-            console.log('Download item: '+ e.target.parentNode.parentNode.childNodes[1].lastChild.textContent + ' Path: ' +                 e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value);
+            console.log('Download item: '+ e.target.parentNode.parentNode.childNodes[1].lastChild.textContent + ' Path: ' + e.target.parentNode.parentNode.firstChild.nextSibling.firstChild.value);
             
             /**@todo exception handling! */
-           //window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+           window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
     }
 }
 
