@@ -12,6 +12,8 @@ let mainPath = '';
 //at application start, fetch data
 setUpTreeStructure();
 //show the folder at application start
+loadDirectory('cloud')
+.then(res => showDirectoryData(res.data));
 
 
 /**
@@ -285,7 +287,7 @@ function download(e){
             console.log(e.target.parentNode.parentNode.getAttribute('data-path'));
             
             /**@todo exception handling! */
-            // window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+            window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
     }
 }
 
