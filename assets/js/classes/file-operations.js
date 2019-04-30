@@ -1,78 +1,90 @@
 $(document).ready(function(){
 
+    let files;
+
     // Upload new files/folder 
     $(".navbar-nav > li > a#upload").click(function(){
 
         bootbox.dialog({
             message: `<div class="top-level-container" data-toggle="modal" data-target="#myModal">
-          <div class="modal-header" id="superimportantheader2">
-          <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
-          </div>  
-          <div class="modal-body">
-            <p>Pfad: </p>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item active" aria-current="page">Home</li>
-                </ol>
-              </nav>
-             
-              <div id="upload"></div>
-              <div class="dropzone" id="dropzone">Hierher ziehen</div> 
-              
-          
-
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-            <button type="button" class="btn btn-primary">Upload</button>
-          </div>  
-            </div>`,
+            <div class="modal-header" id="superimportantheader2">
+            <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
+            </div>  
+            <div class="modal-body">
+                <p>Pfad: </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    </ol>
+                </nav>
+                
+                <div id="upload"></div>
+                <div class="dropzone" id="dropzone">Hierher ziehen</div> 
+                
             
-            onEscape: false,
+
+
+            </div>
+  
+                </div>`,
+            onEscape: true,
             backdrop: true,
             button: {
-                upload: {
-                    label: 'Upload',
-                    className: 'btn btn-primary',
-                    callback: 
-                        function(e){
-                        e.preventDefault();
-                        
-                        let formData = new FormData(),
-                            files = document.getElementById("uploadFiles").files;
-                
-                        for ( let i = 0; i < files.length; i++){
-                            formData.append("files[]", files[i]);
-                        };
-                
-                        formData.append("path", document.getElementById("uploadPath").value);
-                
-                        $.ajax({
-                            cache: false,
-                            contentType: false,
-                            data: formData,
-                            dataType: "json",
-                            method: "POST",
-                            processData: false,
-                            url: "api/upload",
-                            success: function(result){
-                                console.log(result);
-                            }
-                        });
-                      }
-                      (function(){
-                        var dropzone = document.getElementById('dropzone');
+                label: 'Upload',
+                className: 'btn btn-primary',
+                callback: function(e){
 
-                        dropzone.ondragover = function() {
-                          this.className = 'dropzone dragover';
-                          return false; 
+                    console.log("Test");
+
+                    e.preventDefault();
+                
+                    let formData = new FormData();
+            
+                    for ( let i = 0; i < files.length; i++){
+                        formData.append("files[]", files[i]);
+                    };
+            
+                    formData.append("path", document.getElementById("uploadPath").value);
+
+                    console.log(formData);
+            
+                    /*$.ajax({
+                        cache: false,
+                        contentType: false,
+                        data: formData,
+                        dataType: "json",
+                        method: "POST",
+                        processData: false,
+                        url: "api/upload",
+                        success: function(result){
+                            console.log(result);
                         }
-                      }())
-                      
-                      }
+                    });*/
+
+                    console.log("Test");
+
+                }  
+                
             }
         });
+
+        var dropzone = document.getElementById("dropzone");
+
+        dropzone.ondrop = function (e) {
+            e.preventDefault();
+            this.className = "dropzone";
+            files = e.dataTransfer.files;
+        };
+
+        dropzone.ondragover = function(){
+            this.className = "dropzone dragover";
+            return false; 
+        }
+
+        dropzone.ondragleave = function(){
+            this.className = "dropzone dragleave";
+            return false;
+        }
 
     // CREATE
 
