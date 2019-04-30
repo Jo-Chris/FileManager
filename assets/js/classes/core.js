@@ -538,26 +538,54 @@ function newFolder() {
 function uploadFile() {
 
     let breadcrumb = "",
-        files;
+        files = [];
 
     for (let i = 0; i < mainPath.length; i++){
         breadcrumb += "<li class='breadcrumb-item' aria-current='page'>" + mainPath[i] + "</li>";
     };
 
+    $("body").on("drag dragstart dragend dragover dragenter dragleave drop", ".uploadBox", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+    }).on("dragover dragenter", ".uploadBox", function(){
+        $(".uploadBox").addClass("is-dragover");
+        $(".uploadBox").removeClass("is-dragged");
+    }).on("dragleave dragend drop", ".uploadBox", function(){
+        $(".uploadBox").removeClass("is-dragover");
+    }).on("drop", ".uploadBox", function(e){
+        files = e.originalEvent.dataTransfer.files;
+        $(".uploadBox").addClass("is-dropped");
+        $(".uploadBox label.dropped span.number").text("(" + files.length + ")");
+    });
+
     bootbox.dialog({
-        message: `<div class="top-level-container" data-toggle="modal" data-target="#myModal">
-        <div class="modal-header" id="superimportantheader2">
-        <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
-        </div>  
-        <div class="modal-body">
-            <p class="m-0">Pfad: </p>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-white p-0">` + breadcrumb + `</ol>
-            </nav>
-            <div id="upload"></div>
-            <div class="dropzone" id="dropzone">Hierher ziehen</div> 
+        message: `
+        <div class="top-level-container" data-toggle="modal" data-target="#myModal">
+            <div class="modal-header" id="superimportantheader2">
+                <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
+            </div>  
+            <div class="modal-body">
+                <p class="m-0">Pfad: </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white p-0">` + breadcrumb + `</ol>
+                </nav>
+                <form class="uploadBox" method="post" action="" enctype="multipart/form-data">
+                    <div class="box-input">
+                        <svg class="box-icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path></svg>
+                        <input class="box-file" type="file" name="files[]" id="file" data-multiple-caption="{count} Datei(en) ausgewählt" multiple />
+                        <label class="default" for="file">
+                            <strong>Datei auswählen</strong>
+                            <span class="box-dragndrop"> oder per Drag & Drop einfügen</span>.
+                        </label>
+                        <label class="dropped" for="file">
+                            <span class="box-dragndrop"><span class="number"></span> Dateien ausgewählt</span>
+                        </label>
+                      </div>
+                    </div>
+                </form>
             </div>
-        </div>`,
+        </div>
+        `,
         onEscape: true,
         backdrop: true,
         buttons: {
@@ -566,12 +594,9 @@ function uploadFile() {
                 label: 'Abbrechen',
                 className: 'btn btn-danger',
                 callback: function(e){
-                    console.log("Test");
 
                 }
             },
-
-            //upload button
             upload: {
                 label: 'Upload',
                 className: 'btn btn-primary',
@@ -580,7 +605,13 @@ function uploadFile() {
                     e.preventDefault();
 
                     let formData = new FormData();
-                    formData.append("files[]", files);
+
+                    if (files){
+                        for (let i = 0; i < files.length; i++){
+                            formData.append("files[]", files[i]);
+                        };
+                    };
+
                     formData.append("path", mainPathString);
 
                     $.ajax({
@@ -604,23 +635,6 @@ function uploadFile() {
         }
     });
 
-    var dropzone = document.getElementById("dropzone");
-
-    dropzone.ondrop = function (e) {
-        e.preventDefault();
-        this.className = "dropzone";
-        files = e.dataTransfer.files;
-    };
-
-    dropzone.ondragover = function(){
-        this.className = "dropzone dragover";
-        return false;
-    }
-
-    dropzone.ondragleave = function(){
-        this.className = "dropzone dragleave";
-        return false;
-    }
 } 
 
 

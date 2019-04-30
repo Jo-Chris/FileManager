@@ -154,19 +154,61 @@ main.overview .leftcolumn .file-list li.folder-root.open > ul {
   opacity: 1;
 }
 
-/* Dropzone */
+/* Drag & Drop */
 
-.dropzone {
-  width: 435px; 
-  height: 200px;
-  border: 2px dashed grey;
-  color: grey; 
-  line-height:200px; 
+.uploadBox {
+  background: #F5F5F5;
+  outline: 2px dashed #7F8C8D;
+  outline-offset: -10px;
+  padding: 50px 20px;
+  position: relative;
   text-align: center;
+  transition: outline-offset 300ms ease;
 }
-.dropzone.dragover{
-  border-color: black;
-  color: black; 
+.uploadBox .box-dragndrop,
+.uploadBox .box-uploading,
+.uploadBox .box-success,
+.uploadBox .box-error {
+  display: none;
+}
+.uploadBox.is-dragover {
+  outline-offset: -15px;
+}
+.uploadBox .box-icon {
+  display: block;
+  fill: #7F8C8D;
+  height: 50px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.uploadBox .box-dragndrop {
+  display: inline;
+}
+.uploadBox .box-input input {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  z-index: -1;
+}
+.uploadBox .box-input label {
+  color: #7F8C8D;
+}
+.uploadBox .box-input label.dropped {
+  display: none;
+}
+.uploadBox.is-dropped .box-input label.default {
+  display: none;
+}
+.uploadBox.is-dropped .box-input label.dropped {
+  display: block;
+}
+.uploadBox.is-uploading .box-input {
+  visibility: none;
+}
+.uploadBox.is-uploading .box-uploading {
+  display: block;
 }
 
 /* 404 */

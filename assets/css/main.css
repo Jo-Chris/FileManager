@@ -202,42 +202,104 @@ main.overview .leftcolumn .file-list li.folder-root.open > ul {
   opacity: 1;
 }
 
-/* Dropzone */
+/* Drag & Drop */
 /* line 159, ../scss/main.scss */
-.dropzone {
-  width: 435px;
-  height: 200px;
-  border: 2px dashed grey;
-  color: grey;
-  line-height: 200px;
+.uploadBox {
+  background: #F5F5F5;
+  outline: 2px dashed #7F8C8D;
+  outline-offset: -10px;
+  padding: 50px 20px;
+  position: relative;
   text-align: center;
+  transition: outline-offset 300ms ease;
 }
 
-/* line 167, ../scss/main.scss */
-.dropzone.dragover {
-  border-color: black;
-  color: black;
+/* line 168, ../scss/main.scss */
+.uploadBox .box-dragndrop,
+.uploadBox .box-uploading,
+.uploadBox .box-success,
+.uploadBox .box-error {
+  display: none;
+}
+
+/* line 174, ../scss/main.scss */
+.uploadBox.is-dragover {
+  outline-offset: -15px;
+}
+
+/* line 177, ../scss/main.scss */
+.uploadBox .box-icon {
+  display: block;
+  fill: #7F8C8D;
+  height: 50px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* line 184, ../scss/main.scss */
+.uploadBox .box-dragndrop {
+  display: inline;
+}
+
+/* line 187, ../scss/main.scss */
+.uploadBox .box-input input {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+  z-index: -1;
+}
+
+/* line 195, ../scss/main.scss */
+.uploadBox .box-input label {
+  color: #7F8C8D;
+}
+
+/* line 198, ../scss/main.scss */
+.uploadBox .box-input label.dropped {
+  display: none;
+}
+
+/* line 201, ../scss/main.scss */
+.uploadBox.is-dropped .box-input label.default {
+  display: none;
+}
+
+/* line 204, ../scss/main.scss */
+.uploadBox.is-dropped .box-input label.dropped {
+  display: block;
+}
+
+/* line 207, ../scss/main.scss */
+.uploadBox.is-uploading .box-input {
+  visibility: none;
+}
+
+/* line 210, ../scss/main.scss */
+.uploadBox.is-uploading .box-uploading {
+  display: block;
 }
 
 /* 404 */
-/* line 174, ../scss/main.scss */
+/* line 216, ../scss/main.scss */
 .page-error {
   min-height: 100vh;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  /* line 182, ../scss/main.scss */
+  /* line 224, ../scss/main.scss */
   ul.navbar-nav li.sidebar {
     display: block !important;
   }
 
-  /* line 185, ../scss/main.scss */
+  /* line 227, ../scss/main.scss */
   main.overview .leftcolumn {
     margin-left: -335px;
   }
 
-  /* line 188, ../scss/main.scss */
+  /* line 230, ../scss/main.scss */
   main.overview .leftcolumn.active {
     margin-left: 0;
   }
