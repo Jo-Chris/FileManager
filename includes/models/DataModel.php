@@ -34,19 +34,17 @@
                         continue;
                     };
 
-                    $path = $directory . "/" . $file;
-
-                    if (!is_dir($path)){
+                    if (!is_dir($directory . "/" . $file)){
 
                         // File
 
                         $files[] = array(
-                            "date_modified" => filemtime($path),
+                            "date_modified" => filemtime($directory . "/" . $file),
                             "extension" => pathinfo($file, PATHINFO_EXTENSION),
                             "name" => $file,
-                            "path" => $path,
+                            "path" => $directory . "/",
                             "type" => "file",
-                            "size" => filesize($path)
+                            "size" => filesize($directory . "/" . $file)
                         );
 
                     } else {
@@ -54,12 +52,12 @@
                         // Directory
 
                         $files[] = array(
-                            "date_modified" => filemtime($path),
-                            "items" => (array) self::getDataFromDirectory($path),
+                            "date_modified" => filemtime($directory . "/" . $file),
+                            "items" => (array) self::getDataFromDirectory($directory . "/" . $file),
                             "name" => $file,
-                            "path" => $path,
+                            "path" => $directory . "/",
                             "type" => "folder",
-                            "size" => filesize($path)
+                            "size" => filesize($directory . "/" . $file)
                         );
 
                     };
