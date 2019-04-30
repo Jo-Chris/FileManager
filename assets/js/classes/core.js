@@ -103,6 +103,8 @@ document.getElementById('reverse-selection').addEventListener('click', reverseSe
 document.getElementById('global-search').addEventListener('keyup', showSearchResults);
 document.getElementById('tbody-table').addEventListener('click', download);
 document.getElementById('button-action-container').addEventListener('click', downloadMultiple);
+document.getElementById('new').addEventListener('click', newFolder);
+document.getElementById('upload').addEventListener('click', uploadFile);
 
 //this directory needs to get the path of the folder
 async function loadDirectory(directory){
@@ -214,25 +216,6 @@ function removeSingleItem(e) {
     };
 }
 
-/**
- * Delete fetch request
- * @param {*} data - the data to be deleted
- */
-function deleteFetch(data){
-    return new Promise((res, rej) => {
-        fetch('api/data', {
-            method: 'DELETE',
-            headers: {
-                'Content-type' : 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(() => res('Deleted successfully'))
-            .catch(err => rej(err))
-    });
-}
-
 function removeAllItems(e){
 
     const checkboxes = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
@@ -254,17 +237,37 @@ function removeAllItems(e){
                         deleteArr.push(utils.createDeleteJSONArray(name, path));
                         //Delete from UI
                         el.parentNode.parentNode.remove();
-                        //Delete from DB
                     }
                 });
 
                 //this array contains all items that should be deleted
                 console.log(deleteArr);
                 //delete from DB
-                deleteFetch(deleteArr);
+                deleteFetch(deleteArr)
+                    .then(data => console.log(data))
+                    .catch(err => console.log(err));
             }
         });
     }
+}
+
+/**
+ * Delete fetch request
+ * @param {*} data - the data to be deleted
+ */
+function deleteFetch(data){
+    return new Promise((res, rej) => {
+        fetch('api/data', {
+            method: 'DELETE',
+            headers: {
+                'Content-type' : 'application/json'
+            },
+
+        })
+            .then(res => res.json())
+            .then(() => res('Deleted successfully'))
+            .catch(err => rej(err))
+    });
 }
 
 /**
@@ -453,6 +456,141 @@ function displayTableData(data, bool){
             </tr>
             `;
 }
+
+
+function newFolder() {
+    bootbox.dialog({
+        message: `<div class="top-level-container" data-toggle="modal" data-target="#myModal">
+        <div class="modal-header" id="superimportantheader2">
+        <h2 class="modal-title" id="myModalLabel">Datei hochladen</h2>
+        </div>  
+        <div class="modal-body">
+            <p>Pfad: </p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item active" id="upload-path" aria-current="page">Home</li>
+                </ol>
+            </nav>
+            
+            <div id="upload"></div>
+            <div class="dropzone" id="dropzone">Hierher ziehen</div> 
+            </div>
+        </div>`,
+        onEscape: true,
+        backdrop: true,
+        buttons: {
+              //cancel button
+              cancel: {
+                label: 'Cancel',
+                className: 'btn btn-danger',
+                callback: function(e){
+                    console.log("Test");
+
+                }  
+              },
+
+              //upload button
+              upload: {
+              label: 'Upload',
+              className: 'btn btn-primary',
+              callback: function(e){
+
+                  let files = [];
+
+                  e.preventDefault();
+              
+                  let formData = new FormData();
+          
+                  for ( let i = 0; i < files.length; i++){
+                      formData.append("files[]", files[i]);
+                  };
+          
+                  formData.append("path", document.getElementById("upload-path").value);
+
+                  console.log(formData);
+          
+                  /*$.ajax({
+                      cache: false,
+                      contentType: false,
+                      data: formData,
+                      dataType: "json",
+                      method: "POST",
+                      processData: false,
+                      url: "api/upload",
+                      success: function(result){
+                          console.log(result);
+                      }
+                  });*/
+
+                  console.log("Test");
+
+              }  
+            }
+        }
+    });
+
+    var dropzone = document.getElementById("dropzone");
+
+    dropzone.ondrop = function (e) {
+        e.preventDefault();
+        this.className = "dropzone";
+        console.log(files = e.dataTransfer.files);
+    };
+
+    dropzone.ondragover = function(){
+        this.className = "dropzone dragover";
+        return false; 
+    }
+
+    dropzone.ondragleave = function(){
+        this.className = "dropzone dragleave";
+        return false;
+    }
+}
+
+function uploadFile() {
+    //Create new dialog
+    console.log('click');
+    //UI vom Max hier rein...
+    //platzhalter code
+    bootbox.dialog({ 
+        message: `
+        <div class="top-level-container">
+            <div class="modal-header" id="superimportantheader">
+                <h2 class="modal-title" id="myModalLabel">Ordner anlegen</h2>
+            </div>
+            <div class="modal-body">
+                <p>Pfad: </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    </ol>
+                </nav>
+
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Name des Ordners">
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary">Anlegen</button>
+            </div>
+        </div>`, 
+        closeButton: true, 
+        callback:function(e) {
+            
+            //Javscript Code heir (aber konzentrier die auf HTML oben)
+        }
+    });
+} 
+
+
+
+
 
 /**
  * 
