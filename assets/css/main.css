@@ -187,3 +187,25 @@ main.overview .leftcolumn .file-list li.folder-root.open > ul {
   max-height: 1000px;
   opacity: 1;
 }
+
+/* line 146, ../scss/main.scss */
+.dropzone {
+  width: 435px;
+  height: 200px;
+  border: 2px dashed grey;
+  color: grey;
+  line-height: 200px;
+  text-align: center;
+}
+
+/* line 154, ../scss/main.scss */
+.dropzone.dragover {
+  border-color: black;
+  color: black;
+}
+
+/* 404 */
+/* line 161, ../scss/main.scss */
+.page-error {
+  min-height: 100vh;
+}

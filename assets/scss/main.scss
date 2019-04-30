@@ -142,3 +142,22 @@ main.overview .leftcolumn .file-list li.folder-root.open > ul {
   max-height: 1000px;
   opacity: 1;
 }
+
+.dropzone {
+  width: 435px; 
+  height: 200px;
+  border: 2px dashed grey;
+  color: grey; 
+  line-height:200px; 
+  text-align: center;
+}
+.dropzone.dragover{
+  border-color: black;
+  color: black; 
+}
+
+/* 404 */
+
+.page-error {
+  min-height: 100vh;
+}

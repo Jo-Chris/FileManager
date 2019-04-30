@@ -1,18 +1,16 @@
 <?php
 	echo $this->header;
 ?>
-<div id="main">
-	<h1>404 Seite nicht gefunden</h1>
-	<p>Leider konnte Ihre Anfrage nicht richtig verarbeitet werden. Mögliche Ursachen hierfür sind:</p>
-	<ul>
-		<li>die URL die Sie eingegeben haben enthält einen Tippfehler</li>
-		<li>die Seite die Sie versucht haben aufzurufen existiert nicht mehr</li>
-	</ul>
-	<p>Was können Sie jetzt tun?</p>
-	<ul>
-		<li>prüfen Sie ob die URL tatsächlich richtig ist</li>
-		<li>Nutzen Sie die Navigation um zu der Seite zu gelangen die Sie aufrufen wollten</li>
-	</ul>
+<div class="page-error d-flex flex-row align-items-center">
+    <div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-12 text-center">
+                <span class="display-1 d-block">404</span>
+                <div class="mb-4 lead">Die Seite konnte nicht gefunden werden.</div>
+                <a href="<?php echo URL_PATH; ?>/" class="btn btn-link">Zurück zur Startseite</a>
+            </div>
+		</div>
+	</div>
 </div>
 <?php
 	echo $this->footer;
