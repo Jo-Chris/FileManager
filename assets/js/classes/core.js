@@ -255,7 +255,7 @@ function download(e){
             console.log(e.target.parentNode.parentNode.getAttribute('data-path'));
             
             /**@todo exception handling! */
-          // window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+            // window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
     }
 }
 
@@ -272,8 +272,10 @@ function downloadMultiple(e){
             console.log('Download item: '+ checkboxes[i].parentNode.lastChild.textContent + ' Path: ' + checkboxes[i].parentNode.firstChild.value);
             arr.push({
                name: checkboxes[i].parentNode.lastChild.textContent,
-               path: checkboxes[i].parentNode.firstChild.value
+               path: checkboxes[i].parentNode.parentNode.getAttribute('data-path')
         });
+
+        //console.log(checkboxes[i].parentNode.parentNode.getAttribute('data-path'));
 
         //after everything is ready, get those files
         window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(arr);
