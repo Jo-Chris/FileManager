@@ -454,7 +454,7 @@ function displayTableData(data, bool){
             <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
             <button class="btn btn-outline-danger deleteItem ml-2 float-right"><i class="far fa-trash-alt"></i></button>
-            <button class="btn btn-outline-primary float-right downloadItem ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt"></i></button></td>
+            <button class="btn btn-outline-primary float-right downloadItem ${bool ? "invisible" : "visible" }"><i class="fas fa-cloud-download-alt downloadItem"></i></button></td>
             </tr>
             `;
 }
