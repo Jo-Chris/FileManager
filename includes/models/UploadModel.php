@@ -37,12 +37,21 @@
                                     "message" => "File already exists: " . $path . "/" . $files["name"][$i]
                                 );
                             } else {
+
                                 move_uploaded_file($files["tmp_name"][$i], $path . "/" . $files["name"][$i]);
+
                                 $msg[] = array(
                                     "file_name" => $files["name"][$i],
                                     "file_path" => $path,
                                     "message" => "File successfully uploaded: " . $path . "/" . $files["name"][$i]
                                 );
+
+                                // Save upload in db
+
+                                $db = new Database();
+                                $sql = "INSERT INTO file(filename, path, userID, dateUploaded) VALUES('" . $files["name"][$i] ."', '" . $path . "', 1, '" . date("Y-m-d H:i:s") . "')";
+                                $db->query($sql);
+
                             }
                         }
                     };
