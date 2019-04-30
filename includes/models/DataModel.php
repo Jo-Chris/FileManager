@@ -42,7 +42,7 @@
                             "date_modified" => filemtime($directory . "/" . $file),
                             "extension" => pathinfo($file, PATHINFO_EXTENSION),
                             "name" => $file,
-                            "path" => $directory . "/",
+                            "path" => $directory,
                             "type" => "file",
                             "size" => filesize($directory . "/" . $file)
                         );
@@ -55,7 +55,7 @@
                             "date_modified" => filemtime($directory . "/" . $file),
                             "items" => (array) self::getDataFromDirectory($directory . "/" . $file),
                             "name" => $file,
-                            "path" => $directory . "/",
+                            "path" => $directory,
                             "type" => "folder",
                             "size" => filesize($directory . "/" . $file)
                         );
