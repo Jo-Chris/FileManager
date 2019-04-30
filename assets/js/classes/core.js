@@ -589,9 +589,6 @@ function uploadFile() {
 } 
 
 
-
-
-
 /**
  * 
  * @param {*} bool - true: show Bottom buttons, false: hide bottomButtons
