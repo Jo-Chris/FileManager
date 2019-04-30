@@ -169,7 +169,7 @@ function showDirectoryData(directoryData){
         });
 
         //now if theres a folder... move it to the top
-        directoryData.forEach(data => {
+        directoryData.reverse().forEach(data => {
             if(data.type === 'folder'){
                  //create tr element
                 const newRow = document.createElement('tr');
@@ -181,8 +181,8 @@ function showDirectoryData(directoryData){
                 //now insert that row at the very top
                 const firstRow = document.querySelector('tbody').firstChild;
                 //insert it at the very top
+                
                 document.querySelector('tbody').insertBefore(newRow, firstRow);
-
             }
         });
     }
@@ -211,7 +211,7 @@ function removeSingleItem(e) {
                 e.target.parentNode.parentNode.remove();
                 
                 // Delete from DB
-                deleteFetch(arr);
+                deleteData(arr);
 
             }
         });
@@ -245,7 +245,7 @@ function removeAllItems(e){
                 //this array contains all items that should be deleted
                 console.log(deleteArr);
                 //delete from DB
-                deleteFetch(deleteArr)
+                deleteDate(deleteArr)
                     .then(data => console.log(data))
                     .catch(err => console.log(err));
             }
@@ -257,14 +257,14 @@ function removeAllItems(e){
  * Delete fetch request
  * @param {*} data - the data to be deleted
  */
-function deleteFetch(data){
+function deleteData(data){
     return new Promise((res, rej) => {
         fetch('api/data', {
             method: 'DELETE',
             headers: {
                 'Content-type' : 'application/json'
             },
-
+            body: JSON.stringify(data)
         })
             .then(res => res.json())
             .then(() => res('Deleted successfully'))
@@ -592,7 +592,6 @@ function uploadFile() {
 
 
 /**
- * 
  * @param {*} bool - true: show Bottom buttons, false: hide bottomButtons
  */
 function showBottomButtons(bool){
