@@ -19,11 +19,6 @@
             <?php if ($this->errorPasswd == true): ?>
                 <div class="alert alert-danger pb-2 pl-3 pr-3 pt-1" role="alert">Benutzername und/oder Passwort sind falsch!</div>
             <?php endif; ?>
-            <div class="row mb-3 ml-0 mr-0 justify-content-center">
-                <label class="mb-0">
-                    <input type="checkbox" value="remember-me"> Angemeldet bleiben
-                </label>
-            </div>
             <div>
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
                 <a href="<?php echo URL_PATH; ?>/register" class="btn btn-lg btn btn-outline-primary btn-block text-uppercase" id="register">Registrieren</a>

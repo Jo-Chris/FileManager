@@ -1,4 +1,4 @@
-$(function($){
+$(function(){
 
     $.fn.filetree = function(method){
 

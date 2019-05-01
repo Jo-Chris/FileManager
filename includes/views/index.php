@@ -60,12 +60,10 @@
     <main class="overview container mw-100 pb-3 pt-3 h-100">
         <div id="sidebar" class="leftcolumn h-100">
             <div class="h-100 pb-4 pl-4 pr-4 pt-3" id="tree-container">
-
                 <!-- dynamic tree structure will appear here -->
             </div>
         </div>
         <div class="maincolumn h-100" id="maincol">   <!--sorry for that-->
-
             <div class="h-100 p-3">
                 <div class="input-group mb-3" id="seachbar-path-container" style="display: none;">
                     <div class="input-group-prepend">
@@ -74,10 +72,9 @@
                     <input type="text" class="form-control" id="searchbar" aria-describedby="basic-addon3" placeholder="Suche...">
                 </div>
                 <!-- if table is empty, show our rotating logo-->
-
                 <div class="table-responsive-lg invisible" id="main-table">
                     <table class="table table-striped mt-0 align-middle" id="main-list">
-                        <thead class="">
+                        <thead>
                             <th scope="col" class="table-dark col-6 bg-primary">Dateinname</th>
                             <th scope="col" class="table-dark col-2 bg-primary">Größe</th>
                             <th scope="col" class="table-dark col-2 bg-primary ">Zuletzt bearbeitet</th>
@@ -88,20 +85,13 @@
                         </tbody>
                     </table>
                 </div>
-
-
-
                 <div id="button-action-container" class="text-left" style="display: none;">
                     <hr style="background-size: 4px; border-top: 4px solid #ccc; border-color: #ccc;">
-
                     <button id="select-all" class="btn btn-outline-primary"><i class="far fa-hand-pointer pr-2"></i> Alle auswählen</button>
                     <button id="de-select-all" class="btn btn-outline-primary ml-2 mr-2"><i class="fas fa-minus-circle pr-2"></i> Auswahl zurücksetzen</button>
                     <button id="reverse-selection" class="btn btn-outline-primary"><i class="fas fa-undo-alt pr-2"></i>Auswahl umkehren</button>
-
                     <button class="btn btn-outline-danger clear-table invisible float-right  ml-2" id="down-remove-btn"><i class="fas fa-trash-alt pr-2"></i>Löschen</button>
                     <button class="btn btn-outline-primary download-items invisible float-right" id="down-download-btn"><i class="fas fa-cloud-download-alt pr-2"></i>Herunterladen</button>
-                </div>
-
                 </div>
             </div>
         </div>

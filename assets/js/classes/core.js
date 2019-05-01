@@ -16,17 +16,13 @@ setUpTreeStructure();
 loadDirectory('cloud')
 .then(res => showDirectoryData(res.data));
 
-
 /**
  * @returns a data-obj containing fetched data
  */
 async function fetchCloudData(){
     const res = await fetch('api/data');
 
-    console.log('feching order structure');
-
     const data = await res.json();
-    //console.log(data);
     return data;
 }
 
@@ -112,8 +108,6 @@ document.getElementById('upload').addEventListener('click', uploadFile);
 //this directory needs to get the path of the folder
 async function loadDirectory(directory){
     const res = await fetch(`api/data/?directory=${directory}`)    //api/data?direc
-
-    console.log("fetching... " + directory);
 
     const data = await res.json();
 
@@ -245,12 +239,11 @@ function removeAllItems(e){
                 });
 
                 //this array contains all items that should be deleted
-                console.log(deleteArr);
                 //delete from DB
                 //we've still got an bug here!! 
                 deleteDate(deleteArr)
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err));
+                    .then()
+                    .catch();
             }
         });
     }
@@ -281,16 +274,14 @@ function deleteData(data){
 function download(e){
     //Check for a "single-item-download" --> button next to the file
     if(e.target.classList.contains('downloadItem')){
-        //console.log('hit');
             let files = [];
             files.push({
                 name: e.target.parentNode.parentNode.parentNode.childNodes[1].lastChild.textContent,
                 path: e.target.parentNode.parentNode.parentNode.getAttribute('data-path')
             });
-            console.log(e.target.parentNode.parentNode.getAttribute('data-path'));
             
             /**@todo exception handling! */
-            window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(files);
+            window.location.href = rootUrl + "/api/download/?files=" + JSON.stringify(files);
     }
 }
 
@@ -304,16 +295,13 @@ function downloadMultiple(e){
         let arr = [];
 
         for (let i = 0; i < checkboxes.length; i++){
-            console.log('Download item: '+ checkboxes[i].parentNode.lastChild.textContent + ' Path: ' + checkboxes[i].parentNode.firstChild.value);
             arr.push({
                name: checkboxes[i].parentNode.lastChild.textContent,
                path: checkboxes[i].parentNode.parentNode.getAttribute('data-path')
         });
 
-        //console.log(checkboxes[i].parentNode.parentNode.getAttribute('data-path'));
-
         //after everything is ready, get those files
-        window.location.href = "/filemanager/api/download/?files=" + JSON.stringify(arr);
+        window.location.href = rootUrl + "/api/download/?files=" + JSON.stringify(arr);
         }
     }
 }
@@ -418,11 +406,8 @@ async function globalSearch(){
         return;
     }
 
-    console.log('fetching for..' + searchVal);
-
     const res = await fetch(`api/data/?mode=search&key=${searchVal}`)    //api/data?direc
 
-    //console.log("fetching... " + directory);
     //globalPathVar = `${directory}`;
     
     const data = await res.json();
@@ -463,10 +448,7 @@ function displayTableData(data, bool){
 }
 
 
-function newFolder() {
-    //Create new dialog
-    //UI vom Max hier rein...
-    //platzhalter code
+function newFolder(){
 
     let breadcrumb = "";
 
@@ -497,16 +479,13 @@ function newFolder() {
         buttons: {
             //cancel button
             cancel: {
-                label: 'Abbrechen',
-                className: 'btn btn-danger',
-                callback: function (e) {
-                    console.log("Test");
-
-                }
+                label: "Abbrechen",
+                className: "btn btn-outline-danger",
+                callback: function(e){}
             },
             create: {
-                label: 'Anlegen',
-                className: 'btn btn-primary',
+                label: "Anlegen",
+                className: "btn btn-primary",
                 callback: function (e) {
 
                     e.preventDefault();
@@ -521,10 +500,13 @@ function newFolder() {
                         method: "POST",
                         success: function(result){
 
+                            // Reload tree structure
+
                             setUpTreeStructure();
 
-                            loadDirectory(mainPathString)
-                                .then(res => showDirectoryData(res.data));
+                            // Reload directories and files
+
+                            loadDirectory(mainPathString).then(res => showDirectoryData(res.data));
 
                         }
                     });
@@ -535,7 +517,7 @@ function newFolder() {
     });
 }
 
-function uploadFile() {
+function uploadFile(){
 
     let breadcrumb = "",
         files = [];
@@ -584,22 +566,18 @@ function uploadFile() {
                     </div>
                 </form>
             </div>
-        </div>
-        `,
+        </div>`,
         onEscape: true,
         backdrop: true,
         buttons: {
-            //cancel button
             cancel: {
-                label: 'Abbrechen',
-                className: 'btn btn-danger',
-                callback: function(e){
-
-                }
+                label: "Abbrechen",
+                className: "btn btn-outline-danger",
+                callback: function(e){}
             },
             upload: {
-                label: 'Upload',
-                className: 'btn btn-primary',
+                label: "Upload",
+                className: "btn btn-primary",
                 callback: function(e){
 
                     e.preventDefault();
@@ -624,8 +602,9 @@ function uploadFile() {
                         url: "api/upload",
                         success: function(result){
 
-                            loadDirectory(mainPathString)
-                                .then(res => showDirectoryData(res.data));
+                            // Reload directories and files
+
+                            loadDirectory(mainPathString).then(res => showDirectoryData(res.data));
 
                         }
                     });

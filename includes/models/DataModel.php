@@ -79,6 +79,8 @@
 
             $msg = "";
 
+            // Check if directory exists, otherweise create directory
+
             if (!file_exists($path)){
                 if (mkdir($path, 0777, true)){
                     $msg = "Folder successfully created";
@@ -102,11 +104,15 @@
 
             $msg = array();
 
+            // Iterate through files
+
             for ($i = 0; $i < count($files); $i++){
 
                 $path = $files[$i]["path"] . "/" . $files[$i]["name"];
 
                 if (is_link($path)){
+
+                    // File successfully deleted
 
                     unlink($path);
 
@@ -117,6 +123,8 @@
                     );
 
                 } elseif (is_dir($path)){
+
+                    // If directory scan them and delete file
 
                     $objects = scandir($path);
                     $ok = true;
@@ -133,6 +141,8 @@
 
                     if ($ok){
 
+                        // Folder successfully deleted
+
                         rmdir($path);
 
                         $msg[] = array(
@@ -145,6 +155,8 @@
 
                 } elseif (is_file($path)){
 
+                    // File successfully deleted
+
                     unlink($path);
 
                     $msg[] = array(
@@ -154,6 +166,8 @@
                     );
 
                 } else {
+
+                    // Folder or file couldn't be deleted
 
                     $msg[] = array(
                         "name" => $files[$i]["name"],
