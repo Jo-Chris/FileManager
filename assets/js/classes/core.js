@@ -223,8 +223,10 @@ function removeSingleItem(e) {
                 //create an array containing the name and the path of the element to be deleted
                 deleteArr.push(file);
                 
+                console.log(e.target.parentNode.parentNode);
+
                 // Delete from UI 
-                e.target.parentNode.parentNode.parentNode.remove();
+                e.target.parentNode.parentNode.remove();
                 
                 // Delete from DB
                 deleteData(deleteArr);
@@ -291,10 +293,6 @@ function deleteData(data){
                 // Reload tree structure
 
                 setUpTreeStructure();
-
-                // Reload directories and files
-
-                loadDirectory(mainPathString).then(res => showDirectoryData(res.data));
 
             })
             .catch(err => rej(err))
@@ -474,7 +472,7 @@ function displayTableData(data, bool){
             <td class="table-light align-middle">${utils.calcRealSize(data.size)}</td>
             <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 
-            <button class="btn btn-outline-danger ml-2 float-right">Löschen</button>
+            <button class="btn btn-outline-danger ml-2 float-right deleteItem">Löschen</button>
             <button class="btn btn-outline-primary float-right downloadItem ${bool ? "invisible" : "visible" }">Herunterladen</button></td>
             </tr>
             `;
