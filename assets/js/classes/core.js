@@ -104,6 +104,7 @@ document.getElementById('tbody-table').addEventListener('click', download);
 document.getElementById('button-action-container').addEventListener('click', downloadMultiple);
 document.getElementById('new').addEventListener('click', newFolder);
 document.getElementById('upload').addEventListener('click', uploadFile);
+document.getElementById('tbody-table').addEventListener('click', folderNavigation);
 
 //this directory needs to get the path of the folder
 async function loadDirectory(directory){
@@ -114,7 +115,6 @@ async function loadDirectory(directory){
     if(!directory){
         //after fetch is done and folders appear, show the searchbar and current path-value
         showPathAndSearchbar(directory);
-        showFolderIsEmpty();
     }
     //this var references the current path 
     mainPath = directory.split("/");
@@ -153,6 +153,7 @@ function showDirectoryData(directoryData){
                 const newRow = document.createElement('tr');
                 //set class of new rom
                 newRow.classList = "dynRow"
+                newRow.setAttribute("data-type", data.type);
                 newRow.setAttribute("data-path", data.path);
                 newRow.innerHTML = displayTableData(data);
 
@@ -171,6 +172,7 @@ function showDirectoryData(directoryData){
                 const newRow = document.createElement('tr');
                 //create the path attribute
                 newRow.setAttribute("data-path", data.path);
+                newRow.setAttribute("data-type", data.type);
                 //fill the arry
                 newRow.innerHTML = displayTableData(data, true);
 
@@ -184,6 +186,21 @@ function showDirectoryData(directoryData){
     }
 }
 
+/**
+ * subFolder navigation
+ * @param {*} e the element that should be navigated to
+ */
+function folderNavigation(e){
+    //get attr
+    let attr = e.target.parentNode.getAttribute('data-type');
+    //if equal to folder, load content
+    if(attr === 'folder'){
+        let newPath = e.target.parentNode.getAttribute('data-path');
+        console.log(newPath);
+        loadDirectory(newPath)
+        .then(res => showDirectoryData(res.data));
+    }
+}
 
 /**
  * @param {*} e the element that should be removed
