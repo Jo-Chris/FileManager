@@ -34,9 +34,21 @@
                     // Add files to zip file
 
                     for ($i = 0; $i < count($filesArray); $i++){
+
                         if (file_exists($filesArray[$i]["path"] . "/" . $filesArray[$i]["name"])){
+
+                            // Save download in db
+
+                            $db = new Database();
+                            $sql = "UPDATE file SET counterDownloaded = counterDownloaded + 1 WHERE filename = '" . $filesArray[$i]["name"] . "' AND path = '" . $filesArray[$i]["path"] . "'";
+                            $db->query($sql);
+
+                            // Add file to zip file
+
                             $zip->addFile($filesArray[$i]["path"] . "/" . $filesArray[$i]["name"]);
+
                         };
+
                     };
 
                 };
@@ -74,6 +86,12 @@
                     // Check if file or directory
 
                     if (is_file($filesArray[0]["path"] . "/" . $filesArray[0]["name"])){
+
+                        // Save download in db
+
+                        $db = new Database();
+                        $sql = "UPDATE file SET counterDownloaded = counterDownloaded + 1 WHERE filename = '" . $filesArray[0]["name"] . "' AND path = '" . $filesArray[0]["path"] . "'";
+                        $db->query($sql);
 
                         // Write header for download
 

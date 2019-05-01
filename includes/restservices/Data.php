@@ -8,9 +8,9 @@
     class Data extends RESTClass {
 
         /**
-            * GET Request
-            * @param: $data(array)
-        */
+     * GET Request
+     * @param: $data(array)
+     */
         protected function getRequest($data){
 
             // Check if params set

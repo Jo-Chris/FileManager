@@ -190,24 +190,27 @@ function showDirectoryData(directoryData){
  */
 function removeSingleItem(e) {
 
+    let deleteArr = [];
+
     if(e.target.classList.contains('deleteItem')){
         bootbox.confirm('Sind sie sicher?', (res) => {
             if(!res){
                 return;
             }else{
+
+                let file = {};
                 //get name and path
-                let name = e.target.parentNode.parentNode.parentNode.children[0].lastChild.textContent;
+                file.name = e.target.parentNode.parentNode.parentNode.children[0].lastChild.textContent;
                 //current path is always displayed at top
-                let path = e.target.parentNode.parentNode.parentNode.getAttribute('data-path');
+                file.path = e.target.parentNode.parentNode.parentNode.getAttribute('data-path');
                 //create an array containing the name and the path of the element to be deleted
-                let arr = [];
-                arr.push(utils.createDeleteJSONArray(name, path));
+                deleteArr.push(file);
                 
                 // Delete from UI 
                 e.target.parentNode.parentNode.parentNode.remove();
                 
                 // Delete from DB
-                deleteData(arr);
+                deleteData(deleteArr);
 
             }
         });
@@ -228,11 +231,13 @@ function removeAllItems(e){
                 checkboxes.forEach((el)=>{
                     if(el.checked){
                         //get the name of the current file
-                        let name = el.parentNode.lastChild.textContent;
+
+                        let file = {};
+                        file.name = el.parentNode.lastChild.textContent;
                         //current path is always displayed at top
-                        let path = el.parentElement.parentElement.getAttribute('data-path');
+                        file.path = el.parentElement.parentElement.getAttribute('data-path');
                         //create array of elements to be deleted
-                        deleteArr.push(utils.createDeleteJSONArray(name, path));
+                        deleteArr.push(file);
                         //Delete from UI
                         el.parentNode.parentNode.remove();
                     }
@@ -254,16 +259,27 @@ function removeAllItems(e){
  * @param {*} data - the data to be deleted
  */
 function deleteData(data){
+
     return new Promise((res, rej) => {
         fetch('api/data', {
             method: 'DELETE',
             headers: {
                 'Content-type' : 'application/json'
             },
-            body: JSON.stringify(data)
+            body: "files=" + JSON.stringify(data)
         })
             .then(res => res.json())
-            .then(() => res('Deleted successfully'))
+            .then(res => {
+
+                // Reload tree structure
+
+                setUpTreeStructure();
+
+                // Reload directories and files
+
+                loadDirectory(mainPathString).then(res => showDirectoryData(res.data));
+
+            })
             .catch(err => rej(err))
     });
 }
@@ -601,6 +617,10 @@ function uploadFile(){
                         processData: false,
                         url: "api/upload",
                         success: function(result){
+
+                            // Reload tree structure
+
+                            setUpTreeStructure();
 
                             // Reload directories and files
 

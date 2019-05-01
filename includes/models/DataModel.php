@@ -106,9 +106,11 @@
 
             // Iterate through files
 
-            for ($i = 0; $i < count($files); $i++){
+            $filesArray = json_decode($files, true);
 
-                $path = $files[$i]["path"] . "/" . $files[$i]["name"];
+            for ($i = 0; $i < count($filesArray); $i++){
+
+                $path = $filesArray[$i]["path"] . "/" . $filesArray[$i]["name"];
 
                 if (is_link($path)){
 
@@ -116,9 +118,15 @@
 
                     unlink($path);
 
+                    // Save download in db
+
+                    $db = new Database();
+                    $sql = "DELETE FROM file WHERE filename = '" . $filesArray[$i]["name"] . "' AND path = '" . $filesArray[$i]["path"] . "'";
+                    $db->query($sql);
+
                     $msg[] = array(
-                        "name" => $files[$i]["name"],
-                        "path" => $files[$i]["path"],
+                        "name" => $filesArray[$i]["name"],
+                        "path" => $filesArray[$i]["path"],
                         "message" => "File successfully deleted"
                     );
 
@@ -146,8 +154,8 @@
                         rmdir($path);
 
                         $msg[] = array(
-                            "name" => $files[$i]["name"],
-                            "path" => $files[$i]["path"],
+                            "name" => $filesArray[$i]["name"],
+                            "path" => $filesArray[$i]["path"],
                             "message" => "Folder successfully deleted"
                         );
 
@@ -159,9 +167,15 @@
 
                     unlink($path);
 
+                    // Save download in db
+
+                    $db = new Database();
+                    $sql = "DELETE FROM file WHERE filename = '" . $filesArray[$i]["name"] . "' AND path = '" . $filesArray[$i]["path"] . "'";
+                    $db->query($sql);
+
                     $msg[] = array(
-                        "name" => $files[$i]["name"],
-                        "path" => $files[$i]["path"],
+                        "name" => $filesArray[$i]["name"],
+                        "path" => $filesArray[$i]["path"],
                         "message" => "File successfully deleted"
                     );
 
@@ -170,8 +184,8 @@
                     // Folder or file couldn't be deleted
 
                     $msg[] = array(
-                        "name" => $files[$i]["name"],
-                        "path" => $files[$i]["path"],
+                        "name" => $filesArray[$i]["name"],
+                        "path" => $filesArray[$i]["path"],
                         "message" => "Folder or file couldn't be deleted"
                     );
 
