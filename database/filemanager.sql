@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 01. Mai 2019 um 11:17
+-- Erstellungszeit: 02. Mai 2019 um 12:36
 -- Server-Version: 10.1.38-MariaDB
 -- PHP-Version: 7.3.2
 
@@ -71,7 +71,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `gender`, `firstname`, `lastname`, `email`, `password`, `active`, `activationKey`, `roleID`) VALUES
-(1, 'm', 'Max', 'Mustermann', 'filemanager@manuelseisl.at', '$2y$10$iEU0aJWqsimacd1JAgyBMuX0OsuIM12w101/akGxKa59aaSwi0xeO', 1, '$2y$10$PXpLeamW2ksmRD4iTOT8du7ZhSee.c4TN9.rYRg1D1TOwYGuq68O2', 1);
+(1, 'm', 'Max', 'Mustermann', 'cloud@filemanager.at', '$2y$10$iEU0aJWqsimacd1JAgyBMuX0OsuIM12w101/akGxKa59aaSwi0xeO', 1, '$2y$10$PXpLeamW2ksmRD4iTOT8du7ZhSee.c4TN9.rYRg1D1TOwYGuq68O2', 1);
 
 -- --------------------------------------------------------
 

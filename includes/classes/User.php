@@ -203,7 +203,7 @@
 
             $body = "<html>
                 <head>
-                    <title>Registrierung - Filemanager</title>
+                    <title>Registrierung - fhCloud</title>
                 </head>
                 <body>
                     <h1>Vielen Dank für deine Registrierung!</h1>
@@ -212,7 +212,7 @@
                 </body>
             </html>";
 
-            $mail = new Mail($body, "register@filemanager.at", "reply@filemanager.at", "Registrierung - Filemanager", $email);
+            $mail = new Mail($body, "cloud@filemanager.at", "reply@filemanager.at", "Registrierung - fhCloud", $email);
             $mail->send();
 
         }

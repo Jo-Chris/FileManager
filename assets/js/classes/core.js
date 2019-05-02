@@ -304,11 +304,13 @@ function deleteData(data){
  */
 function download(e){
     //Check for a "single-item-download" --> button next to the file
+
     if(e.target.classList.contains('downloadItem')){
+
             let files = [];
             files.push({
-                name: e.target.parentNode.parentNode.parentNode.childNodes[1].lastChild.textContent,
-                path: e.target.parentNode.parentNode.parentNode.getAttribute('data-path')
+                name: e.target.parentNode.parentNode.childNodes[1].lastChild.textContent,
+                path: e.target.parentNode.parentNode.getAttribute('data-path')
             });
             
             /**@todo exception handling! */

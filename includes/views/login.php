@@ -6,7 +6,7 @@
         <form class="form-signin mb-3 mt-3" action="login" method="post">
             <input type="hidden" name="action" value="login">
             <div class="row mb-3 ml-0 mr-0">
-                <h1 class="h2 font-weight-normal mb-0 text-center w-100">Filemanager</h1>
+                <h1 class="h2 font-weight-normal mb-0 text-center w-100"><i class="fas fa-cloud"></i> fhCloud</h1>
             </div>
             <div class="row mb-2 ml-0 mr-0">
                 <label class="sr-only" for="email" >E-Mail Adresse</label>

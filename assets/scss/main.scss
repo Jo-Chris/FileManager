@@ -216,19 +216,3 @@ main.overview .leftcolumn .file-list li.folder-root.open > ul {
 .page-error {
   min-height: 100vh;
 }
-
-/* Responsive */
-
-@media (max-width: 768px){
-
-  ul.navbar-nav li.sidebar {
-    display: block !important;
-  }
-  main.overview .leftcolumn {
-    margin-left: -335px;
-  }
-  main.overview .leftcolumn.active {
-    margin-left: 0;
-  }
-
-}

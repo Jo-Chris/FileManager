@@ -3,7 +3,7 @@
 ?>
 <header class="overview">
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary position-fixed w-100 z-">
-        <a class="navbar-brand" href="<?php echo URL_PATH; ?>/">Filemanager</a>
+        <a class="navbar-brand" href="<?php echo URL_PATH; ?>/"><i class="fas fa-cloud"></i> fhCloud</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,9 +14,6 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="upload" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cloud-upload-alt"></i> Upload</a>
-                </li>
-                <li class="nav-item dropdown sidebar d-none">
-                    <a class="nav-link" href="#" id="showSideBar" aria-haspopup="true" aria-expanded="false">Ordner</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-md-0 mr-auto">
