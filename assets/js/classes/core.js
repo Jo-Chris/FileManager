@@ -155,6 +155,7 @@ function showDirectoryData(directoryData){
                 newRow.classList = "dynRow"
                 newRow.setAttribute("data-type", data.type);
                 newRow.setAttribute("data-path", data.path);
+                newRow.setAttribute("data-filename", data.name);
                 newRow.innerHTML = displayTableData(data);
 
                 //append the row
@@ -217,10 +218,10 @@ function removeSingleItem(e) {
 
                 let file = {};
                 //get name and path
-                file.name = e.target.parentNode.parentNode.parentNode.children[0].lastChild.textContent;
+                //file.name = e.target.parentNode.parentNode.parentNode.children[0].lastChild.textContent; //do not rely on such things! This gives different results in different browsers!
+                file.name = e.target.parentNode.parentNode.getAttribute('data-filename');
                 //current path is always displayed at top
-                file.path = e.target.parentNode.parentNode.parentNode.getAttribute('data-path');
-                //create an array containing the name and the path of the element to be deleted
+                file.path = e.target.parentNode.parentNode.getAttribute('data-path');
                 deleteArr.push(file);
                 
                 console.log(e.target.parentNode.parentNode);
@@ -470,7 +471,7 @@ function displayTableData(data, bool){
     let id = document.querySelector('tbody').rows.length;
 
     return `
-            <td class="table-light align-middle"><input type="checkbox" class=" ${bool ? "invisible" : "visible" } name="filedata" ></input><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
+            <td class="table-light align-middle"><input type="checkbox" class="${bool ? "invisible" : "visible" }" name="filedata" ><button class="btn mr-2 ml-2"><i class="${utils.determineFileIcon(data.name, data.type)} fa-2x text-primary"></i></button>${data.name}</td>
             <td class="table-light align-middle">${utils.calcRealSize(data.size)}</td>
             <td class="table-light align-middle">${utils.formatDate(data.date_modified)}</td>
             <td class="table-light text-center align-middle"> 

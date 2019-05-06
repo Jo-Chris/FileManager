@@ -74,8 +74,8 @@
                         <thead>
                             <th scope="col" class="table-dark col-6 bg-primary">Dateinname</th>
                             <th scope="col" class="table-dark col-2 bg-primary">Größe</th>
-                            <th scope="col" class="table-dark col-2 bg-primary ">Zuletzt bearbeitet</th>
-                            <th scope="col" class="table-dark col-2 bg-primary text-right">Aktionen</th>
+                            <th scope="col" class="table-dark col-1 bg-primary ">Zuletzt bearbeitet</th>
+                            <th scope="col" class="table-dark col-3 bg-primary text-right">Aktionen</th>
                         </thead>
                         <tbody id="tbody-table">
                             <!-- Dynamic Content follows here -->
