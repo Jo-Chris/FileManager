@@ -72,9 +72,9 @@
                 <div class="table-responsive-lg invisible" id="main-table">
                     <table class="table table-striped mt-0 align-middle" id="main-list">
                         <thead>
-                            <th scope="col" class="table-dark col-6 bg-primary">Dateinname</th>
+                            <th scope="col" class="table-dark col-5 bg-primary">Dateinname</th>
                             <th scope="col" class="table-dark col-2 bg-primary">Größe</th>
-                            <th scope="col" class="table-dark col-1 bg-primary ">Zuletzt bearbeitet</th>
+                            <th scope="col" class="table-dark col-2 bg-primary ">Zuletzt bearbeitet</th>
                             <th scope="col" class="table-dark col-3 bg-primary text-right">Aktionen</th>
                         </thead>
                         <tbody id="tbody-table">
